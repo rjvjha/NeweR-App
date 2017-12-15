@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:checkable="false"
+        android:title="@string/menu_section">
+        <menu>
+            <item
+                android:id="@+id/nav_top_stories"
+                android:checkable="true"
+                android:title="Top Stories" />
+            <item
+                android:id="@+id/nav_india"
+                android:checkable="true"
+                android:title="India" />
+            <item
+                android:id="@+id/nav_world"
+                android:checkable="true"
+                android:title="World" />
+            <item
+                android:id="@+id/nav_business"
+                android:checkable="true"
+                android:title="Business" />
+            <item
+                android:id="@+id/nav_technology"
+                android:checkable="true"
+                android:title="Technology" />
+            <item
+                android:id="@+id/nav_entertainment"
+                android:checkable="true"
+                android:title="Entertainment" />
+            <item
+                android:id="@+id/nav_sport"
+                android:checkable="true"
+                android:title="Sport" />
+            <item
+                android:id="@+id/nav_science"
+                android:checkable="true"
+                android:title="Science" />
+            <item
+                android:id="@+id/nav_health"
+                android:checkable="true"
+                android:title="Health"/>
+        </menu>
+    </item>
+
+
+    <item android:title="@string/menu_manage">
+        <menu>
+            <item
+                android:id="@+id/nav_change_source"
+                android:title="Change news source" />
+        </menu>
+    </item>
+
+</menu>
