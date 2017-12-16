@@ -3,53 +3,63 @@
 
     <item
         android:checkable="false"
-        android:title="@string/menu_section">
+        android:title="@string/menu_section_label">
         <menu>
             <item
                 android:id="@+id/nav_top_stories"
                 android:checkable="true"
-                android:title="Top Stories" />
+                android:title="@string/menu_top_stories"
+                android:icon="@drawable/ic_trending_up_black_24dp"/>
             <item
                 android:id="@+id/nav_india"
                 android:checkable="true"
-                android:title="India" />
+                android:title="@string/menu_india"
+                android:icon="@drawable/ic_flag_black_24dp"/>
             <item
                 android:id="@+id/nav_world"
                 android:checkable="true"
-                android:title="World" />
+                android:title="@string/menu_world"
+                android:icon="@drawable/ic_language_black_24dp"/>
             <item
                 android:id="@+id/nav_business"
                 android:checkable="true"
-                android:title="Business" />
+                android:title="@string/menu_Business"
+                android:icon="@drawable/ic_business_black_24dp"/>
             <item
                 android:id="@+id/nav_technology"
                 android:checkable="true"
-                android:title="Technology" />
+                android:title="@string/menu_technology"
+                android:icon="@drawable/ic_memory_black_24dp"/>
             <item
                 android:id="@+id/nav_entertainment"
                 android:checkable="true"
-                android:title="Entertainment" />
+                android:title="@string/menu_entertainment"
+                android:icon="@drawable/ic_local_movies_black_24dp"/>
             <item
                 android:id="@+id/nav_sport"
                 android:checkable="true"
-                android:title="Sport" />
+                android:title="@string/menu_sport"
+                android:icon="@drawable/ic_directions_bike_black_24dp"/>
             <item
                 android:id="@+id/nav_science"
                 android:checkable="true"
-                android:title="Science" />
+                android:title="@string/menu_science"
+                android:icon="@drawable/ic_science" />
             <item
                 android:id="@+id/nav_health"
                 android:checkable="true"
-                android:title="Health"/>
+                android:title="@string/menu_health"
+                android:icon="@drawable/ic_favorite_black_24dp"/>
         </menu>
     </item>
 
 
-    <item android:title="@string/menu_manage">
+    <item android:title="@string/menu_manage_label">
         <menu>
             <item
                 android:id="@+id/nav_change_source"
-                android:title="Change news source" />
+                android:title="@string/menu_change_source"
+                android:icon="@drawable/ic_mode_edit_black_24dp"/>
         </menu>
     </item>
 

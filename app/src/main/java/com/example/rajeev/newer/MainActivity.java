@@ -1,5 +1,6 @@
 package com.example.rajeev.newer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -54,9 +57,25 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id){
+
+            case R.id.action_search:
+                Intent searchIntent = new Intent(this, SearchActvity.class);
+                startActivity(searchIntent);
+                return true;
+
+            case R.id.action_refresh:
+                // DO nothing for now;
+                break;
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                return true;
+
+            case R.id.action_about:
+                // Do nothing for now;
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -68,10 +87,55 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         // Handle the nav items here
+        switch (id){
 
+            case R.id.nav_top_stories:
+                setTitle(R.string.title_activity_main);
+                break;
+
+            case R.id.nav_india:
+                setTitle(R.string.menu_india);
+                break;
+
+            case R.id.nav_world:
+                setTitle(R.string.menu_world);
+                break;
+
+            case R.id.nav_business:
+                setTitle(R.string.menu_Business);
+                break;
+
+            case R.id.nav_technology:
+                setTitle(R.string.menu_technology);
+                break;
+
+            case R.id.nav_entertainment:
+                setTitle(R.string.menu_entertainment);
+                break;
+
+            case R.id.nav_sport:
+                setTitle(R.string.menu_sport);
+                break;
+
+            case R.id.nav_science:
+                setTitle(R.string.menu_science);
+                break;
+
+            case R.id.nav_health:
+                setTitle(R.string.menu_health);
+                break;
+
+            case R.id.nav_change_source:
+                // Do nothing for now
+                break;
+
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
