@@ -10,7 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity
@@ -31,6 +34,25 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //  Main Content code starts from here
+        ListView listView = (ListView) findViewById(R.id.list_view);
+        List<Article> articlesList = new ArrayList<>();
+        for(int i = 0; i<10; i++){
+            articlesList.add(new Article(
+                    "times-of-india",
+                    "The Times of India",
+                    "Author",
+                    "Sonia confident that 'fearless' Rahul will reinvigorate Congress - Times of India ",
+                    "Passing on the party's mantle to her son Rahul Gandhi, outgoing Congress president Sonia Gandhi said on Saturday that the party should setmits house in order and introspect while readying for any sacrifice to stop communal forces in the country.",
+                    "http://dummy.com",
+                    "http://dummyImage.com",
+                    "2017-12-15 5:00pm"));
+        }
+        ArticleAdapter adapter = new ArticleAdapter(this,articlesList);
+        listView.setAdapter(adapter);
+
+
     }
 
     @Override
