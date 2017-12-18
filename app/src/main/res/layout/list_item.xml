@@ -12,11 +12,12 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="4dp"
+        app:cardCornerRadius="8dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="false"
         app:contentPadding="16dp"
         app:contentPaddingBottom="8dp"
+        app:cardElevation="2dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
@@ -48,7 +49,6 @@
                     android:id="@+id/article_published_datetime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
                     android:layout_weight="1"
                     android:fontFamily="serif"
                     android:gravity="end"
@@ -61,7 +61,6 @@
                 android:layout_height="176dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                android:scaleType="centerCrop"
                 android:src="@drawable/placeholder" />
 
             <TextView
