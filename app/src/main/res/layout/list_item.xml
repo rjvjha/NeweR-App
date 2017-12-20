@@ -60,8 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="176dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/placeholder" />
+                android:layout_marginTop="16dp"
+                android:src="@color/backgroundColor" />
 
             <TextView
                 android:id="@+id/article_title_textView"
@@ -96,7 +96,6 @@
                     android:fontFamily="serif"
                     android:textAllCaps="true"
                     android:textAppearance="?android:textAppearanceSmall"
-                    android:textStyle="bold"
                     tools:text=" Author Name" />
             </LinearLayout>
 
@@ -106,7 +105,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="serif"
                 android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="@android:color/black"
+                android:textColor="#757575"
+                android:maxLines="7"
+                android:ellipsize="end"
                 tools:text="Passing on the party's mantle to her son Rahul Gandhi, outgoing Congress president Sonia Gandhi said on Saturday that the party should setmits house in order and introspect while readying for any sacrifice to stop communal forces in the country." />
 
             <View
@@ -136,7 +137,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_file_download_black_24dp"
+                    android:drawableLeft="@drawable/ic_bookmark_border_black_24dp"
                     android:text="Save" />
 
                 <Button

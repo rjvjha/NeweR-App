@@ -28,4 +28,10 @@
     <string name="action_feedback">Feedback</string>
     <string name="action_about">About</string>
 
+    <!-- String values for user feedback messages -->
+    <string name="no_internet_connectivity">No internet connection available!</string>
+    <string name="offline_mode_suggestion">Switch to offline mode to read your saved articles.</string>
+    <string name="no_aricles_found">No stories availabe!</string>
+    <string name="no_articles_suggestion">Please check your internet connection.</string>
+
 </resources>

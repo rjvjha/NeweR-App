@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +29,21 @@ import java.util.List;
  */
 
 class ArticleAdapter extends ArrayAdapter<Article> {
-    private TextView mPublishDateTime;
-
 
     public ArticleAdapter(Context context, List<Article> articles) {
         super(context, 0, articles);
+    }
+
+
+    static class ViewHolder{
+        TextView sourceName;
+        TextView publishDateTime;
+        TextView title;
+        TextView authorName;
+        TextView byLabel;
+        TextView description;
+        ImageView articleImage;
+        int position;
     }
 
     @NonNull
@@ -41,61 +51,68 @@ class ArticleAdapter extends ArrayAdapter<Article> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // current article
         Article currentArticle = getItem(position);
+        ViewHolder holder;
         View itemView = convertView;
         if (itemView == null) {
             itemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+            holder = new ViewHolder();
+            holder.sourceName = (TextView) itemView.findViewById(R.id.source_name_textView);
+            holder.publishDateTime = (TextView) itemView.findViewById(R.id.article_published_datetime);
+            holder.title = (TextView) itemView.findViewById(R.id.article_title_textView);
+            holder.authorName = (TextView) itemView.findViewById(R.id.article_author_textView);
+            holder.byLabel = (TextView) itemView.findViewById(R.id.by_label_text);
+            holder.description = (TextView) itemView.findViewById(R.id.article_description_textView);
+            holder.articleImage = (ImageView) itemView.findViewById(R.id.article_image_imageView);
+            holder.position = position;
+            itemView.setTag(holder);
         }
-
-        TextView sourceName = (TextView) itemView.findViewById(R.id.source_name_textView);
-        mPublishDateTime = (TextView) itemView.findViewById(R.id.article_published_datetime);
-        TextView title = (TextView) itemView.findViewById(R.id.article_title_textView);
-        TextView authorName = (TextView) itemView.findViewById(R.id.article_author_textView);
-        TextView byLabel = (TextView) itemView.findViewById(R.id.by_label_text);
-        TextView description = (TextView) itemView.findViewById(R.id.article_description_textView);
-        ImageView articleImage = (ImageView) itemView.findViewById(R.id.article_image_imageView);
-
-        mPublishDateTime.setVisibility(View.VISIBLE);
-        authorName.setVisibility(View.VISIBLE);
-        articleImage.setVisibility(View.VISIBLE);
-        description.setVisibility(View.VISIBLE);
-        byLabel.setVisibility(View.VISIBLE);
+        holder = (ViewHolder) itemView.getTag();
 
 
+        holder.publishDateTime.setVisibility(View.VISIBLE);
+        holder.authorName.setVisibility(View.VISIBLE);
+        holder.articleImage.setVisibility(View.VISIBLE);
+        holder.description.setVisibility(View.VISIBLE);
+        holder.byLabel.setVisibility(View.VISIBLE);
+
+        // Get the values from Article object
         String currentAuthor = currentArticle.getAuthor();
         Bitmap articleThumnail = currentArticle.getArticleImage();
         String publishAt = currentArticle.getPublishedAt();
+        String description = currentArticle.getDescription();
 
         // Check for null and empty author values
         if (currentAuthor == "null" || TextUtils.isEmpty(currentAuthor)) {
-            byLabel.setVisibility(View.GONE);
-            authorName.setVisibility(View.GONE);
+            holder.byLabel.setVisibility(View.GONE);
+            holder.authorName.setVisibility(View.GONE);
 
         } else {
-            authorName.setText(currentAuthor);
-        }
-        // Check for null Bitmap values
-        if (articleThumnail == null) {
-            articleImage.setVisibility(View.GONE);
-        } else {
-            articleImage.setImageBitmap(articleThumnail);
+            holder.authorName.setText(currentAuthor);
         }
 
-        sourceName.setText(currentArticle.getSourceName());
+//        // Check for null Bitmap values
+//        if (articleThumnail == null) {
+//            articleImage.setVisibility(View.GONE);
+//        } else {
+//            articleImage.setImage
+//        }
 
-        mPublishDateTime.setText(formatDateTime(publishAt));
+        holder.sourceName.setText(currentArticle.getSourceName());
 
-        title.setText(currentArticle.getTitle());
+        holder.publishDateTime.setText(formatDateTime(publishAt,holder.publishDateTime));
+
+        holder.title.setText(currentArticle.getTitle());
 
         // Check for empty description
-        if (currentArticle.getDescription() != null) {
-            description.setText(currentArticle.getDescription());
+        if (description != null && !TextUtils.isEmpty(description)) {
+            holder.description.setText(currentArticle.getDescription());
         }
 
         return itemView;
     }
 
     // Helper method to format Date and time
-    private String formatDateTime(String publishDateTime) {
+    private String formatDateTime(String publishDateTime, TextView dateTime) {
         String displayDateTime = new String();
         if (publishDateTime != "null" && !TextUtils.isEmpty(publishDateTime)) {
             try {
@@ -112,7 +129,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
             }
 
         }else{
-            mPublishDateTime.setVisibility(View.GONE);
+            dateTime.setVisibility(View.GONE);
             return displayDateTime;
         }
 

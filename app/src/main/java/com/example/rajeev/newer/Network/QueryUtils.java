@@ -120,7 +120,7 @@ public final class QueryUtils {
     /**
      * Make an HTTP request to the given imageURL and return a Bitmap as the response.
      */
-    private static Bitmap makeHttpRequest(String imageUrl) throws IOException{
+    private static Bitmap downloadBitmapFromInternet(String imageUrl) throws IOException{
         //@ToDo: write code to fetch bitmap from imageUrl
         Bitmap thumbnail = null;
         URL url = createUrl(imageUrl);
@@ -142,6 +142,7 @@ public final class QueryUtils {
                 inputStream = urlConnection.getInputStream();
                 Log.wtf(LOG_TAG,"received the stream, decoding stream now");
                 thumbnail = BitmapFactory.decodeStream(inputStream);
+                return thumbnail;
             }else{
                 Log.wtf(LOG_TAG, "error while connecting, http error code: " + urlConnection.getResponseCode());
             }
@@ -158,7 +159,7 @@ public final class QueryUtils {
                 inputStream.close();
             }
         }
-        return thumbnail;
+        return null;
     }
 
     /**
@@ -187,7 +188,6 @@ public final class QueryUtils {
                     String url;
                     String urlToImage = null;
                     String publishedAt;
-                    Bitmap articleImage = null;
                     JSONObject article = articlesArray.getJSONObject(i);
                     JSONObject source = article.getJSONObject("source");
                     sourceId = source.optString("id");
@@ -198,10 +198,6 @@ public final class QueryUtils {
                     url = article.optString("url");
                     urlToImage = article.optString("urlToImage");
                     publishedAt = article.getString("publishedAt");
-                    Log.v(LOG_TAG, "Fetching required bitmap for article no :"+ i);
-                    if(urlToImage != null && urlToImage !="null"){
-                        articleImage = makeHttpRequest(urlToImage);
-                    }
                     articlesList.add(new Article(sourceId,
                             sourceName,
                             author,
@@ -209,8 +205,7 @@ public final class QueryUtils {
                             description,
                             url,
                             urlToImage,
-                            publishedAt,
-                            articleImage
+                            publishedAt
                             )) ;
                 }
                 return articlesList;
@@ -219,9 +214,7 @@ public final class QueryUtils {
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem parsing the Json Results", e);
             e.printStackTrace();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "error while retrieving article image from input stream", e);
-       }
+        }
 
         return null;
     }
