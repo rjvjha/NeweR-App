@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -17,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rajeev.newer.Network.ISO8601;
+import com.example.rajeev.newer.Network.ImageDownloaderTask;
 
+import java.lang.ref.WeakReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -77,9 +81,26 @@ class ArticleAdapter extends ArrayAdapter<Article> {
 
         // Get the values from Article object
         String currentAuthor = currentArticle.getAuthor();
-        Bitmap articleThumnail = currentArticle.getArticleImage();
         String publishAt = currentArticle.getPublishedAt();
         String description = currentArticle.getDescription();
+        String imageUrl = currentArticle.getUrlToImage();
+
+
+
+        // Set article source name
+        holder.sourceName.setText(currentArticle.getSourceName());
+        // Set publish DateTime
+        holder.publishDateTime.setText(formatDateTime(publishAt,holder.publishDateTime));
+
+//        if(imageUrl!="null" && !TextUtils.isEmpty(imageUrl)){
+//            ImageDownloaderTask task = new ImageDownloaderTask(holder.articleImage);
+//            DownloadDrawable downloadDrawable = new DownloadDrawable(task);
+//
+//        }
+
+
+        // Set Title
+        holder.title.setText(currentArticle.getTitle());
 
         // Check for null and empty author values
         if (currentAuthor == "null" || TextUtils.isEmpty(currentAuthor)) {
@@ -90,20 +111,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
             holder.authorName.setText(currentAuthor);
         }
 
-//        // Check for null Bitmap values
-//        if (articleThumnail == null) {
-//            articleImage.setVisibility(View.GONE);
-//        } else {
-//            articleImage.setImage
-//        }
-
-        holder.sourceName.setText(currentArticle.getSourceName());
-
-        holder.publishDateTime.setText(formatDateTime(publishAt,holder.publishDateTime));
-
-        holder.title.setText(currentArticle.getTitle());
-
-        // Check for empty description
+        // Check for empty description and set description
         if (description != null && !TextUtils.isEmpty(description)) {
             holder.description.setText(currentArticle.getDescription());
         }

@@ -120,7 +120,7 @@ public final class QueryUtils {
     /**
      * Make an HTTP request to the given imageURL and return a Bitmap as the response.
      */
-    private static Bitmap downloadBitmapFromInternet(String imageUrl) throws IOException{
+    public static Bitmap downloadBitmapFromInternet(String imageUrl) throws IOException{
         //@ToDo: write code to fetch bitmap from imageUrl
         Bitmap thumbnail = null;
         URL url = createUrl(imageUrl);
@@ -132,7 +132,7 @@ public final class QueryUtils {
             Log.v(LOG_TAG,"Connection Opened");
             urlConnection.setRequestMethod("GET");
             urlConnection.setReadTimeout(5000);
-            urlConnection.setConnectTimeout(1000);
+            urlConnection.setConnectTimeout(500);
             urlConnection.setUseCaches(true);
             Log.v(LOG_TAG,"Connecting to the given url");
             urlConnection.connect();

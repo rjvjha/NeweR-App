@@ -5,6 +5,7 @@ import android.support.v4.content.AsyncTaskLoader;
 
 import com.example.rajeev.newer.Article;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,9 @@ import java.util.List;
 
 public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
     private static final String LOG_TAG = ArticleLoader.class.getName();
-    String [] urls;
+    private String [] urls;
+    private List<Article> mData;
+
 
     public ArticleLoader(Context context,String... urls){
         super(context);
@@ -24,7 +27,13 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
 
     @Override
     protected void onStartLoading() {
-        forceLoad();
+        if(mData!=null){
+            // use cached data
+            deliverResult(mData);
+        }else {
+            // We have no data, so kick off loading it
+            forceLoad();
+        }
     }
 
     @Override
@@ -33,5 +42,12 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
             return null;
         }
         return QueryUtils.fetchArticlesFromNetwork(urls[0]);
+    }
+
+    @Override
+    public void deliverResult(List<Article> data) {
+        // We’ll save the data for later retrieval
+        mData = data;
+        super.deliverResult(data);
     }
 }
