@@ -61,7 +61,7 @@
                 android:layout_height="176dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="16dp"
-                android:src="@color/backgroundColor" />
+                tools:src="@color/backgroundColor" />
 
             <TextView
                 android:id="@+id/article_title_textView"

@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.rajeev.newer.Network.ISO8601;
 import com.example.rajeev.newer.Network.ImageDownloaderTask;
 
@@ -69,8 +71,10 @@ class ArticleAdapter extends ArrayAdapter<Article> {
             holder.articleImage = (ImageView) itemView.findViewById(R.id.article_image_imageView);
             holder.position = position;
             itemView.setTag(holder);
+        }else{
+            holder = (ViewHolder) itemView.getTag();
         }
-        holder = (ViewHolder) itemView.getTag();
+
 
 
         holder.publishDateTime.setVisibility(View.VISIBLE);
@@ -85,18 +89,21 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         String description = currentArticle.getDescription();
         String imageUrl = currentArticle.getUrlToImage();
 
-
-
         // Set article source name
         holder.sourceName.setText(currentArticle.getSourceName());
         // Set publish DateTime
         holder.publishDateTime.setText(formatDateTime(publishAt,holder.publishDateTime));
 
-//        if(imageUrl!="null" && !TextUtils.isEmpty(imageUrl)){
-//            ImageDownloaderTask task = new ImageDownloaderTask(holder.articleImage);
-//            DownloadDrawable downloadDrawable = new DownloadDrawable(task);
-//
-//        }
+        if(imageUrl!="null" && !TextUtils.isEmpty(imageUrl)){
+           GlideApp.with(getContext())
+                   .load(imageUrl)
+                   .placeholder(R.color.backgroundColor)
+                   .fallback(Color.GRAY)
+                   .optionalCenterCrop()
+                   .into(holder.articleImage);
+        }else{
+            holder.articleImage.setVisibility(View.GONE);
+        }
 
 
         // Set Title

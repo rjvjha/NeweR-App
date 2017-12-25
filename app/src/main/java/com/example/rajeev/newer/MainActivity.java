@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     private ArticleAdapter adapter;
     private ProgressBar progressIndicator;
     private Chronometer chronometer;
+    private View emptyView;
     private ImageView emptyListImageView;
     private TextView emptyListTextView1;
     private TextView emptyListTextViewSuggestionText;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View emptyView = findViewById(R.id.empty_list_view);
+        emptyView = findViewById(R.id.empty_list_view);
         progressIndicator = (ProgressBar)findViewById(R.id.progress_indicator);
         chronometer = (Chronometer) findViewById(R.id.timer);
         chronometer.setBase(SystemClock.elapsedRealtime());
@@ -129,6 +130,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_refresh:
                 // DO nothing for now;
                 if(checkInternetConnectivity()) {
+                    emptyView.setVisibility(View.GONE);
+                    progressIndicator.setVisibility(View.VISIBLE);
                     getSupportLoaderManager().restartLoader(LOADER_ID, null ,this);
                 }
                 break;
