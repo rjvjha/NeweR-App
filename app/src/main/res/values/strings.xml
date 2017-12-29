@@ -34,4 +34,7 @@
     <string name="no_aricles_found">No stories availabe!</string>
     <string name="no_articles_suggestion">Please check your internet connection.</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

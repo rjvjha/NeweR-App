@@ -76,7 +76,6 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         }
 
 
-
         holder.publishDateTime.setVisibility(View.VISIBLE);
         holder.authorName.setVisibility(View.VISIBLE);
         holder.articleImage.setVisibility(View.VISIBLE);
@@ -93,7 +92,6 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         holder.sourceName.setText(currentArticle.getSourceName());
         // Set publish DateTime
         holder.publishDateTime.setText(formatDateTime(publishAt,holder.publishDateTime));
-
         if(imageUrl!="null" && !TextUtils.isEmpty(imageUrl)){
            GlideApp.with(getContext())
                    .load(imageUrl)
@@ -121,6 +119,8 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         // Check for empty description and set description
         if (description != null && !TextUtils.isEmpty(description)) {
             holder.description.setText(currentArticle.getDescription());
+        }else{
+            holder.description.setVisibility(View.GONE);
         }
 
         return itemView;

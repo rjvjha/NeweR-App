@@ -7,9 +7,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.util.TimeUtils;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,34 +18,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Chronometer;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.rajeev.newer.Network.ArticleLoader;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        LoaderManager.LoaderCallbacks<List<Article>> {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String SAMPLE_NEWS_URL ="https://newsapi.org/v2/top-headlines?sources=google-news-in,the-times-of-india,the-hindu&apiKey=e591d4b34f2e435ba3d8a1f4d4f0d185";
     private static final String LOG_TAG = MainActivity.class.getName();
-    private static final int  LOADER_ID = 0;
-    private ArticleAdapter adapter;
-    private ProgressBar progressIndicator;
-    private Chronometer chronometer;
-    private View emptyView;
-    private ImageView emptyListImageView;
-    private TextView emptyListTextView1;
-    private TextView emptyListTextViewSuggestionText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,38 +41,40 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        emptyView = findViewById(R.id.empty_list_view);
-        progressIndicator = (ProgressBar)findViewById(R.id.progress_indicator);
-        chronometer = (Chronometer) findViewById(R.id.timer);
-        chronometer.setBase(SystemClock.elapsedRealtime());
-        emptyListImageView = findViewById(R.id.empty_list_imageView);
-        emptyListTextView1 = findViewById(R.id.empty_list_textView1);
-        emptyListTextViewSuggestionText = findViewById(R.id.empty_list_suggestion);
+//        emptyView = findViewById(R.id.empty_list_view);
+//        progressIndicator = (ProgressBar)findViewById(R.id.progress_indicator);
+//        emptyListImageView = findViewById(R.id.empty_list_imageView);
+//        emptyListTextView1 = findViewById(R.id.empty_list_textView1);
+//        emptyListTextViewSuggestionText = findViewById(R.id.empty_list_suggestion);
+//
+//        //  Main Content code starts from here
+//
+//        ListView listView = (ListView) findViewById(R.id.list_view);
+//        listView.setEmptyView(emptyView);
+//
+//        // Code for hiding the app bar when scrolling list view
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            listView.setNestedScrollingEnabled(true);
+//        }
+//
+//        adapter = new ArticleAdapter(this, new ArrayList<Article>());
+//        listView.setAdapter(adapter);
 
-        //  Main Content code starts from here
+//        // Check for internet Connectivity
+//        if(checkInternetConnectivity()){
+//            getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+//        } else if(!checkInternetConnectivity() && adapter.isEmpty()){
+//            progressIndicator.setVisibility(View.GONE);
+//            emptyListImageView.setImageResource(R.drawable.ic_signal_wifi_off_black_24dp);
+//            emptyListTextView1.setText(R.string.no_internet_connectivity);
+//            emptyListTextViewSuggestionText.setText(R.string.offline_mode_suggestion);
+//
+//        }
+//
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fragment_content_container, new TopStoriesFragment());
+        fragmentTransaction.commit();
 
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        listView.setEmptyView(emptyView);
-
-        // Code for hiding the app bar when scrolling list view
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            listView.setNestedScrollingEnabled(true);
-        }
-
-        adapter = new ArticleAdapter(this, new ArrayList<Article>());
-        listView.setAdapter(adapter);
-
-        // Check for internet Connectivity
-        if(checkInternetConnectivity()){
-            getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-            chronometer.start();
-        } else if(!checkInternetConnectivity() && adapter.isEmpty()){
-            progressIndicator.setVisibility(View.GONE);
-            emptyListImageView.setImageResource(R.drawable.ic_signal_wifi_off_black_24dp);
-            emptyListTextView1.setText(R.string.no_internet_connectivity);
-            emptyListTextViewSuggestionText.setText(R.string.offline_mode_suggestion);
-
-        }
     }
 
     @Override
@@ -129,11 +110,6 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.action_refresh:
                 // DO nothing for now;
-                if(checkInternetConnectivity()) {
-                    emptyView.setVisibility(View.GONE);
-                    progressIndicator.setVisibility(View.VISIBLE);
-                    getSupportLoaderManager().restartLoader(LOADER_ID, null ,this);
-                }
                 break;
             case R.id.action_settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
@@ -159,38 +135,47 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_top_stories:
                 setTitle(R.string.title_activity_main);
+                openFragment(new TopStoriesFragment());
                 break;
 
             case R.id.nav_india:
                 setTitle(R.string.menu_india);
+                openFragment(new IndiaCategoryFragment());
                 break;
 
             case R.id.nav_world:
                 setTitle(R.string.menu_world);
+                openFragment(new WorldFragment());
                 break;
 
             case R.id.nav_business:
                 setTitle(R.string.menu_Business);
+                openFragment(new BusinessFragment());
                 break;
 
             case R.id.nav_technology:
                 setTitle(R.string.menu_technology);
+                openFragment(new TechnologyFragment());
                 break;
 
             case R.id.nav_entertainment:
                 setTitle(R.string.menu_entertainment);
+                openFragment(new EntertainmentFragment());
                 break;
 
             case R.id.nav_sport:
                 setTitle(R.string.menu_sport);
+                openFragment(new SportFragment());
                 break;
 
             case R.id.nav_science:
                 setTitle(R.string.menu_science);
+                openFragment(new ScienceFragment());
                 break;
 
             case R.id.nav_health:
                 setTitle(R.string.menu_health);
+                openFragment(new HealthFragment());
                 break;
 
             case R.id.nav_change_source:
@@ -218,32 +203,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-    // Loader Callback methods are implemented here
-
-
-    @Override
-    public Loader<List<Article>> onCreateLoader(int id, Bundle args) {
-        return new ArticleLoader(this,SAMPLE_NEWS_URL);
+    private void openFragment(final Fragment fragment){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_content_container,fragment);
+        ft.commit();
     }
 
-    @Override
-    public void onLoadFinished(Loader<List<Article>> loader, List<Article> data) {
-        progressIndicator.setVisibility(View.GONE);
-        adapter.clear();
-        if(data != null && !data.isEmpty()){
-            chronometer.stop();
-            Toast.makeText(this,"News updated",Toast.LENGTH_SHORT).show();
-            Log.v(LOG_TAG, "Total time taken: "+ chronometer.getText());
-            adapter.addAll(data);
-        }
-        emptyListTextView1.setText(R.string.no_aricles_found);
-        emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<Article>> loader) {
-       adapter.clear();
-
-    }
 }

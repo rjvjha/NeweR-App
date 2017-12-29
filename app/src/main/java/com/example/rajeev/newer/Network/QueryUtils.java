@@ -180,6 +180,10 @@ public final class QueryUtils {
             if(TextUtils.equals(status,"ok")){
                 JSONArray articlesArray = root.getJSONArray("articles");
                 for(int i=0; i< articlesArray.length();i++) {
+                    // fetch only 49 articles at a time.
+                    if(i >= 49){
+                        break;
+                    }
                     String sourceId;
                     String sourceName;
                     String author;
