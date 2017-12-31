@@ -28,7 +28,7 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SearchActvity"
+        <activity android:name=".SearchActivity"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity"></activity>

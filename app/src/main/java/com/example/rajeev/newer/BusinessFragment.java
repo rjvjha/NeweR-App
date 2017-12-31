@@ -39,6 +39,7 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
     private TextView emptyListTextView1;
     private TextView emptyListTextViewSuggestionText;
     private ProgressBar progressIndicator;
+    private TextView loadingFeedback ;
     private static List<Article> sData;
 
 
@@ -65,6 +66,7 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
         Context context = getContext();
         emptyView = rootView.findViewById(R.id.empty_list_view);
         progressIndicator = rootView.findViewById(R.id.progress_indicator);
+        loadingFeedback = rootView.findViewById(R.id.loading_feedback_text);
         emptyListImageView = rootView.findViewById(R.id.empty_list_imageView);
         emptyListTextView1 = rootView.findViewById(R.id.empty_list_textView1);
         emptyListTextViewSuggestionText = rootView.findViewById((R.id.empty_list_suggestion));
@@ -75,6 +77,7 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
         if(sData!=null) {
             adapter.addAll(sData);
             progressIndicator.setVisibility(View.GONE);
+            loadingFeedback.setVisibility(View.GONE);
         }
         // Code for hiding the app bar when scrolling list view
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -86,6 +89,7 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
 
         if(!checkInternetConnectivity() && adapter.isEmpty()){
             progressIndicator.setVisibility(View.GONE);
+            loadingFeedback.setVisibility(View.GONE);
             emptyListImageView.setImageResource(R.drawable.ic_signal_wifi_off_black_24dp);
             emptyListTextView1.setText(R.string.no_internet_connectivity);
             emptyListTextViewSuggestionText.setText(R.string.offline_mode_suggestion);
@@ -109,6 +113,7 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader<List<Article>> loader, List<Article> data) {
         progressIndicator.setVisibility(View.GONE);
+        loadingFeedback.setVisibility(View.GONE);
         adapter.clear();
         if(data != null && !data.isEmpty()){
             Toast.makeText(getContext(),"News updated",Toast.LENGTH_SHORT).show();

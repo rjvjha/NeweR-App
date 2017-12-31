@@ -127,8 +127,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_share"
-                    android:drawableTint="@color/cardview_dark_background"
+                    android:drawableLeft="@drawable/ic_share_black_24dp"
                     android:text="Share" />
 
                 <Button
@@ -137,7 +136,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_bookmark_border_black_24dp"
+                    android:drawableLeft="@drawable/ic_file_download_black_24dp"
                     android:text="Save" />
 
                 <Button

@@ -1,13 +1,19 @@
 package com.example.rajeev.newer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 
 
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import android.util.Log;
@@ -15,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +43,8 @@ import java.util.List;
 
 class ArticleAdapter extends ArrayAdapter<Article> {
 
+
+
     public ArticleAdapter(Context context, List<Article> articles) {
         super(context, 0, articles);
     }
@@ -49,7 +58,55 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         TextView byLabel;
         TextView description;
         ImageView articleImage;
+        Button shareButton;
+        Button saveButton;
+        Button readMoreButton;
         int position;
+    }
+
+    // private helper methods to add listener to ShareAction
+    private void shareAction(Button button, final String articleTitle, final String url){
+        button.setOnClickListener(new View.OnClickListener() {
+            final String MSG = "Read this: \n" + articleTitle +"\n" + url + "\n" +
+                    "shared from Newer news app.";
+            @Override
+            public void onClick(View v) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                Log.v("ArticleAdapter","Share OnClick triggered");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, MSG);
+                shareIntent.setType("text/plain");
+                String chooserTitle = getContext().getResources().getString(R.string.chooser_title);
+                Intent chooser = Intent.createChooser(shareIntent, chooserTitle);
+
+                // Verify the intent will resolve to at least one activity
+                if(shareIntent.resolveActivity(getContext().getPackageManager()) != null){
+                    getContext().startActivity(chooser);
+                }
+
+            }
+        });
+    }
+    // private helper methods to add listener to readMoreAction
+    private void readMoreAction(Button button, final String url){
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int toolbarColorId = ContextCompat.getColor(getContext(), R.color.custom_tab_toolbar);
+                CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
+                intentBuilder.setCloseButtonIcon(BitmapFactory.decodeResource(getContext().
+                        getResources(),R.drawable.ic_action_back));
+                intentBuilder.setToolbarColor(toolbarColorId);
+                intentBuilder.setStartAnimations(getContext(),R.anim.slide_in_right,
+                        R.anim.slide_out_left);
+                intentBuilder.setExitAnimations(getContext(),android.R.anim.slide_in_left,
+                        android.R.anim.slide_out_right);
+
+                CustomTabsIntent customTabsIntent = intentBuilder.build();
+                customTabsIntent.launchUrl(getContext(), Uri.parse(url));
+            }
+        });
+
     }
 
     @NonNull
@@ -69,6 +126,9 @@ class ArticleAdapter extends ArrayAdapter<Article> {
             holder.byLabel = (TextView) itemView.findViewById(R.id.by_label_text);
             holder.description = (TextView) itemView.findViewById(R.id.article_description_textView);
             holder.articleImage = (ImageView) itemView.findViewById(R.id.article_image_imageView);
+            holder.shareButton = (Button) itemView.findViewById(R.id.article_button_share);
+            holder.saveButton = (Button) itemView.findViewById(R.id.article_save_button);
+            holder.readMoreButton = (Button) itemView.findViewById(R.id.article_read_more_button);
             holder.position = position;
             itemView.setTag(holder);
         }else{
@@ -83,10 +143,13 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         holder.byLabel.setVisibility(View.VISIBLE);
 
         // Get the values from Article object
+        String currentTitle = currentArticle.getTitle();
         String currentAuthor = currentArticle.getAuthor();
         String publishAt = currentArticle.getPublishedAt();
         String description = currentArticle.getDescription();
         String imageUrl = currentArticle.getUrlToImage();
+        String articleUrl = currentArticle.getUrl();
+
 
         // Set article source name
         holder.sourceName.setText(currentArticle.getSourceName());
@@ -95,7 +158,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         if(imageUrl!="null" && !TextUtils.isEmpty(imageUrl)){
            GlideApp.with(getContext())
                    .load(imageUrl)
-                   .placeholder(R.color.backgroundColor)
+                   .placeholder(R.color.fallbackImageColor)
                    .fallback(Color.GRAY)
                    .optionalCenterCrop()
                    .into(holder.articleImage);
@@ -105,7 +168,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
 
 
         // Set Title
-        holder.title.setText(currentArticle.getTitle());
+        holder.title.setText(currentTitle);
 
         // Check for null and empty author values
         if (currentAuthor == "null" || TextUtils.isEmpty(currentAuthor)) {
@@ -122,6 +185,10 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         }else{
             holder.description.setVisibility(View.GONE);
         }
+
+        // attach onClick Listeners to buttons here;
+        shareAction(holder.shareButton, currentTitle, articleUrl);
+        readMoreAction(holder.readMoreButton, articleUrl);
 
         return itemView;
     }

@@ -44,6 +44,7 @@ public class IndiaCategoryFragment extends Fragment
     private TextView emptyListTextViewSuggestionText;
     private ProgressBar progressIndicator;
     private static List<Article> sData;
+    private TextView loadingFeedback;
 
 
     public IndiaCategoryFragment() {
@@ -69,6 +70,7 @@ public class IndiaCategoryFragment extends Fragment
         Context context = getContext();
         emptyView = rootView.findViewById(R.id.empty_list_view);
         progressIndicator = rootView.findViewById(R.id.progress_indicator);
+        loadingFeedback = rootView.findViewById(R.id.loading_feedback_text);
         emptyListImageView = rootView.findViewById(R.id.empty_list_imageView);
         emptyListTextView1 = rootView.findViewById(R.id.empty_list_textView1);
         emptyListTextViewSuggestionText = rootView.findViewById((R.id.empty_list_suggestion));
@@ -78,6 +80,7 @@ public class IndiaCategoryFragment extends Fragment
         // if data is already availabe then add it to adapter
         if(sData!=null) {
             adapter.addAll(sData);
+            loadingFeedback.setVisibility(View.GONE);
             progressIndicator.setVisibility(View.GONE);
         }
         // Code for hiding the app bar when scrolling list view
@@ -90,6 +93,7 @@ public class IndiaCategoryFragment extends Fragment
 
         if(!checkInternetConnectivity() && adapter.isEmpty()){
             progressIndicator.setVisibility(View.GONE);
+            loadingFeedback.setVisibility(View.GONE);
             emptyListImageView.setImageResource(R.drawable.ic_signal_wifi_off_black_24dp);
             emptyListTextView1.setText(R.string.no_internet_connectivity);
             emptyListTextViewSuggestionText.setText(R.string.offline_mode_suggestion);
@@ -115,6 +119,7 @@ public class IndiaCategoryFragment extends Fragment
     @Override
     public void onLoadFinished(Loader<List<Article>> loader, List<Article> data) {
         progressIndicator.setVisibility(View.GONE);
+        loadingFeedback.setVisibility(View.GONE);
         adapter.clear();
         if(data != null && !data.isEmpty()){
             Toast.makeText(getContext(),"News updated",Toast.LENGTH_SHORT).show();
