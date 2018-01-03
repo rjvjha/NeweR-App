@@ -21,4 +21,19 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- SavedArticlesCatalog theme -->
+    <style name="ArticlesCatalogTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/saved_articles_activity</item>
+        <item name="colorPrimaryDark">#388E3C</item>
+        <item name="colorAccent">#81C784</item>
+    </style>
+    <!-- SearchActivity Theme -->
+    <style name="SearchActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+
 </resources>

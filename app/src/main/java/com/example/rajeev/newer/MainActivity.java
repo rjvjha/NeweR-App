@@ -3,7 +3,9 @@ package com.example.rajeev.newer;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity
@@ -37,36 +40,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-//        emptyView = findViewById(R.id.empty_list_view);
-//        progressIndicator = (ProgressBar)findViewById(R.id.progress_indicator);
-//        emptyListImageView = findViewById(R.id.empty_list_imageView);
-//        emptyListTextView1 = findViewById(R.id.empty_list_textView1);
-//        emptyListTextViewSuggestionText = findViewById(R.id.empty_list_suggestion);
-//
-//        //  Main Content code starts from here
-//
-//        ListView listView = (ListView) findViewById(R.id.list_view);
-//        listView.setEmptyView(emptyView);
-//
-//        // Code for hiding the app bar when scrolling list view
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            listView.setNestedScrollingEnabled(true);
-//        }
-//
-//        adapter = new ArticleAdapter(this, new ArrayList<Article>());
-//        listView.setAdapter(adapter);
+        FloatingActionButton fab = findViewById(R.id.fab_saved_articles);
+        // code to handle fab button click
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SavedArticlesCatalog.class);
+                startActivity(intent);
 
-//        // Check for internet Connectivity
-//        if(checkInternetConnectivity()){
-//            getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-//        } else if(!checkInternetConnectivity() && adapter.isEmpty()){
-//            progressIndicator.setVisibility(View.GONE);
-//            emptyListImageView.setImageResource(R.drawable.ic_signal_wifi_off_black_24dp);
-//            emptyListTextView1.setText(R.string.no_internet_connectivity);
-//            emptyListTextViewSuggestionText.setText(R.string.offline_mode_suggestion);
-//
-//        }
-//
+            }
+        });
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_content_container, new TopStoriesFragment());
         fragmentTransaction.commit();

@@ -6,4 +6,5 @@
     <color name="backgroundColor">#607D8B</color>
     <color name="fallbackImageColor">#F5F5F5</color>
     <color name="custom_tab_toolbar">#263238</color>
+    <color name="saved_articles_activity">#4CAF50</color>
 </resources>

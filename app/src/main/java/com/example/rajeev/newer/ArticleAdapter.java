@@ -94,9 +94,9 @@ class ArticleAdapter extends ArrayAdapter<Article> {
             public void onClick(View v) {
                 int toolbarColorId = ContextCompat.getColor(getContext(), R.color.custom_tab_toolbar);
                 CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
-                intentBuilder.setCloseButtonIcon(BitmapFactory.decodeResource(getContext().
-                        getResources(),R.drawable.ic_action_back));
                 intentBuilder.setToolbarColor(toolbarColorId);
+                intentBuilder.setCloseButtonIcon(BitmapFactory.decodeResource(getContext().
+                        getResources(), R.drawable.ic_action_back));
                 intentBuilder.setStartAnimations(getContext(),R.anim.slide_in_right,
                         R.anim.slide_out_left);
                 intentBuilder.setExitAnimations(getContext(),android.R.anim.slide_in_left,
