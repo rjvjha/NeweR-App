@@ -107,7 +107,7 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public Loader<List<Article>> onCreateLoader(int id, Bundle args) {
-        return new ArticleLoader(getContext(),SAMPLE_URL);
+        return new ArticleLoader(getContext(), SAMPLE_URL);
     }
 
     @Override
@@ -120,7 +120,7 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
             sData = data;
             adapter.addAll(data);
         }
-        emptyListTextView1.setText(R.string.no_aricles_found);
+        emptyListTextView1.setText(R.string.no_articles_found);
         emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
 
     }

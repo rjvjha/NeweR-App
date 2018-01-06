@@ -13,7 +13,7 @@
         android:dividerHeight="4dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:clipToPadding="false"
+        android:clipToPadding="true"
         android:animateLayoutChanges="true"
         />
 </RelativeLayout>

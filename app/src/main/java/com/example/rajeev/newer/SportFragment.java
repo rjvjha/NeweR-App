@@ -122,7 +122,7 @@ public class SportFragment extends Fragment implements LoaderManager.LoaderCallb
             sData = data;
             adapter.addAll(data);
         }
-        emptyListTextView1.setText(R.string.no_aricles_found);
+        emptyListTextView1.setText(R.string.no_articles_found);
         emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
 
     }

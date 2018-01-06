@@ -40,21 +40,23 @@
                 android:layout_height="80dp"
                 android:scaleType="centerCrop"
                 android:layout_weight="0"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
                 android:src="@drawable/placeholder" />
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/article_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="Sonia confident that 'fearless' Rahul will reinvigorate Congress"
-                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textAppearance="?android:textAppearanceMedium"
                     android:fontFamily="serif"
-                    android:textStyle="bold"
+                    android:maxLines="4"
+                    android:ellipsize="end"
                     android:textColor="@android:color/black"/>
 
 
@@ -74,6 +76,7 @@
                         tools:text="Times of India"
                         android:fontFamily="sans-serif-condensed" />
 
+
             </LinearLayout>
         </LinearLayout>
             <View
@@ -82,14 +85,28 @@
                 android:layout_marginTop="2dp"
                 android:background="?android:attr/listDivider"
                 />
-            <ImageButton
-                android:id="@+id/share_button_article"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_share_black_24dp"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_marginTop="4dp"
-                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+                <ImageButton
+                    android:id="@+id/share_button_article"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_share_black_24dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_alignParentLeft="true"
+                    />
+                <ImageButton
+                    android:id="@+id/download_button_article"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_toRightOf="@id/share_button_article"
+                    android:src="@drawable/ic_file_download_black_24dp"
+                    android:layout_marginLeft="16dp"
+                    style="?android:attr/borderlessButtonStyle"/>
+            </RelativeLayout>
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

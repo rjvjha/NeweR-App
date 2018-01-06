@@ -2,20 +2,14 @@ package com.example.rajeev.newer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-
-
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +19,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.rajeev.newer.Network.ISO8601;
-import com.example.rajeev.newer.Network.ImageDownloaderTask;
 
-import java.lang.ref.WeakReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -50,7 +40,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
     }
 
 
-    static class ViewHolder{
+    private class ViewHolder{
         TextView sourceName;
         TextView publishDateTime;
         TextView title;
@@ -72,7 +62,6 @@ class ArticleAdapter extends ArrayAdapter<Article> {
             @Override
             public void onClick(View v) {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                Log.v("ArticleAdapter","Share OnClick triggered");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, MSG);
                 shareIntent.setType("text/plain");
                 String chooserTitle = getContext().getResources().getString(R.string.chooser_title);
@@ -96,7 +85,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
                 CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
                 intentBuilder.setToolbarColor(toolbarColorId);
                 intentBuilder.setCloseButtonIcon(BitmapFactory.decodeResource(getContext().
-                        getResources(), R.drawable.ic_action_back));
+                        getResources(), R.drawable.ic_chevron_left_black_24dp));
                 intentBuilder.setStartAnimations(getContext(),R.anim.slide_in_right,
                         R.anim.slide_out_left);
                 intentBuilder.setExitAnimations(getContext(),android.R.anim.slide_in_left,
@@ -119,16 +108,16 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         if (itemView == null) {
             itemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
             holder = new ViewHolder();
-            holder.sourceName = (TextView) itemView.findViewById(R.id.source_name_textView);
-            holder.publishDateTime = (TextView) itemView.findViewById(R.id.article_published_datetime);
-            holder.title = (TextView) itemView.findViewById(R.id.article_title_textView);
-            holder.authorName = (TextView) itemView.findViewById(R.id.article_author_textView);
-            holder.byLabel = (TextView) itemView.findViewById(R.id.by_label_text);
-            holder.description = (TextView) itemView.findViewById(R.id.article_description_textView);
-            holder.articleImage = (ImageView) itemView.findViewById(R.id.article_image_imageView);
-            holder.shareButton = (Button) itemView.findViewById(R.id.article_button_share);
-            holder.saveButton = (Button) itemView.findViewById(R.id.article_save_button);
-            holder.readMoreButton = (Button) itemView.findViewById(R.id.article_read_more_button);
+            holder.sourceName = itemView.findViewById(R.id.source_name_textView);
+            holder.publishDateTime = itemView.findViewById(R.id.article_published_datetime);
+            holder.title = itemView.findViewById(R.id.article_title_textView);
+            holder.authorName = itemView.findViewById(R.id.article_author_textView);
+            holder.byLabel = itemView.findViewById(R.id.by_label_text);
+            holder.description = itemView.findViewById(R.id.article_description_textView);
+            holder.articleImage = itemView.findViewById(R.id.article_image_imageView);
+            holder.shareButton = itemView.findViewById(R.id.article_button_share);
+            holder.saveButton =  itemView.findViewById(R.id.article_save_button);
+            holder.readMoreButton = itemView.findViewById(R.id.article_read_more_button);
             holder.position = position;
             itemView.setTag(holder);
         }else{

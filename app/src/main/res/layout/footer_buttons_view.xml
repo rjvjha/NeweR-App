@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/footer_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.ButtonBarLayout
+        android:id="@+id/navigation_pages_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginBottom="4dp"
+        >
+        <Button
+            android:id="@+id/prev_page_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_chevron_left_black_24dp"
+            android:text="@string/prev_page"
+            style="?android:attr/borderlessButtonStyle"/>
+        <TextView
+            android:id="@+id/page_no_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            />
+        <Button
+            android:id="@+id/next_page_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+            android:text="@string/next_page"
+            style="?android:attr/borderlessButtonStyle"/>
+
+    </android.support.v7.widget.ButtonBarLayout>
+
+
+
+
+</FrameLayout>

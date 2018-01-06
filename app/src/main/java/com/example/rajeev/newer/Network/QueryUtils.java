@@ -71,12 +71,12 @@ public final class QueryUtils {
         InputStream inputStream = null;
         try{
             urlConnection = (HttpURLConnection) url.openConnection();
-//            urlConnection.setReadTimeout(2000);
-//            urlConnection.setConnectTimeout(2000);
+            Log.v(LOG_TAG,"Connection Opened");
             urlConnection.setDoInput(true);
             urlConnection.setRequestMethod("GET");
-            int responseCode = urlConnection.getResponseCode();
+            Log.v(LOG_TAG,"Connecting to the given url" + url);
             urlConnection.connect();
+            int responseCode = urlConnection.getResponseCode();
             if(responseCode== HttpURLConnection.HTTP_OK){
                 inputStream = urlConnection.getInputStream();
                 jsonRespnse = readFromStream(inputStream);

@@ -32,10 +32,23 @@
     <!-- String values for user feedback messages -->
     <string name="no_internet_connectivity">No internet connection available!</string>
     <string name="offline_mode_suggestion">Switch to offline mode to read your saved articles.</string>
-    <string name="no_aricles_found">No stories available!</string>
+    <string name="no_articles_found">No stories available!</string>
     <string name="no_articles_suggestion">Please check your internet connection.</string>
-    <string name="loading_feedback">Loading...</string>
+    <string name="loading_feedback">Loading&#8230;</string>
+    <string name="searching_feedback">Searching&#8230;</string>
     <string name="search_empty_header">Search through millions of articles from over 5,000 large and small news sources and blogs.</string>
+    <string name="search_edit_text_hint">Enter keyword or phrases to search..</string>
+
+    <!-- String values for navigating pages in searches -->
+    <string name="prev_page">prev</string>
+    <string name="next_page">next</string>
+    <string name="page_text">page 1</string>
+
+    <!-- String values for possible sortBy options for spinner -->
+    <string name="sortByLabel">Sort By :</string>
+    <string name="sortBy_relevancy">relevancy</string>
+    <string name="sortBy_popularity">popularity</string>
+    <string name="sortBy_publishedAt">publishedAt</string>
 
     <!-- String values for implicit Intents -->
     <string name="chooser_title">Share article</string>

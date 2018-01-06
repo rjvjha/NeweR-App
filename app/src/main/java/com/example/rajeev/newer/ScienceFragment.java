@@ -122,7 +122,7 @@ public class ScienceFragment extends Fragment implements LoaderManager.LoaderCal
             sData = data;
             adapter.addAll(data);
         }
-        emptyListTextView1.setText(R.string.no_aricles_found);
+        emptyListTextView1.setText(R.string.no_articles_found);
         emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
 
     }

@@ -77,7 +77,7 @@ public class TechnologyFragment extends Fragment implements LoaderManager.Loader
         ListView listView = rootView.findViewById(R.id.list_view);
         adapter = new ArticleAdapter(context,new ArrayList<Article>());
         listView.setEmptyView(emptyView);
-        // if data is already availabe then add it to adapter
+        // if data is already available then add it to adapter
         if(sData!=null) {
             adapter.addAll(sData);
             progressIndicator.setVisibility(View.GONE);
@@ -125,7 +125,7 @@ public class TechnologyFragment extends Fragment implements LoaderManager.Loader
             sData = data;
             adapter.addAll(data);
         }
-        emptyListTextView1.setText(R.string.no_aricles_found);
+        emptyListTextView1.setText(R.string.no_articles_found);
         emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
 
     }

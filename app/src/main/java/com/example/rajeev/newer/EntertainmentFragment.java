@@ -20,8 +20,6 @@ import android.widget.Toast;
 
 import com.example.rajeev.newer.Network.ArticleLoader;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,7 +121,7 @@ public class EntertainmentFragment extends Fragment implements LoaderManager.Loa
             sData = data;
             adapter.addAll(data);
         }
-        emptyListTextView1.setText(R.string.no_aricles_found);
+        emptyListTextView1.setText(R.string.no_articles_found);
         emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
 
     }
