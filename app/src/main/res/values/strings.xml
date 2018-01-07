@@ -46,9 +46,10 @@
 
     <!-- String values for possible sortBy options for spinner -->
     <string name="sortByLabel">Sort By :</string>
-    <string name="sortBy_relevancy">relevancy</string>
-    <string name="sortBy_popularity">popularity</string>
-    <string name="sortBy_publishedAt">publishedAt</string>
+    <string name="sortBy_relevancy">Relevancy</string>
+    <string name="sortBy_popularity">Popularity</string>
+    <string name="sortBy_publishedAt">Published At</string>
+    <string name="sortBy_Apply">Apply</string>
 
     <!-- String values for implicit Intents -->
     <string name="chooser_title">Share article</string>

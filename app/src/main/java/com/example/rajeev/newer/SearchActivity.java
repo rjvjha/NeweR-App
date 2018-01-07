@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -47,6 +48,12 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     private String sortBySelectedOption;
     private static boolean isFirstSearch ;
 
+    // SortBy Possible Values
+    private static final String SORT_BY_RELEVANCY = "relevancy";
+    private static final String SORT_BY_POPULARITY = "popularity";
+    private static final String SORT_BY_PUBLISHED_AT = "publishedAt";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
                 inflate(R.layout.footer_buttons_view,null);
         FrameLayout sortByHeaderView = (FrameLayout) getLayoutInflater().
                 inflate(R.layout.header_sortby_setting,null);
+        Button sortByApplyButton = sortByHeaderView.findViewById(R.id.apply_button);
 
         final TextView displayPageNo = navFooterView.findViewById(R.id.page_no_textView);
         sortBySpinner = sortByHeaderView.findViewById(R.id.spinner_sortBy);
@@ -81,7 +89,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
 
         //sortBySelectedOption = getString(R.string.sortBy_relevancy);
 
-        Boolean isConnected = checkInternetConnectivity();
+        final Boolean isConnected = checkInternetConnectivity();
 
         if (!isConnected) {
             // Handle no internet connectivity
@@ -145,6 +153,17 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
 
+        // Implementing sortBy Apply button
+        sortByApplyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkInternetConnectivity()){
+                    triggerLoader();
+                }
+
+            }
+        });
+
         setupSpinner();
     }
 
@@ -154,7 +173,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     private void setupSpinner(){
         final ArrayAdapter sortBySpinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.array_sortBy_options,android.R.layout.simple_spinner_item);
-        sortBySpinnerAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        sortBySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
         sortBySpinner.setAdapter(sortBySpinnerAdapter);
 
@@ -164,38 +183,28 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
                 String selection = (String) parent.getItemAtPosition(position);
                 if(!TextUtils.isEmpty(selection)){
                     if(selection.equals(getString(R.string.sortBy_relevancy))){
-                        sortBySelectedOption = selection;
-                        if(!isFirstSearch){
-                           // clearImageCache();
-                            triggerLoader();
-                        }
+                        sortBySelectedOption = SORT_BY_RELEVANCY;
 
                     }else if(selection.equals(getString(R.string.sortBy_popularity))){
-                        sortBySelectedOption = selection;
-                       // clearImageCache();
-                        triggerLoader();
-
+                        sortBySelectedOption = SORT_BY_POPULARITY;
                     } else {
-                        sortBySelectedOption = selection;
-                        //clearImageCache();
-                        triggerLoader();
-                    }
+                        sortBySelectedOption = SORT_BY_PUBLISHED_AT;
 
-                    //isFirstSearch = false;
+                    }
 
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-               sortBySelectedOption = getString(R.string.sortBy_relevancy);
+               sortBySelectedOption = SORT_BY_RELEVANCY;
             }
         });
     }
     // private helper method to trigger loader
     private void triggerLoader(){
-        isFirstSearch = false;
         getSupportLoaderManager().restartLoader(LOADER_ID, null, SearchActivity.this);
+        adapter.notifyDataSetChanged();
         adapter.clear();
         progressBar.setVisibility(View.VISIBLE);
     }

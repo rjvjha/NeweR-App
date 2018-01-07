@@ -1,7 +1,6 @@
 package com.example.rajeev.newer;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -34,6 +33,7 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
         ImageButton shareButton;
         ImageButton downloadButton;
     }
+
 
     @NonNull
     @Override
@@ -76,7 +76,7 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
                         .load(imageUrl)
                         .override(80,80))
                     .placeholder(R.color.fallbackImageColor)
-                    .fallback(Color.GRAY)
+                    .error(R.drawable.ic_not_available_black_24dp)
                     .optionalCenterCrop()
                     .into(holder.articleImage);
 
