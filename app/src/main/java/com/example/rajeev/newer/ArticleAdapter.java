@@ -160,7 +160,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         holder.title.setText(currentTitle);
 
         // Check for null and empty author values
-        if (currentAuthor == "null" || TextUtils.isEmpty(currentAuthor)) {
+        if (currentAuthor.equals("null") || TextUtils.isEmpty(currentAuthor)) {
             holder.byLabel.setVisibility(View.GONE);
             holder.authorName.setVisibility(View.GONE);
 
@@ -169,7 +169,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         }
 
         // Check for empty description and set description
-        if (description != null && !TextUtils.isEmpty(description)) {
+        if (!description.equals("null") && !TextUtils.isEmpty(description)) {
             holder.description.setText(currentArticle.getDescription());
         }else{
             holder.description.setVisibility(View.GONE);
@@ -185,7 +185,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
     // Helper method to format Date and time
     private String formatDateTime(String publishDateTime, TextView dateTime) {
         String displayDateTime = new String();
-        if (publishDateTime != "null" && !TextUtils.isEmpty(publishDateTime)) {
+        if (!publishDateTime.equals("null") && !TextUtils.isEmpty(publishDateTime)) {
             try {
                 Calendar calendar = ISO8601.toCalendar(publishDateTime);
                 Date date = calendar.getTime();

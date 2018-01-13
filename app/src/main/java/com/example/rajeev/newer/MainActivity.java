@@ -3,7 +3,6 @@ package com.example.rajeev.newer;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -88,9 +87,6 @@ public class MainActivity extends AppCompatActivity
                 startActivity(searchIntent);
                 return true;
 
-            case R.id.action_refresh:
-                // DO nothing for now;
-                break;
             case R.id.action_settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);

@@ -59,7 +59,6 @@
                 android:id="@+id/article_image_imageView"
                 android:layout_width="match_parent"
                 android:layout_height="176dp"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="16dp"
                 tools:src="@color/backgroundColor" />
 
@@ -70,6 +69,7 @@
                 android:ellipsize="end"
                 android:fontFamily="serif"
                 android:maxLines="3"
+                android:layout_marginTop="8dp"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@android:color/black"
                 tools:text="Sonia confident that 'fearless' Rahul will reinvigorate Congress - Times of India " />

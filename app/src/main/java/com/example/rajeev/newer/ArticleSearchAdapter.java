@@ -26,9 +26,8 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
 
     private static class ViewHolder{
         TextView title;
-        TextView author;
         TextView source;
-        TextView publishedAt;
+        TextView description;
         ImageView articleImage;
         ImageButton shareButton;
         ImageButton downloadButton;
@@ -45,7 +44,7 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
             itemView = LayoutInflater.from(getContext()).inflate(R.layout.article_item_compact,parent,false);
             holder = new ViewHolder();
             holder.title = itemView.findViewById(R.id.article_title);
-            holder.author = itemView.findViewById(R.id.article_author);
+            holder.description = itemView.findViewById(R.id.article_description);
             holder.source = itemView.findViewById(R.id.article_source);
             holder.articleImage = itemView.findViewById(R.id.article_image);
             holder.shareButton = itemView.findViewById(R.id.share_button_article);
@@ -54,13 +53,12 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
         } else{
             holder = (ViewHolder) itemView.getTag();
         }
-        holder.author.setVisibility(View.VISIBLE);
+        holder.description.setVisibility(View.VISIBLE);
         holder.articleImage.setVisibility(View.VISIBLE);
 
         // get the required values from article object
         String currentTitle = currentArticle.getTitle();
-        String currentAuthor = currentArticle.getAuthor();
-        String publishAt = currentArticle.getPublishedAt();
+        String currentDescription = currentArticle.getDescription();
         String imageUrl = currentArticle.getUrlToImage();
         String currentSource = currentArticle.getSourceName();
 
@@ -87,12 +85,12 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
         // Set Title
         holder.title.setText(currentTitle);
 
-        // Check for null and empty author values
-        if (currentAuthor.equals("null" )|| TextUtils.isEmpty(currentAuthor)) {
-            holder.author.setVisibility(View.GONE);
+        // Check for null and empty description values
+        if (currentDescription.equals("null" )|| TextUtils.isEmpty(currentDescription)) {
+            holder.description.setVisibility(View.GONE);
 
         } else {
-            holder.author.setText(currentAuthor);
+            holder.description.setText(currentDescription);
         }
         return itemView;
     }

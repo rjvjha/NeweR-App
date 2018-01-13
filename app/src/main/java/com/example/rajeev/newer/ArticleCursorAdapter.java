@@ -32,11 +32,11 @@ public class ArticleCursorAdapter extends ArrayAdapter<Article> {
         }
         //ImageView articleImage = itemView.findViewById(R.id.article_image);
         TextView title = itemView.findViewById(R.id.article_title);
-        TextView author = itemView.findViewById(R.id.article_author);
+        TextView description = itemView.findViewById(R.id.article_description);
         TextView source = itemView.findViewById(R.id.article_source);
 
         title.setText(currentArticle.getTitle());
-        author.setText(currentArticle.getAuthor());
+        description.setText(currentArticle.getDescription());
         source.setText(currentArticle.getSourceName());
 
         return  itemView;

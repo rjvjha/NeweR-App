@@ -6,10 +6,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -31,7 +37,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 public class SportFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>>{
 
     private static final String LOG_TAG = IndiaCategoryFragment.class.getName();
-    private static final String SAMPLE_URL = "https://newsapi.org/v2/top-headlines?category=sport&language=en&country=&apiKey=e591d4b34f2e435ba3d8a1f4d4f0d185";
+    private static final String SAMPLE_URL = "https://newsapi.org/v2/top-headlines?category=sport&pageSize=30&country=in&apiKey=e591d4b34f2e435ba3d8a1f4d4f0d185";
     private final int LOADER_ID = 6;
     private View emptyView;
     private ArticleAdapter adapter;
@@ -41,10 +47,17 @@ public class SportFragment extends Fragment implements LoaderManager.LoaderCallb
     private ProgressBar progressIndicator;
     private static List<Article> sData;
     private TextView loadingFeedback;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     public SportFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -70,6 +83,7 @@ public class SportFragment extends Fragment implements LoaderManager.LoaderCallb
         emptyListImageView = rootView.findViewById(R.id.empty_list_imageView);
         emptyListTextView1 = rootView.findViewById(R.id.empty_list_textView1);
         emptyListTextViewSuggestionText = rootView.findViewById((R.id.empty_list_suggestion));
+        mSwipeRefreshLayout = rootView.findViewById(R.id.swipe_refresh);
         ListView listView = rootView.findViewById(R.id.list_view);
         adapter = new ArticleAdapter(context,new ArrayList<Article>());
         listView.setEmptyView(emptyView);
@@ -95,7 +109,39 @@ public class SportFragment extends Fragment implements LoaderManager.LoaderCallb
             emptyListTextViewSuggestionText.setText(R.string.offline_mode_suggestion);
 
         }
+        mSwipeRefreshLayout.setNestedScrollingEnabled(true);
+        // Implementing Swipe-to-refresh behaviour
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(LOG_TAG, "onRefresh called from SwipeRefreshLayout");
+                articlesRefreshOperation();
+            }
+        });
         return rootView;
+    }
+
+    private void articlesRefreshOperation(){
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+        // adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.section_fragments_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id){
+            case R.id.action_refresh:
+                mSwipeRefreshLayout.setRefreshing(true);
+                articlesRefreshOperation();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -119,6 +165,7 @@ public class SportFragment extends Fragment implements LoaderManager.LoaderCallb
         adapter.clear();
         if(data != null && !data.isEmpty()){
             Toast.makeText(getContext(),"News updated",Toast.LENGTH_SHORT).show();
+            mSwipeRefreshLayout.setRefreshing(false);
             sData = data;
             adapter.addAll(data);
         }
