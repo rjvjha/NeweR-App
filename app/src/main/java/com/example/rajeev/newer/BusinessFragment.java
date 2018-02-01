@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -18,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -84,6 +86,7 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
         emptyListTextView1 = rootView.findViewById(R.id.empty_list_textView1);
         mSwipeRefreshLayout = rootView.findViewById(R.id.swipe_refresh);
         emptyListTextViewSuggestionText = rootView.findViewById((R.id.empty_list_suggestion));
+        final FloatingActionButton fabBtn = ((MainActivity) getActivity()).getFloatingActionButton();
         ListView listView = rootView.findViewById(R.id.list_view);
         adapter = new ArticleAdapter(context,new ArrayList<Article>());
         listView.setEmptyView(emptyView);
@@ -118,6 +121,20 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
                 articlesRefreshOperation();
             }
         });
+
+        // hiding of fab button on scroll of listView
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int lastItem = firstVisibleItem + visibleItemCount;
+            }
+        });
+
         return rootView;
     }
 

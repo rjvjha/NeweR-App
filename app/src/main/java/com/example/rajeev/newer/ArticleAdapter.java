@@ -81,11 +81,11 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int toolbarColorId = ContextCompat.getColor(getContext(), R.color.custom_tab_toolbar);
+                int toolbarColorId = ContextCompat.getColor(getContext(), R.color.colorPrimary);
                 CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
                 intentBuilder.setToolbarColor(toolbarColorId);
                 intentBuilder.setCloseButtonIcon(BitmapFactory.decodeResource(getContext().
-                        getResources(), R.drawable.ic_chevron_left_black_24dp));
+                        getResources(), R.drawable.ic_arrow_back_white_24dp));
                 intentBuilder.setStartAnimations(getContext(),R.anim.slide_in_right,
                         R.anim.slide_out_left);
                 intentBuilder.setExitAnimations(getContext(),android.R.anim.slide_in_left,

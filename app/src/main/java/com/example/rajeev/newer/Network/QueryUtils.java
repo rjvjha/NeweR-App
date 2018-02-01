@@ -176,6 +176,10 @@ public final class QueryUtils {
         try{
             JSONObject root = new JSONObject(JSON_RESPONSE);
             String status = root.getString("status");
+            int totalResults = root.getInt("totalResults");
+//            if (totalResults == 0){
+//                return null;
+//            }
             // if status is ok start reading from JSON
             if(TextUtils.equals(status,"ok")){
                 JSONArray articlesArray = root.getJSONArray("articles");

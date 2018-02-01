@@ -29,16 +29,17 @@
         <activity
             android:name=".SearchActivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/SearchActivityTheme"/>
+            android:theme="@style/SearchActivityTheme" />
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".SavedArticlesCatalog"
+        <activity
+            android:name=".SavedArticlesCatalog"
             android:label="@string/title_activity_savedArticlesCatalog"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/ArticlesCatalogTheme"/>
-
-
+            android:theme="@style/ArticlesCatalogTheme" />
+        <activity android:name=".EditNewsSource"
+            android:label="@string/title_activity_editNewsSource"></activity>
     </application>
 
 </manifest>

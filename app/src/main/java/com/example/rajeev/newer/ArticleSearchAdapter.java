@@ -1,6 +1,7 @@
 package com.example.rajeev.newer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -33,6 +34,33 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
         ImageButton downloadButton;
     }
 
+    // private helper method for share action onClick
+
+    private void shareAction(ImageButton button, final String TITLE, final String URL){
+        button.setOnClickListener(new View.OnClickListener() {
+            final String MSG = "Read this: \n" + TITLE +"\n" + URL + "\n" +
+                    "shared from Newer news app.";
+            @Override
+            public void onClick(View v) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, MSG);
+                shareIntent.setType("text/plain");
+                String chooserTitle = getContext().getResources().getString(R.string.chooser_title);
+                Intent chooser = Intent.createChooser(shareIntent, chooserTitle);
+
+                // Verify the intent will resolve to at least one activity
+                if(shareIntent.resolveActivity(getContext().getPackageManager()) != null){
+                    getContext().startActivity(chooser);
+                }
+
+            }
+        });
+    }
+
+    // private helper method for downloadArticleAction onClick
+    private void downloadArticle(ImageButton button, final Article CURRENT_ARTICLE){
+
+    }
 
     @NonNull
     @Override
@@ -92,6 +120,7 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
         } else {
             holder.description.setText(currentDescription);
         }
+        shareAction(holder.shareButton, currentTitle, currentArticle.getUrl());
         return itemView;
     }
 }

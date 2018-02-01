@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/article_item_container_main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardViewContainer_article_item"
@@ -14,8 +15,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
-        android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
+        android:descendantFocusability="blocksDescendants"
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp"
         app:cardPreventCornerOverlap="true"
@@ -42,7 +43,7 @@
                 android:layout_weight="0"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="2dp"
-                android:src="@drawable/placeholder" />
+                tools:src="@drawable/placeholder" />
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -84,22 +85,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp">
+
                 <ImageButton
                     android:id="@+id/share_button_article"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_share_black_24dp"
                     style="?android:attr/borderlessButtonStyle"
-                    android:layout_alignParentLeft="true"
-                    />
+                    android:layout_alignParentStart="true"
+                    android:padding="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+
                 <ImageButton
                     android:id="@+id/download_button_article"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_toRightOf="@id/share_button_article"
+                    android:layout_toEndOf="@id/share_button_article"
                     android:src="@drawable/ic_file_download_black_24dp"
-                    android:layout_marginLeft="16dp"
-                    style="?android:attr/borderlessButtonStyle"/>
+                    android:layout_marginStart="16dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:padding="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+
                 <TextView
                     android:id="@+id/article_source"
                     android:layout_width="wrap_content"

@@ -4,6 +4,7 @@
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_search">Search</string>
     <string name="title_activity_savedArticlesCatalog">Saved Articles</string>
+    <string name="title_activity_editNewsSource">Edit Sources</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -38,6 +39,8 @@
     <string name="searching_feedback">Searching&#8230;</string>
     <string name="search_empty_header">Search through millions of articles from over 5,000 large and small news sources and blogs.</string>
     <string name="search_edit_text_hint">Enter keyword or phrases to search..</string>
+    <string name="search_activity_no_results_feedback">No relevant articles found!,
+        try rephrasing the search terms.</string>
 
     <!-- String values for navigating pages in searches -->
     <string name="prev_page">prev</string>
@@ -53,5 +56,127 @@
 
     <!-- String values for implicit Intents -->
     <string name="chooser_title">Share article</string>
+
+    <!-- String values for Preferences in SettingsActivity -->
+    <string name="pref_country_title">Country</string>
+    <string name="pref_country_key">pref_country</string>
+    <string name="pref_country_dialog">Choose a country</string>
+    <string name="pref_country_default" translatable="false" >@string/country_india_value</string>
+
+    <!-- String values for countries labels in SettingsActivity -->
+
+    <string name="country_argentina_label">Argentina</string>
+    <string name="country_australia_label">Australia</string>
+    <string name="country_austria_label">Austria</string>
+    <string name="country_belgium_label">Belgium</string>
+    <string name="country_brazil_label">Brazil</string>
+    <string name="country_bulgaria_label">Bulgaria</string>
+    <string name="country_canada_label">Canada</string>
+    <string name="country_china_label">China</string>
+    <string name="country_columbia_label">Columbia</string>
+    <string name="country_cuba_label">Cuba</string>
+    <string name="country_czech_republic_label">Czech Republic</string>
+    <string name="country_egypt_label">Egypt</string>
+    <string name="country_france_label">France</string>
+    <string name="country_germany_label">Germany</string>
+    <string name="country_greece_label">Greece</string>
+    <string name="country_hongkong_label">Hong Kong</string>
+    <string name="country_hungary_label">Hungary</string>
+    <string name="country_india_label">India</string>
+    <string name="country_indonesia_label">Indonesia</string>
+    <string name="country_ireland_label">Ireland</string>
+    <string name="country_israel_label">Israel</string>
+    <string name="country_italy_label">Italy</string>
+    <string name="country_japan_label">Japan</string>
+    <string name="country_latvia_label">Latvia</string>
+    <string name="country_lithuania_label">Lithuania</string>
+    <string name="country_malaysia_label">Malaysia</string>
+    <string name="country_mexico_label">Mexico</string>
+    <string name="country_morocco_label">Morocco</string>
+    <string name="country_netherlands_label">Netherlands</string>
+    <string name="country_new_zealand_label">New Zealand</string>
+    <string name="country_nigeria_label">Nigeria</string>
+    <string name="country_norway_label">Norway</string>
+    <string name="country_philippines_label">Philippines</string>
+    <string name="country_poland_label">Poland</string>
+    <string name="country_portugal_label">Portugal</string>
+    <string name="country_romania_label">Romania</string>
+    <string name="country_russia_label">Russia</string>
+    <string name="country_saudi_arabia_label">Saudi Arabia</string>
+    <string name="country_serbia_label">Serbia</string>
+    <string name="country_singapore_label">Singapore</string>
+    <string name="country_slovakia_label">Slovakia</string>
+    <string name="country_slovenia_label">Slovenia</string>
+    <string name="country_south_africa_label">South Africa</string>
+    <string name="country_south_korea_label">South Korea</string>
+    <string name="country_sweden_label">Sweden</string>
+    <string name="country_switzerland_label">Switzerland</string>
+    <string name="country_taiwan_label">Taiwan</string>
+    <string name="country_thailand_label">Thailand</string>
+    <string name="country_turkey_label">Turkey</string>
+    <string name="country_uae_label">UAE</string>
+    <string name="country_ukraine_label">Ukraine</string>
+    <string name="country_uk_label">United Kingdom</string>
+    <string name="country_us_label">United States</string>
+    <string name="country_venezuela_label">Venezuela</string>
+
+    <!-- String values for countries values in SettingsActivity -->
+    <string name="country_uae_value" translatable="false">ae</string>
+    <string name="country_argentina_value" translatable="false">ar</string>
+    <string name="country_india_value" translatable="false">in</string>
+    <string name="country_australia_value" translatable="false">au</string>
+    <string name="country_belgium_value" translatable="false">be</string>
+    <string name="country_austria_value" translatable="false">at</string>
+    <string name="country_brazil_value" translatable="false">br</string>
+    <string name="country_bulgaria_value" translatable="false">bg</string>
+    <string name="country_canada_value" translatable="false">ca</string>
+    <string name="country_china_value" translatable="false">cn</string>
+    <string name="country_columbia_value" translatable="false">co</string>
+    <string name="country_cuba_value" translatable="false">cu</string>
+    <string name="country_czech_republic_value" translatable="false">cz</string>
+    <string name="country_egypt_value" translatable="false">eg</string>
+    <string name="country_france_value" translatable="false">fr</string>
+    <string name="country_germany_value" translatable="false">de</string>
+    <string name="country_greece_value" translatable="false">gr</string>
+    <string name="country_hongkong_value" translatable="false">hk</string>
+    <string name="country_hungary_value" translatable="false">hu</string>
+    <string name="country_indonesia_value" translatable="false">id</string>
+    <string name="country_ireland_value" translatable="false">ie</string>
+    <string name="country_israel_value" translatable="false">il</string>
+    <string name="country_italy_value" translatable="false">it</string>
+    <string name="country_japan_value" translatable="false">jp</string>
+    <string name="country_latvia_value" translatable="false">lv</string>
+    <string name="country_lithuania_value" translatable="false">lt</string>
+    <string name="country_malaysia_value" translatable="false">my</string>
+    <string name="country_mexico_value" translatable="false">mx</string>
+    <string name="country_morocco_value" translatable="false">ma</string>
+    <string name="country_netherlands_value" translatable="false">nl</string>
+    <string name="country_new_zealand_value" translatable="false">nz</string>
+    <string name="country_nigeria_value" translatable="false">ng</string>
+    <string name="country_norway_value" translatable="false">no</string>
+    <string name="country_philippines_value" translatable="false">ph</string>
+    <string name="country_poland_value" translatable="false">pl</string>
+    <string name="country_portugal_value" translatable="false">pt</string>
+    <string name="country_romania_value" translatable="false">ro</string>
+    <string name="country_russia_value" translatable="false">ru</string>
+    <string name="country_saudi_arabia_value" translatable="false">sa</string>
+    <string name="country_serbia_value" translatable="false">rs</string>
+    <string name="country_singapore_value" translatable="false">sg</string>
+    <string name="country_slovakia_value" translatable="false">sk</string>
+    <string name="country_slovenia_value" translatable="false">si</string>
+    <string name="country_south_africa_value" translatable="false">za</string>
+    <string name="country_south_korea_value" translatable="false">kr</string>
+    <string name="country_sweden_value" translatable="false">se</string>
+    <string name="country_switzerland_value" translatable="false">ch</string>
+    <string name="country_taiwan_value" translatable="false">tw</string>
+    <string name="country_thailand_value" translatable="false">th</string>
+    <string name="country_turkey_value" translatable="false">tr</string>
+    <string name="country_ukraine_value" translatable="false">ua</string>
+    <string name="country_uk_value" translatable="false">gb</string>
+    <string name="country_us_value" translatable="false">us</string>
+    <string name="country_venezuela_value" translatable="false">ve</string>
+
+
+    
 
 </resources>

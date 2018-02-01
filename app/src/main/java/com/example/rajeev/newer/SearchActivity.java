@@ -2,13 +2,17 @@ package com.example.rajeev.newer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -78,7 +82,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
 
         ListView listView = findViewById(R.id.articles_search_list_view);
         emptyTextView = findViewById(R.id.empty_list_textView);
-        View emptyView = findViewById(R.id.empty_state_list);
+        final View emptyView = findViewById(R.id.empty_state_list);
         listView.setEmptyView(emptyView);
         listView.addFooterView(navFooterView);
         listView.addHeaderView(sortByHeaderView);
@@ -87,15 +91,13 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         adapter = new ArticleSearchAdapter(this, articlesList);
         listView.setAdapter(adapter);
 
-        //sortBySelectedOption = getString(R.string.sortBy_relevancy);
-
         final Boolean isConnected = checkInternetConnectivity();
 
         if (!isConnected) {
             // Handle no internet connectivity
             emptyTextView.setText(R.string.no_internet_connectivity);
         }
-        setupSpinner();
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +128,30 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
 
             }
         });
+        // Implementing listView Item click listener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                position--;
+                Article article = adapter.getItem(position);
+                String url = article.getUrl();
+                Log.wtf(LOG_TAG, "OnItemClicked for"+ position );
+                Bitmap icon = BitmapFactory.decodeResource(
+                        getResources(), R.drawable.ic_arrow_back_white_24dp);
+                int toolbarColorId = ContextCompat.getColor(SearchActivity.this, R.color.colorPrimary);
+                CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
+                intentBuilder.setToolbarColor(toolbarColorId);
+                intentBuilder.setCloseButtonIcon(icon);
+                intentBuilder.setStartAnimations(SearchActivity.this,R.anim.slide_in_right,
+                        R.anim.slide_out_left);
+                intentBuilder.setExitAnimations(SearchActivity.this,android.R.anim.slide_in_left,
+                        android.R.anim.slide_out_right);
+
+                CustomTabsIntent customTabsIntent = intentBuilder.build();
+                customTabsIntent.launchUrl(SearchActivity.this, Uri.parse(url));
+            }
+        });
+
 
         // Implementing Navigation next Page Button onClick
         navFooterView.findViewById(R.id.next_page_button).setOnClickListener(new View.OnClickListener() {
@@ -204,7 +230,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     // private helper method to trigger loader
     private void triggerLoader(){
         getSupportLoaderManager().restartLoader(LOADER_ID, null, SearchActivity.this);
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
         adapter.clear();
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -280,7 +306,6 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
             adapter.addAll(data);
         }
         emptyTextView.setText(R.string.no_articles_found);
-
     }
 
     @Override
