@@ -2,10 +2,13 @@ package com.example.rajeev.newer;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -38,7 +41,7 @@ public class IndiaCategoryFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<List<Article>> {
 
     private static final String LOG_TAG = IndiaCategoryFragment.class.getName();
-    private static final String SAMPLE_URL = "https://newsapi.org/v2/top-headlines?country=in&pageSize=30&apiKey=e591d4b34f2e435ba3d8a1f4d4f0d185";
+    private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
     private final int LOADER_ID = 1;
     private View emptyView;
     private ArticleAdapter adapter;
@@ -49,6 +52,7 @@ public class IndiaCategoryFragment extends Fragment
     private static List<Article> sData;
     private TextView loadingFeedback;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
 
 
     public IndiaCategoryFragment() {
@@ -72,6 +76,13 @@ public class IndiaCategoryFragment extends Fragment
             }
         }
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        String countryTitle = ((MainActivity) getActivity()).getCountryLabel();
+        ((MainActivity) getActivity()).setTitle(countryTitle);
     }
 
     @Override
@@ -124,7 +135,12 @@ public class IndiaCategoryFragment extends Fragment
     }
 
     private void articlesRefreshOperation(){
-        getLoaderManager().restartLoader(LOADER_ID, null, this);
+        if(checkInternetConnectivity()){
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
+        }else{
+            mSwipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), R.string.no_internet_connectivity, Toast.LENGTH_SHORT).show();
+        }
         // adapter.notifyDataSetChanged();
     }
 
@@ -154,10 +170,24 @@ public class IndiaCategoryFragment extends Fragment
         return networkInfo!=null && networkInfo.isConnected();
     }
 
+    // private method to get queryUrl
+    private String getQueryUrl(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String selectedCountry = sharedPreferences.getString(
+                getString(R.string.pref_country_key),
+                getString(R.string.pref_country_default));
+        Uri baseUri = Uri.parse(BASE_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("country",selectedCountry);
+        uriBuilder.appendQueryParameter("apiKey", "e591d4b34f2e435ba3d8a1f4d4f0d185");
+        return uriBuilder.toString();
+    }
+
+
 
     @Override
     public Loader<List<Article>> onCreateLoader(int id, Bundle args) {
-        return new ArticleLoader(getContext(),SAMPLE_URL);
+        return new ArticleLoader(getContext(),getQueryUrl());
     }
 
     @Override

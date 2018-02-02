@@ -2,10 +2,13 @@ package com.example.rajeev.newer;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -39,7 +42,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 public class BusinessFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>> {
 
     private static final String LOG_TAG = BusinessFragment.class.getName();
-    private static final String SAMPLE_URL = "https://newsapi.org/v2/top-headlines?category=business&pageSize=30&country=in&apiKey=e591d4b34f2e435ba3d8a1f4d4f0d185";
+    private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
     private final int LOADER_ID = 3;
     private View emptyView;
     private ArticleAdapter adapter;
@@ -71,6 +74,8 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
                 getLoaderManager().initLoader(LOADER_ID, null, this);
             }
         }
+
+
 
     }
 
@@ -139,8 +144,12 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void articlesRefreshOperation(){
-        getLoaderManager().restartLoader(LOADER_ID, null, this);
-        // adapter.notifyDataSetChanged();
+        if(checkInternetConnectivity()){
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
+        }else{
+            mSwipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), R.string.no_internet_connectivity, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -169,9 +178,23 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
         return networkInfo!=null && networkInfo.isConnected();
     }
 
+    // private method to get queryUrl
+    private String getQueryUrl(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String selectedCountry = sharedPreferences.getString(
+                getString(R.string.pref_country_key),
+                getString(R.string.pref_country_default));
+        Uri baseUri = Uri.parse(BASE_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("country",selectedCountry);
+        uriBuilder.appendQueryParameter("category","business");
+        uriBuilder.appendQueryParameter("apiKey", "e591d4b34f2e435ba3d8a1f4d4f0d185");
+        return uriBuilder.toString();
+    }
+
     @Override
     public Loader<List<Article>> onCreateLoader(int id, Bundle args) {
-        return new ArticleLoader(getContext(), SAMPLE_URL);
+        return new ArticleLoader(getContext(), getQueryUrl());
     }
 
     @Override

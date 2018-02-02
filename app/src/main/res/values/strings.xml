@@ -62,6 +62,7 @@
     <string name="pref_country_key">pref_country</string>
     <string name="pref_country_dialog">Choose a country</string>
     <string name="pref_country_default" translatable="false" >@string/country_india_value</string>
+    <string name="country_settings_hint">Articles will be shown from chosen country news sources in their respective languages.</string>
 
     <!-- String values for countries labels in SettingsActivity -->
 

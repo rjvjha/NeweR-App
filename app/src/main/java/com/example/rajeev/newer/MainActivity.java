@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_country:
-                setTitle(getCountryLabel());
+                //setTitle(getCountryLabel());
                 openFragment(new IndiaCategoryFragment());
                 break;
 
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Private helper method to return the country selected by the user
-    private String getCountryLabel(){
+    public String getCountryLabel(){
         String [] countryLabels = getResources().getStringArray(R.array.settings_countries_labels);
         String [] countryValues = getResources().getStringArray(R.array.settings_countries_values);
         List<String> countryValuesList = Arrays.asList(countryValues);

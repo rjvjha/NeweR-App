@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment
-    android:id="@+id/setting_preferences_fragment"
-    android:name="com.example.rajeev.newer.SettingsActivity$NewsPreferenceFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rajeev.newer.SettingsActivity">
-</fragment>
+    android:orientation="vertical">
+
+    <fragment
+        android:id="@+id/setting_preferences_fragment"
+        android:name="com.example.rajeev.newer.SettingsActivity$NewsPreferenceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.example.rajeev.newer.SettingsActivity"/>
+    <TextView
+        android:id="@+id/settings_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/country_settings_hint"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:background="@color/light_grey"
+        android:fontFamily="sans-serif"/>
+</LinearLayout>
