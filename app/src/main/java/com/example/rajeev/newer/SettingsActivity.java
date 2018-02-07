@@ -35,6 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
             bindPreferenceSummaryToValue(country);
         }
 
+
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             String stringValue = newValue.toString();
@@ -54,6 +55,9 @@ public class SettingsActivity extends AppCompatActivity {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
             String preferenceString = preferences.getString(preference.getKey(), "");
             onPreferenceChange(preference, preferenceString);
+        }
+
+        private void restartActivity(){
         }
 
     }

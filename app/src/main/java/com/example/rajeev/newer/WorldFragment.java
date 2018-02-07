@@ -4,6 +4,7 @@ package com.example.rajeev.newer;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,7 +38,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 public class WorldFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>>{
 
     private static final String LOG_TAG = WorldFragment.class.getName();
-    private static final String SAMPLE_URL = "https://newsapi.org/v2/top-headlines?q=world&pageSize=30&apiKey=e591d4b34f2e435ba3d8a1f4d4f0d185";
+    private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
     private final int LOADER_ID = 2;
     private View emptyView;
     private ArticleAdapter adapter;
@@ -124,9 +125,22 @@ public class WorldFragment extends Fragment implements LoaderManager.LoaderCallb
         return rootView;
     }
 
+    private String getQueryUrl(){
+        Uri baseUri = Uri.parse(BASE_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("q", "world");
+        uriBuilder.appendQueryParameter("pageSize","30");
+        uriBuilder.appendQueryParameter("apiKey", "e591d4b34f2e435ba3d8a1f4d4f0d185");
+        return uriBuilder.toString();
+    }
+
     private void articlesRefreshOperation(){
-        getLoaderManager().restartLoader(LOADER_ID, null, this);
-        // adapter.notifyDataSetChanged();
+        if(checkInternetConnectivity()){
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
+        }else{
+            mSwipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), R.string.no_internet_connectivity, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -158,7 +172,7 @@ public class WorldFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public Loader<List<Article>> onCreateLoader(int id, Bundle args) {
-        return new ArticleLoader(getContext(),SAMPLE_URL);
+        return new ArticleLoader(getContext(),getQueryUrl());
     }
 
     @Override
