@@ -1,10 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment
-    android:id="@+id/preference_fragment"
-    android:name="com.example.rajeev.newer.EditNewsSource$ArticlePreferenceFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context="com.example.rajeev.newer.EditNewsSource">
-</fragment>
+
+    <LinearLayout
+        android:id="@+id/spinners_body_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@color/cardview_light_background">
+
+        <LinearLayout
+            android:id="@+id/spinners_label_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/country_text_label"
+                style="@style/EditNewsSource_spinners_label_style"
+                android:text="@string/country_label"
+                android:layout_marginRight="4dp"
+                />
+
+            <TextView
+                android:id="@+id/language_text_label"
+                style="@style/EditNewsSource_spinners_label_style"
+                android:text="@string/language_label" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/spinners_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <Spinner
+                android:id="@+id/country_selector"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/settings_countries_labels"
+                android:spinnerMode="dialog"/>
+
+            <Spinner
+                android:id="@+id/language_selector"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/news_sources_languages_labels"
+                android:spinnerMode="dialog"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/category_text_label"
+                style="@style/EditNewsSource_spinners_label_style"
+                android:text="@string/category_sort_label"
+                />
+
+            <Spinner
+                android:id="@+id/category_selector"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/news_sources_category_labels"
+                android:spinnerMode="dropdown"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/divider_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:layout_below="@id/spinners_body_container"/>
+    <ListView
+        android:id="@+id/edit_news_sources_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/divider_line"
+        android:divider="@color/colorAccent"
+        android:paddingTop="8dp"
+        android:clipToPadding="false"
+        android:footerDividersEnabled="false"
+        android:dividerHeight="0.5dp" />
+</RelativeLayout>

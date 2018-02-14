@@ -120,4 +120,55 @@
         <item>@string/country_us_value</item>
         <item>@string/country_venezuela_value</item>
     </string-array>
+    <string-array name="news_sources_languages_labels">
+        <item>@string/language_arabic_label</item>
+        <item>@string/language_german_label</item>
+        <item>@string/language_english_label</item>
+        <item>@string/language_spanish_label</item>
+        <item>@string/language_french_label</item>
+        <item>@string/language_hebrew_label</item>
+        <item>@string/language_italian_label</item>
+        <item>@string/language_dutch_label</item>
+        <item>@string/language_norwegian_label</item>
+        <item>@string/language_portuguese_label</item>
+        <item>@string/language_russian_label</item>
+        <item>@string/language_sami_label</item>
+        <item>@string/language_chinese_label</item>
+    </string-array>
+
+    <string-array name="news_sources_languages_values">
+        <item>@string/language_arabic_value</item>
+        <item>@string/language_german_value</item>
+        <item>@string/language_english_value</item>
+        <item>@string/language_spanish_value</item>
+        <item>@string/language_french_value</item>
+        <item>@string/language_hebrew_value</item>
+        <item>@string/language_italian_value</item>
+        <item>@string/language_dutch_value</item>
+        <item>@string/language_norwegian_value</item>
+        <item>@string/language_portuguese_value</item>
+        <item>@string/language_russian_value</item>
+        <item>@string/language_sami_value</item>
+        <item>@string/language_chinese_value</item>
+
+    </string-array>
+
+    <string-array name="news_sources_category_labels">
+        <item>@string/menu_Business</item>
+        <item>@string/menu_entertainment</item>
+        <item>@string/category_general_label</item>
+        <item>@string/menu_health</item>
+        <item>@string/menu_science</item>
+        <item>@string/menu_sport</item>
+        <item>@string/menu_technology</item>
+    </string-array>
+    <string-array name="news_sources_category_values">
+        <item>@string/category_business_value</item>
+        <item>@string/category_entertainment_value</item>
+        <item>@string/category_general_value</item>
+        <item>@string/category_health_value</item>
+        <item>@string/category_science_value</item>
+        <item>@string/category_sports_value</item>
+        <item>@string/category_technology_value</item>
+    </string-array>
 </resources>

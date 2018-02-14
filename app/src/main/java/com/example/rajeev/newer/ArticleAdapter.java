@@ -40,7 +40,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
     }
 
 
-    private class ViewHolder{
+    private static class ViewHolder{
         TextView sourceName;
         TextView publishDateTime;
         TextView title;
@@ -160,7 +160,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         holder.title.setText(currentTitle);
 
         // Check for null and empty author values
-        if (currentAuthor.equals("null") || TextUtils.isEmpty(currentAuthor)) {
+        if (currentAuthor.equals("null") && TextUtils.isEmpty(currentAuthor)) {
             holder.byLabel.setVisibility(View.GONE);
             holder.authorName.setVisibility(View.GONE);
 

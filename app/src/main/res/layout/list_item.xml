@@ -87,13 +87,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="By" />
+                    android:text="@string/author_by_label" />
 
                 <TextView
                     android:id="@+id/article_author_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:fontFamily="serif"
                     android:textAllCaps="true"
                     android:textAppearance="?android:textAppearanceSmall"
@@ -128,8 +128,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_share_black_24dp"
-                    android:text="Share" />
+                    android:drawableStart="@drawable/ic_share_black_24dp"
+                    android:text="@string/share_button_label_text" />
 
                 <Button
                     android:id="@+id/article_save_button"
@@ -137,8 +137,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_file_download_black_24dp"
-                    android:text="Save" />
+                    android:drawableStart="@drawable/ic_file_download_black_24dp"
+                    android:text="@string/save_button_label_text" />
 
                 <Button
                     android:id="@+id/article_read_more_button"
@@ -147,7 +147,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Read More" />
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/readMore_button_label_text"/>
             </android.support.v7.widget.ButtonBarLayout>
 
 

@@ -81,6 +81,7 @@ public class IndiaCategoryFragment extends Fragment
     @Override
     public void onStart() {
         super.onStart();
+        // set title of country fragment
         String countryTitle = ((MainActivity) getActivity()).getCountryLabel();
         ((MainActivity) getActivity()).setTitle(countryTitle);
     }
