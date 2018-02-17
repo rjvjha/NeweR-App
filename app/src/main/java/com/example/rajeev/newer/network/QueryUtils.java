@@ -1,15 +1,17 @@
-package com.example.rajeev.newer.Network;
+package com.example.rajeev.newer.network;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.rajeev.newer.Article;
+import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.custom_classes.NewsSource;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,29 +30,44 @@ public final class QueryUtils {
 
     private static final String LOG_TAG = QueryUtils.class.getName();
 
-    /** Private Constructor as we don't want to create instances of {@link QueryUtils} */
-    private QueryUtils(){}
+    /**
+     * Private Constructor as we don't want to create instances of {@link QueryUtils}
+     */
+    private QueryUtils() {
+    }
 
 
-    public static List<Article> fetchArticlesFromNetwork(String requestUrl){
+    public static List<Article> fetchArticlesFromNetwork(String requestUrl) {
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
-        try{
+        try {
             jsonResponse = makeHttpRequest(url);
-        }catch (IOException e){
-            Log.e(LOG_TAG, "error while closing input stream.",e);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "error while closing input stream.", e);
             e.printStackTrace();
         }
         return fetchArticleFromJson(jsonResponse);
     }
 
+    public static List<NewsSource> fetchNewsSourcesFromNetwork(String requestUrl) {
+        URL url = createUrl(requestUrl);
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "error while closing input stream.", e);
+            e.printStackTrace();
+        }
+        return fetchNewsSourcesFromJson(jsonResponse);
+    }
+
     // private helper methd to create url from string
-    private static URL createUrl(String stringUrl){
+    private static URL createUrl(String stringUrl) {
         URL newUrl = null;
-        try{
+        try {
             newUrl = new URL(stringUrl);
-        }catch(MalformedURLException e){
-            Log.e(LOG_TAG,"Error creating Url", e);
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "Error creating Url", e);
             return null;
         }
         return newUrl;
@@ -59,39 +76,39 @@ public final class QueryUtils {
     /**
      * Make an HTTP request to the given URL and return a String as the response.
      */
-    private  static String makeHttpRequest(URL url) throws IOException{
+    private static String makeHttpRequest(URL url) throws IOException {
         String jsonRespnse = " ";
 
         // if url is null, return early
-        if(url == null){
+        if (url == null) {
             return jsonRespnse;
         }
 
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
-        try{
+        try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            Log.v(LOG_TAG,"Connection Opened");
+            Log.v(LOG_TAG, "Connection Opened");
             urlConnection.setDoInput(true);
             urlConnection.setRequestMethod("GET");
-            Log.v(LOG_TAG,"Connecting to the given url" + url);
+            Log.v(LOG_TAG, "Connecting to the given url" + url);
             urlConnection.connect();
             int responseCode = urlConnection.getResponseCode();
-            if(responseCode== HttpURLConnection.HTTP_OK){
+            if (responseCode == HttpURLConnection.HTTP_OK) {
                 inputStream = urlConnection.getInputStream();
                 jsonRespnse = readFromStream(inputStream);
             } else {
-                Log.wtf(LOG_TAG," Http Error code :"+ responseCode);
+                Log.wtf(LOG_TAG, " Http Error code :" + responseCode);
                 return null;
             }
 
-        } catch (IOException e){
-            Log.e(LOG_TAG,"Error reading the input stream",e);
-        }finally {
-            if(urlConnection!=null){
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error reading the input stream", e);
+        } finally {
+            if (urlConnection != null) {
                 urlConnection.disconnect();
             }
-            if(inputStream!=null){
+            if (inputStream != null) {
                 inputStream.close();
             }
         }
@@ -102,14 +119,14 @@ public final class QueryUtils {
      * Convert the {@link InputStream} into a String which contains the
      * whole JSON response from the server.
      */
-    private static String readFromStream(InputStream inputStream) throws IOException{
+    private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
 
-        if(inputStream != null){
+        if (inputStream != null) {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String line = reader.readLine();
-            while (line != null){
+            while (line != null) {
                 output.append(line);
                 line = reader.readLine();
             }
@@ -120,42 +137,42 @@ public final class QueryUtils {
     /**
      * Make an HTTP request to the given imageURL and return a Bitmap as the response.
      */
-    public static Bitmap downloadBitmapFromInternet(String imageUrl) throws IOException{
+    public static Bitmap downloadBitmapFromInternet(String imageUrl) throws IOException {
         //@ToDo: write code to fetch bitmap from imageUrl
         Bitmap thumbnail = null;
         URL url = createUrl(imageUrl);
-        Log.v(LOG_TAG,"Image url:"+url);
+        Log.v(LOG_TAG, "Image url:" + url);
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
-        try{
+        try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            Log.v(LOG_TAG,"Connection Opened");
+            Log.v(LOG_TAG, "Connection Opened");
             urlConnection.setRequestMethod("GET");
             urlConnection.setReadTimeout(5000);
             urlConnection.setConnectTimeout(500);
             urlConnection.setUseCaches(true);
-            Log.v(LOG_TAG,"Connecting to the given url");
+            Log.v(LOG_TAG, "Connecting to the given url");
             urlConnection.connect();
             int responseCode = urlConnection.getResponseCode();
-            if(responseCode == HttpURLConnection.HTTP_OK){
-                Log.wtf(LOG_TAG,"Connection successful, fetching input sream now");
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                Log.wtf(LOG_TAG, "Connection successful, fetching input sream now");
                 inputStream = urlConnection.getInputStream();
-                Log.wtf(LOG_TAG,"received the stream, decoding stream now");
+                Log.wtf(LOG_TAG, "received the stream, decoding stream now");
                 thumbnail = BitmapFactory.decodeStream(inputStream);
                 return thumbnail;
-            }else{
+            } else {
                 Log.wtf(LOG_TAG, "error while connecting, http error code: " + urlConnection.getResponseCode());
             }
-        }catch (IOException e){
+        } catch (IOException e) {
 
-            Log.e(LOG_TAG,"error while reading the input stream", e);
+            Log.e(LOG_TAG, "error while reading the input stream", e);
 
-        }finally {
-            if(urlConnection != null){
+        } finally {
+            if (urlConnection != null) {
                 urlConnection.disconnect();
             }
 
-            if(inputStream != null){
+            if (inputStream != null) {
                 inputStream.close();
             }
         }
@@ -166,14 +183,14 @@ public final class QueryUtils {
      * Return a list of {@link Article} objects that has been built up from
      * parsing a JSON response.
      */
-    private static List<Article> fetchArticleFromJson(final String JSON_RESPONSE){
+    private static List<Article> fetchArticleFromJson(final String JSON_RESPONSE) {
         List<Article> articlesList = new ArrayList<>();
 
         // Check for empty Json response
-        if(JSON_RESPONSE == null || TextUtils.isEmpty(JSON_RESPONSE)){
+        if (JSON_RESPONSE == null || TextUtils.isEmpty(JSON_RESPONSE)) {
             return null;
         }
-        try{
+        try {
             JSONObject root = new JSONObject(JSON_RESPONSE);
             String status = root.getString("status");
             int totalResults = root.getInt("totalResults");
@@ -181,11 +198,11 @@ public final class QueryUtils {
 //                return null;
 //            }
             // if status is ok start reading from JSON
-            if(TextUtils.equals(status,"ok")){
+            if (TextUtils.equals(status, "ok")) {
                 JSONArray articlesArray = root.getJSONArray("articles");
-                for(int i=0; i< articlesArray.length();i++) {
+                for (int i = 0; i < articlesArray.length(); i++) {
                     // fetch only 49 articles at a time.
-                    if(i >= 49){
+                    if (i >= 49) {
                         break;
                     }
                     String sourceId;
@@ -205,7 +222,7 @@ public final class QueryUtils {
                     description = article.optString("description");
                     url = article.optString("url");
                     urlToImage = article.optString("urlToImage");
-                    publishedAt = article.getString("publishedAt");
+                    publishedAt = article.optString("publishedAt");
                     articlesList.add(new Article(sourceId,
                             sourceName,
                             author,
@@ -214,7 +231,7 @@ public final class QueryUtils {
                             url,
                             urlToImage,
                             publishedAt
-                            )) ;
+                    ));
                 }
                 return articlesList;
             }
@@ -227,5 +244,56 @@ public final class QueryUtils {
         return null;
     }
 
+
+    /**
+     * Return a list of {@link NewsSource} objects that has been built up from
+     * parsing a JSON response.
+     */
+
+    private static List<NewsSource> fetchNewsSourcesFromJson(final String JSON_RESPONSE) {
+        List<NewsSource> newsSourceList = new ArrayList<>();
+        // Check for empty Json response
+        if (JSON_RESPONSE == null || TextUtils.isEmpty(JSON_RESPONSE)) {
+            return null;
+        }
+
+        try {
+            JSONObject root = new JSONObject(JSON_RESPONSE);
+            String status = root.getString("status");
+            if (TextUtils.equals(status, "ok")) {
+                JSONArray sourcesArray = root.getJSONArray("sources");
+                for (int i = 0; i < sourcesArray.length(); i++) {
+                    JSONObject source = sourcesArray.getJSONObject(i);
+                    String sourceId;
+                    String sourceName;
+                    String sourceDescription;
+                    String sourceUrl;
+                    String sourceCategory;
+                    String sourceLanguage;
+                    String sourceCountry;
+                    sourceId = source.optString("id");
+                    sourceName = source.getString("name");
+                    sourceDescription = source.optString("description");
+                    sourceUrl = source.optString("url");
+                    sourceCategory = source.optString("category");
+                    sourceLanguage = source.optString("language");
+                    sourceCountry = source.optString("country");
+                    newsSourceList.add(new NewsSource(sourceId,
+                            sourceName,
+                            sourceDescription,
+                            sourceUrl,
+                            sourceCategory,
+                            sourceLanguage,
+                            sourceCountry));
+                }
+                return newsSourceList;
+            }
+
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "Problem parsing the Json Results", e);
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

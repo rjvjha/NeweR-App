@@ -34,7 +34,7 @@
     <string name="no_internet_connectivity">No internet connection available!</string>
     <string name="offline_mode_suggestion">Switch to offline mode to read your saved articles.</string>
     <string name="no_articles_found">No stories available!</string>
-    <string name="no_articles_suggestion">Please check your internet connection.</string>
+    <string name="no_internet_suggestion">Please check your internet connection.</string>
     <string name="loading_feedback">Loading&#8230;</string>
     <string name="searching_feedback">Searching&#8230;</string>
     <string name="search_empty_header">Search through millions of articles from over 5,000 large and small news sources and blogs.</string>
@@ -188,6 +188,9 @@
     <string name="language_label">Language</string>
     <string name="category_sort_label">Category</string>
     <string name="category_general_label">General</string>
+    <string name="empty_list_descriptiontext">Get breaking news headlines from your favourite news Sources.</string>
+    <string name="empty_list_suggestiontext">* Choose a country or a language.</string>
+
 
     <!-- String labels for Languages -->
     <string name="language_arabic_label">Arabic</string>

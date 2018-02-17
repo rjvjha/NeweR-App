@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,7 +31,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rajeev.newer.Network.ArticleLoader;
+import com.example.rajeev.newer.utils.GlideApp;
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.adapters.ArticleSearchAdapter;
+import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.loaders.ArticleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,7 +173,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
             @Override
             public void onClick(View v) {
                 if(pageNo==1){
-                    Toast.makeText(getBaseContext(), "I can't go back further!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "This is the first page!", Toast.LENGTH_SHORT).show();
                 }else{
                     pageNo--;
                     triggerLoader();

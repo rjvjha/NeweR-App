@@ -1,6 +1,4 @@
-package com.example.rajeev.newer;
-
-import android.graphics.Bitmap;
+package com.example.rajeev.newer.custom_classes;
 
 /**
  * Custom class containing all the attributes and setter & getter methods for {@link Article} object

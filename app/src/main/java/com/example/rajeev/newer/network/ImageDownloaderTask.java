@@ -1,4 +1,4 @@
-package com.example.rajeev.newer.Network;
+package com.example.rajeev.newer.network;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;

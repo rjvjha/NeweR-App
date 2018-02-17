@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.custom_classes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,20 @@ public class NewsSource {
         this.sourceUrl = sourceUrl;
     }
 
+    public NewsSource(String sourceId, String sourceName, String sourceDescription, String sourceUrl, String sourceCategory, String sourceLanguage, String sourceCountry) {
+        this.sourceId = sourceId;
+        this.sourceName = sourceName;
+        this.sourceDescription = sourceDescription;
+        this.sourceUrl = sourceUrl;
+        this.sourceCategory = sourceCategory;
+        this.sourceLanguage = sourceLanguage;
+        this.sourceCountry = sourceCountry;
+    }
+
     static {
         selectedSourceIds = new ArrayList<>(20);
+        selectedSourceIds.add("abc-news");
+        selectedSourceIds.add("buzzfeed");
     }
 
     public static List<String> getSelectedSourceIds() {

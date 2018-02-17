@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.utils.GlideApp;
 
 import java.util.List;
 
@@ -98,9 +102,10 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
 
             GlideApp.with(getContext())
                     .load(imageUrl)
-                    .thumbnail(GlideApp.with(getContext())
-                        .load(imageUrl)
-                        .override(80,80))
+//                    .thumbnail(GlideApp.with(getContext())
+//                        .load(imageUrl)
+//                        .override(80,80))
+                    .override(80, 80)
                     .placeholder(R.color.fallbackImageColor)
                     .error(R.drawable.ic_not_available_black_24dp)
                     .optionalCenterCrop()

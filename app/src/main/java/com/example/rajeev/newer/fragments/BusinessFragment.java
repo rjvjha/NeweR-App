@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.fragments;
 
 
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -28,7 +27,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rajeev.newer.Network.ArticleLoader;
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.adapters.ArticleAdapter;
+import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.loaders.ArticleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +92,6 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
         emptyListTextView1 = rootView.findViewById(R.id.empty_list_textView1);
         mSwipeRefreshLayout = rootView.findViewById(R.id.swipe_refresh);
         emptyListTextViewSuggestionText = rootView.findViewById((R.id.empty_list_suggestion));
-        final FloatingActionButton fabBtn = ((MainActivity) getActivity()).getFloatingActionButton();
         ListView listView = rootView.findViewById(R.id.list_view);
         adapter = new ArticleAdapter(context,new ArrayList<Article>());
         listView.setEmptyView(emptyView);
@@ -195,7 +196,7 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
             adapter.addAll(data);
         }
         emptyListTextView1.setText(R.string.no_articles_found);
-        emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
+        emptyListTextViewSuggestionText.setText(R.string.no_internet_suggestion);
 
     }
 

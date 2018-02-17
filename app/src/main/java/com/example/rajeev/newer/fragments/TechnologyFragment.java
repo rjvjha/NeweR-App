@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.fragments;
 
 
 import android.content.Context;
@@ -27,7 +27,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rajeev.newer.Network.ArticleLoader;
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.adapters.ArticleAdapter;
+import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.loaders.ArticleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +40,12 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EntertainmentFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>>{
+public class TechnologyFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>> {
 
-    private static final String LOG_TAG = EntertainmentFragment.class.getName();
+
+    private static final String LOG_TAG = TechnologyFragment.class.getName();
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
-    private final int LOADER_ID = 5;
+    private final int LOADER_ID = 4;
     private View emptyView;
     private ArticleAdapter adapter;
     private ImageView emptyListImageView;
@@ -53,7 +57,8 @@ public class EntertainmentFragment extends Fragment implements LoaderManager.Loa
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
-    public EntertainmentFragment() {
+
+    public TechnologyFragment() {
         // Required empty public constructor
     }
 
@@ -75,6 +80,7 @@ public class EntertainmentFragment extends Fragment implements LoaderManager.Loa
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,7 +96,7 @@ public class EntertainmentFragment extends Fragment implements LoaderManager.Loa
         ListView listView = rootView.findViewById(R.id.list_view);
         adapter = new ArticleAdapter(context,new ArrayList<Article>());
         listView.setEmptyView(emptyView);
-        // if data is already availabe then add it to adapter
+        // if data is already available then add it to adapter
         if(sData!=null) {
             adapter.addAll(sData);
             progressIndicator.setVisibility(View.GONE);
@@ -112,7 +118,6 @@ public class EntertainmentFragment extends Fragment implements LoaderManager.Loa
             emptyListTextViewSuggestionText.setText(R.string.offline_mode_suggestion);
 
         }
-
         mSwipeRefreshLayout.setNestedScrollingEnabled(true);
         // Implementing Swipe-to-refresh behaviour
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -125,16 +130,16 @@ public class EntertainmentFragment extends Fragment implements LoaderManager.Loa
         return rootView;
     }
 
-    // private method to get queryUrl
     private String getQueryUrl(){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences sharedPreferences = PreferenceManager.
+                getDefaultSharedPreferences(getContext());
         String selectedCountry = sharedPreferences.getString(
                 getString(R.string.pref_country_key),
                 getString(R.string.pref_country_default));
         Uri baseUri = Uri.parse(BASE_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-        uriBuilder.appendQueryParameter("category","entertainment");
-        uriBuilder.appendQueryParameter("country",selectedCountry);
+        uriBuilder.appendQueryParameter("category", "technology");
+        uriBuilder.appendQueryParameter("country", selectedCountry);
         uriBuilder.appendQueryParameter("apiKey", "e591d4b34f2e435ba3d8a1f4d4f0d185");
         return uriBuilder.toString();
     }
@@ -166,7 +171,6 @@ public class EntertainmentFragment extends Fragment implements LoaderManager.Loa
         return super.onOptionsItemSelected(item);
     }
 
-
     // private helper method to check the internet connectivity
     private boolean checkInternetConnectivity(){
         ConnectivityManager connMgr = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
@@ -187,12 +191,12 @@ public class EntertainmentFragment extends Fragment implements LoaderManager.Loa
         adapter.clear();
         if(data != null && !data.isEmpty()){
             Toast.makeText(getContext(),"News updated",Toast.LENGTH_SHORT).show();
-            sData = data;
             mSwipeRefreshLayout.setRefreshing(false);
+            sData = data;
             adapter.addAll(data);
         }
         emptyListTextView1.setText(R.string.no_articles_found);
-        emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
+        emptyListTextViewSuggestionText.setText(R.string.no_internet_suggestion);
 
     }
 
@@ -201,5 +205,7 @@ public class EntertainmentFragment extends Fragment implements LoaderManager.Loa
         adapter.clear();
 
     }
+
+
 
 }

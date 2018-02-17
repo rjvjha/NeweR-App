@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    tools:context="com.example.rajeev.newer.EditNewsSource">
+    tools:context="com.example.rajeev.newer.activities.EditNewsSourceActivity">
 
     <LinearLayout
         android:id="@+id/spinners_body_container"
@@ -27,7 +27,7 @@
                 android:id="@+id/country_text_label"
                 style="@style/EditNewsSource_spinners_label_style"
                 android:text="@string/country_label"
-                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
                 />
 
             <TextView
@@ -100,4 +100,40 @@
         android:clipToPadding="false"
         android:footerDividersEnabled="false"
         android:dividerHeight="0.5dp" />
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_indicator_editNewsSource"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
+    <RelativeLayout
+        android:id="@+id/empty_list_view_editNewsSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/empty_list_suggestion_editNewsSource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:text="@string/empty_list_descriptiontext"
+            />
+        <TextView
+            android:id="@+id/empty_list_textView1_editNewsSource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/empty_list_suggestion_editNewsSource"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif"
+            android:paddingTop="8dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/empty_list_suggestiontext"
+            android:textAppearance="?android:textAppearanceSmall" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -1,6 +1,4 @@
-package com.example.rajeev.newer.Network;
-
-import android.util.Log;
+package com.example.rajeev.newer.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

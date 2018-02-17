@@ -1,8 +1,12 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
+
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.adapters.ArticleCursorAdapter;
+import com.example.rajeev.newer.custom_classes.Article;
 
 import java.util.ArrayList;
 import java.util.List;

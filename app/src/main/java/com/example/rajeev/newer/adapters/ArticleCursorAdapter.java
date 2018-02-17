@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.custom_classes.Article;
+
 import java.util.List;
 
 
@@ -18,7 +21,7 @@ import java.util.List;
 
 public class ArticleCursorAdapter extends ArrayAdapter<Article> {
 
-    ArticleCursorAdapter(Context context, List<Article> list){
+    public ArticleCursorAdapter(Context context, List<Article> list){
         super(context, 0, list);
     }
 

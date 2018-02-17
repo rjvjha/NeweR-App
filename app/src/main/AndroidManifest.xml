@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,22 +23,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SearchActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".activities.SearchActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:theme="@style/SearchActivityTheme" />
         <activity
-            android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".activities.SettingsActivity"
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".SavedArticlesCatalog"
+            android:name=".activities.SavedArticlesCatalog"
             android:label="@string/title_activity_savedArticlesCatalog"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:theme="@style/ArticlesCatalogTheme" />
-        <activity android:name=".EditNewsSource"
+        <activity android:name=".activities.EditNewsSourceActivity"
             android:label="@string/title_activity_editNewsSource"></activity>
     </application>
 

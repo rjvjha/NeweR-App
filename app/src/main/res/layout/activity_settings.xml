@@ -7,10 +7,10 @@
 
     <fragment
         android:id="@+id/setting_preferences_fragment"
-        android:name="com.example.rajeev.newer.SettingsActivity$NewsPreferenceFragment"
+        android:name="com.example.rajeev.newer.activities.SettingsActivity$NewsPreferenceFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.example.rajeev.newer.SettingsActivity"/>
+        tools:context="com.example.rajeev.newer.activities.SettingsActivity"/>
     <TextView
         android:id="@+id/settings_hint"
         android:layout_width="match_parent"

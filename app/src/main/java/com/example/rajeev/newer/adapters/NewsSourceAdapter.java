@@ -1,16 +1,19 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.custom_classes.NewsSource;
 
 import java.util.List;
 
@@ -19,10 +22,30 @@ import java.util.List;
  */
 
 public class NewsSourceAdapter extends ArrayAdapter<NewsSource> {
+    private static final String LOG_TAG = NewsSourceAdapter.class.getName();
+
+
 
     public NewsSourceAdapter(@NonNull Context context, @NonNull List<NewsSource> newsSourceList) {
         super(context, 0, newsSourceList);
     }
+
+    private void onSwitchClickEvent(final Switch switchToggleButton, final String newsSourceId) {
+        switchToggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (switchToggleButton.isChecked()) {
+                    // only add newsSource which are not selected
+                    NewsSource.addNewSourceId(newsSourceId);
+                } else {
+                    NewsSource.removeExistingNewsSourceId(newsSourceId);
+                }
+            }
+        });
+
+    }
+
 
     private static class ViewHolder{
         Switch newsSourceSwitch;
@@ -33,7 +56,7 @@ public class NewsSourceAdapter extends ArrayAdapter<NewsSource> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         //current newsSource
-        final NewsSource currentNewsSource = getItem(position);
+        NewsSource currentNewsSource = getItem(position);
         ViewHolder holder;
         View itemView = convertView;
         if(itemView==null){
@@ -44,42 +67,31 @@ public class NewsSourceAdapter extends ArrayAdapter<NewsSource> {
             itemView.setTag(holder);
 
         } else{
-            holder = (ViewHolder)itemView.getTag();
+            holder = (ViewHolder) itemView.getTag();
         }
+
         // get string values from current object
         String newsSourceName = currentNewsSource.getSourceName();
+        final String newsSourceId = currentNewsSource.getSourceId();
         String newsSourceDescription = currentNewsSource.getSourceDescription();
 
         holder.newsSourceSwitch.setText(newsSourceName);
 
+        Log.v(LOG_TAG,"isNewsSourceSelected: "+ currentNewsSource.isNewsSourceSelected()+ newsSourceName);
+
         // if news Source is selected toogle the switch to checked state.
         if(currentNewsSource.isNewsSourceSelected()){
             holder.newsSourceSwitch.setChecked(true);
-        } else{
+        }else{
             holder.newsSourceSwitch.setChecked(false);
         }
 
         if(!newsSourceDescription.equals("null") && !TextUtils.isEmpty(newsSourceDescription) ){
             holder.newsSourceDescription.setText(newsSourceDescription);
         }
-        // Implementing onCheckedChanged Listener on switch
-        holder.newsSourceSwitch.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        // when switch is checked add source id to selected source Ids list else remove it.
-                        String selectedNewsSourceId = currentNewsSource.getSourceId();
-                        if(isChecked){
-                            NewsSource.addNewSourceId(selectedNewsSourceId);
-                        } else{
-                            NewsSource.removeExistingNewsSourceId(selectedNewsSourceId);
-                        }
 
-                    }
-                }
+        onSwitchClickEvent(holder.newsSourceSwitch,newsSourceId);
 
-
-        );
         return itemView;
     }
 }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rajeev.newer.MainActivity">
+    android:fitsSystemWindows="true"
+    tools:context="com.example.rajeev.newer.activities.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="enterAlways|scroll"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -39,6 +40,7 @@
         android:tint="@android:color/white"
         android:clickable="true"
         app:backgroundTint="@color/saved_articles_activity"
+        app:layout_anchorGravity="bottom|right|end"
         />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +18,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.fragments.BusinessFragment;
+import com.example.rajeev.newer.fragments.EntertainmentFragment;
+import com.example.rajeev.newer.fragments.HealthFragment;
+import com.example.rajeev.newer.fragments.IndiaCategoryFragment;
+import com.example.rajeev.newer.fragments.ScienceFragment;
+import com.example.rajeev.newer.fragments.SportFragment;
+import com.example.rajeev.newer.fragments.TechnologyFragment;
+import com.example.rajeev.newer.fragments.TopStoriesFragment;
+import com.example.rajeev.newer.fragments.WorldFragment;
 
 import java.util.Arrays;
 import java.util.List;
@@ -165,7 +176,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_change_source:
-                Intent editNewsIntent = new Intent(this,EditNewsSource.class);
+                Intent editNewsIntent = new Intent(this,EditNewsSourceActivity.class);
                 drawer.closeDrawer(GravityCompat.START);
                 startActivity(editNewsIntent);
                 return true;
@@ -198,7 +209,7 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
     }
 
-    FloatingActionButton getFloatingActionButton(){
+    public FloatingActionButton getFloatingActionButton(){
         return fab;
     }
 

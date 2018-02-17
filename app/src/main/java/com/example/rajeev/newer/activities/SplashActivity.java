@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

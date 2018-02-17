@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +19,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.rajeev.newer.Network.ISO8601;
+import com.example.rajeev.newer.utils.GlideApp;
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.utils.ISO8601;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,7 +34,7 @@ import java.util.List;
  * Created by rjvjha on 16/12/17.
  */
 
-class ArticleAdapter extends ArrayAdapter<Article> {
+public class ArticleAdapter extends ArrayAdapter<Article> {
 
 
 
@@ -149,7 +152,6 @@ class ArticleAdapter extends ArrayAdapter<Article> {
                    .load(imageUrl)
                    .placeholder(R.color.fallbackImageColor)
                    .fallback(Color.GRAY)
-                   .optionalCenterCrop()
                    .into(holder.articleImage);
         }else{
             holder.articleImage.setVisibility(View.GONE);
@@ -160,7 +162,7 @@ class ArticleAdapter extends ArrayAdapter<Article> {
         holder.title.setText(currentTitle);
 
         // Check for null and empty author values
-        if (currentAuthor.equals("null") && TextUtils.isEmpty(currentAuthor)) {
+        if (currentAuthor.equals("null") || TextUtils.isEmpty(currentAuthor)) {
             holder.byLabel.setVisibility(View.GONE);
             holder.authorName.setVisibility(View.GONE);
 

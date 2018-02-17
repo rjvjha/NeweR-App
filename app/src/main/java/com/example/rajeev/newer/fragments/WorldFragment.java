@@ -1,14 +1,12 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.fragments;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -27,7 +25,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rajeev.newer.Network.ArticleLoader;
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.adapters.ArticleAdapter;
+import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.loaders.ArticleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +38,11 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TechnologyFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>> {
+public class WorldFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>>{
 
-
-    private static final String LOG_TAG = TechnologyFragment.class.getName();
+    private static final String LOG_TAG = WorldFragment.class.getName();
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
-    private final int LOADER_ID = 4;
+    private final int LOADER_ID = 2;
     private View emptyView;
     private ArticleAdapter adapter;
     private ImageView emptyListImageView;
@@ -54,8 +54,7 @@ public class TechnologyFragment extends Fragment implements LoaderManager.Loader
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
-
-    public TechnologyFragment() {
+    public WorldFragment() {
         // Required empty public constructor
     }
 
@@ -93,12 +92,14 @@ public class TechnologyFragment extends Fragment implements LoaderManager.Loader
         ListView listView = rootView.findViewById(R.id.list_view);
         adapter = new ArticleAdapter(context,new ArrayList<Article>());
         listView.setEmptyView(emptyView);
-        // if data is already available then add it to adapter
+
+        // if data is already availabe then add it to adapter
         if(sData!=null) {
             adapter.addAll(sData);
-            progressIndicator.setVisibility(View.GONE);
             loadingFeedback.setVisibility(View.GONE);
+            progressIndicator.setVisibility(View.GONE);
         }
+
         // Code for hiding the app bar when scrolling list view
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             listView.setNestedScrollingEnabled(true);
@@ -128,15 +129,10 @@ public class TechnologyFragment extends Fragment implements LoaderManager.Loader
     }
 
     private String getQueryUrl(){
-        SharedPreferences sharedPreferences = PreferenceManager.
-                getDefaultSharedPreferences(getContext());
-        String selectedCountry = sharedPreferences.getString(
-                getString(R.string.pref_country_key),
-                getString(R.string.pref_country_default));
         Uri baseUri = Uri.parse(BASE_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-        uriBuilder.appendQueryParameter("category", "technology");
-        uriBuilder.appendQueryParameter("country", selectedCountry);
+        uriBuilder.appendQueryParameter("q", "world");
+        uriBuilder.appendQueryParameter("pageSize","30");
         uriBuilder.appendQueryParameter("apiKey", "e591d4b34f2e435ba3d8a1f4d4f0d185");
         return uriBuilder.toString();
     }
@@ -168,6 +164,7 @@ public class TechnologyFragment extends Fragment implements LoaderManager.Loader
         return super.onOptionsItemSelected(item);
     }
 
+
     // private helper method to check the internet connectivity
     private boolean checkInternetConnectivity(){
         ConnectivityManager connMgr = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
@@ -178,7 +175,7 @@ public class TechnologyFragment extends Fragment implements LoaderManager.Loader
 
     @Override
     public Loader<List<Article>> onCreateLoader(int id, Bundle args) {
-        return new ArticleLoader(getContext(), getQueryUrl());
+        return new ArticleLoader(getContext(),getQueryUrl());
     }
 
     @Override
@@ -193,7 +190,7 @@ public class TechnologyFragment extends Fragment implements LoaderManager.Loader
             adapter.addAll(data);
         }
         emptyListTextView1.setText(R.string.no_articles_found);
-        emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
+        emptyListTextViewSuggestionText.setText(R.string.no_internet_suggestion);
 
     }
 
@@ -202,7 +199,6 @@ public class TechnologyFragment extends Fragment implements LoaderManager.Loader
         adapter.clear();
 
     }
-
 
 
 }

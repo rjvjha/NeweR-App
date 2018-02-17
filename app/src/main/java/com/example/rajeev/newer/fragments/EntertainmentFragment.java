@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.fragments;
 
 
 import android.content.Context;
@@ -27,7 +27,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rajeev.newer.Network.ArticleLoader;
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.adapters.ArticleAdapter;
+import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.loaders.ArticleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +40,11 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class IndiaCategoryFragment extends Fragment
-        implements LoaderManager.LoaderCallbacks<List<Article>> {
+public class EntertainmentFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>>{
 
-    private static final String LOG_TAG = IndiaCategoryFragment.class.getName();
+    private static final String LOG_TAG = EntertainmentFragment.class.getName();
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
-    private final int LOADER_ID = 1;
+    private final int LOADER_ID = 5;
     private View emptyView;
     private ArticleAdapter adapter;
     private ImageView emptyListImageView;
@@ -54,11 +56,9 @@ public class IndiaCategoryFragment extends Fragment
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
-
-    public IndiaCategoryFragment() {
+    public EntertainmentFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,14 +79,6 @@ public class IndiaCategoryFragment extends Fragment
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        // set title of country fragment
-        String countryTitle = ((MainActivity) getActivity()).getCountryLabel();
-        ((MainActivity) getActivity()).setTitle(countryTitle);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.list_articles, container, false);
@@ -104,8 +96,8 @@ public class IndiaCategoryFragment extends Fragment
         // if data is already availabe then add it to adapter
         if(sData!=null) {
             adapter.addAll(sData);
-            loadingFeedback.setVisibility(View.GONE);
             progressIndicator.setVisibility(View.GONE);
+            loadingFeedback.setVisibility(View.GONE);
         }
         // Code for hiding the app bar when scrolling list view
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -123,6 +115,7 @@ public class IndiaCategoryFragment extends Fragment
             emptyListTextViewSuggestionText.setText(R.string.offline_mode_suggestion);
 
         }
+
         mSwipeRefreshLayout.setNestedScrollingEnabled(true);
         // Implementing Swipe-to-refresh behaviour
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -135,6 +128,20 @@ public class IndiaCategoryFragment extends Fragment
         return rootView;
     }
 
+    // private method to get queryUrl
+    private String getQueryUrl(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String selectedCountry = sharedPreferences.getString(
+                getString(R.string.pref_country_key),
+                getString(R.string.pref_country_default));
+        Uri baseUri = Uri.parse(BASE_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("category","entertainment");
+        uriBuilder.appendQueryParameter("country",selectedCountry);
+        uriBuilder.appendQueryParameter("apiKey", "e591d4b34f2e435ba3d8a1f4d4f0d185");
+        return uriBuilder.toString();
+    }
+
     private void articlesRefreshOperation(){
         if(checkInternetConnectivity()){
             getLoaderManager().restartLoader(LOADER_ID, null, this);
@@ -142,7 +149,6 @@ public class IndiaCategoryFragment extends Fragment
             mSwipeRefreshLayout.setRefreshing(false);
             Toast.makeText(getContext(), R.string.no_internet_connectivity, Toast.LENGTH_SHORT).show();
         }
-        // adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -171,24 +177,10 @@ public class IndiaCategoryFragment extends Fragment
         return networkInfo!=null && networkInfo.isConnected();
     }
 
-    // private method to get queryUrl
-    private String getQueryUrl(){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String selectedCountry = sharedPreferences.getString(
-                getString(R.string.pref_country_key),
-                getString(R.string.pref_country_default));
-        Uri baseUri = Uri.parse(BASE_URL);
-        Uri.Builder uriBuilder = baseUri.buildUpon();
-        uriBuilder.appendQueryParameter("country",selectedCountry);
-        uriBuilder.appendQueryParameter("apiKey", "e591d4b34f2e435ba3d8a1f4d4f0d185");
-        return uriBuilder.toString();
-    }
-
-
 
     @Override
     public Loader<List<Article>> onCreateLoader(int id, Bundle args) {
-        return new ArticleLoader(getContext(),getQueryUrl());
+        return new ArticleLoader(getContext(), getQueryUrl());
     }
 
     @Override
@@ -203,7 +195,7 @@ public class IndiaCategoryFragment extends Fragment
             adapter.addAll(data);
         }
         emptyListTextView1.setText(R.string.no_articles_found);
-        emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
+        emptyListTextViewSuggestionText.setText(R.string.no_internet_suggestion);
 
     }
 
@@ -212,7 +204,5 @@ public class IndiaCategoryFragment extends Fragment
         adapter.clear();
 
     }
-
-
 
 }

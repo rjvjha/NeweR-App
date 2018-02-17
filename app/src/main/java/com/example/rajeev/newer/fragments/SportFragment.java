@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.fragments;
 
 
 import android.content.Context;
@@ -27,7 +27,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rajeev.newer.Network.ArticleLoader;
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.adapters.ArticleAdapter;
+import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.loaders.ArticleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +40,11 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TopStoriesFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>>{
+public class SportFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>>{
 
-    private static final String LOG_TAG = TopStoriesFragment.class.getName();
+    private static final String LOG_TAG = IndiaCategoryFragment.class.getName();
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
-    private final int LOADER_ID = 0;
+    private final int LOADER_ID = 6;
     private View emptyView;
     private ArticleAdapter adapter;
     private ImageView emptyListImageView;
@@ -53,7 +56,7 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
-    public TopStoriesFragment() {
+    public SportFragment() {
         // Required empty public constructor
     }
 
@@ -75,7 +78,6 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,22 +93,20 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
         ListView listView = rootView.findViewById(R.id.list_view);
         adapter = new ArticleAdapter(context,new ArrayList<Article>());
         listView.setEmptyView(emptyView);
-
         // if data is already available then add it to adapter
         if(sData!=null) {
             adapter.addAll(sData);
-            progressIndicator.setVisibility(View.GONE);
             loadingFeedback.setVisibility(View.GONE);
+            progressIndicator.setVisibility(View.GONE);
         }
-
         // Code for hiding the app bar when scrolling list view
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             listView.setNestedScrollingEnabled(true);
         }
-
         listView.setAdapter(adapter);
 
-        // Code for handling no internet case
+        // Check for internet Connectivity
+
         if(!checkInternetConnectivity() && adapter.isEmpty()){
             progressIndicator.setVisibility(View.GONE);
             loadingFeedback.setVisibility(View.GONE);
@@ -127,14 +127,14 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
         return rootView;
     }
 
-    private String getQueryUrl() {
+    private String getQueryUrl(){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String selectedCountry = sharedPreferences.getString(
                 getString(R.string.pref_country_key),
                 getString(R.string.pref_country_default));
         Uri baseUri = Uri.parse(BASE_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-        uriBuilder.appendQueryParameter("category", "general");
+        uriBuilder.appendQueryParameter("category", "sports");
         uriBuilder.appendQueryParameter("country", selectedCountry);
         uriBuilder.appendQueryParameter("apiKey", "e591d4b34f2e435ba3d8a1f4d4f0d185");
         return uriBuilder.toString();
@@ -147,6 +147,7 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
             mSwipeRefreshLayout.setRefreshing(false);
             Toast.makeText(getContext(), R.string.no_internet_connectivity, Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override
@@ -166,6 +167,7 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     // private helper method to check the internet connectivity
     private boolean checkInternetConnectivity(){
@@ -187,12 +189,12 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
         adapter.clear();
         if(data != null && !data.isEmpty()){
             Toast.makeText(getContext(),"News updated",Toast.LENGTH_SHORT).show();
-            sData = data;
             mSwipeRefreshLayout.setRefreshing(false);
+            sData = data;
             adapter.addAll(data);
         }
         emptyListTextView1.setText(R.string.no_articles_found);
-        emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
+        emptyListTextViewSuggestionText.setText(R.string.no_internet_suggestion);
 
     }
 
@@ -201,5 +203,4 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
         adapter.clear();
 
     }
-
 }

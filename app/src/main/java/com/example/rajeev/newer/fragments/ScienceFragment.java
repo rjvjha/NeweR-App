@@ -1,4 +1,4 @@
-package com.example.rajeev.newer;
+package com.example.rajeev.newer.fragments;
 
 
 import android.content.Context;
@@ -27,7 +27,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rajeev.newer.Network.ArticleLoader;
+import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.adapters.ArticleAdapter;
+import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.loaders.ArticleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +40,10 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HealthFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>>{
-
+public class ScienceFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>>{
     private static final String LOG_TAG = EntertainmentFragment.class.getName();
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
-    private final int LOADER_ID = 8;
+    private final int LOADER_ID = 7;
     private View emptyView;
     private ArticleAdapter adapter;
     private ImageView emptyListImageView;
@@ -53,7 +55,7 @@ public class HealthFragment extends Fragment implements LoaderManager.LoaderCall
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
-    public HealthFragment() {
+    public ScienceFragment() {
         // Required empty public constructor
     }
 
@@ -79,6 +81,7 @@ public class HealthFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.list_articles, container, false);
         Context context = getContext();
         emptyView = rootView.findViewById(R.id.empty_list_view);
@@ -122,7 +125,6 @@ public class HealthFragment extends Fragment implements LoaderManager.LoaderCall
                 articlesRefreshOperation();
             }
         });
-
         return rootView;
     }
 
@@ -133,7 +135,7 @@ public class HealthFragment extends Fragment implements LoaderManager.LoaderCall
                 getString(R.string.pref_country_default));
         Uri baseUri = Uri.parse(BASE_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-        uriBuilder.appendQueryParameter("category", "health");
+        uriBuilder.appendQueryParameter("category", "science");
         uriBuilder.appendQueryParameter("country", selectedCountry);
         uriBuilder.appendQueryParameter("apiKey", "e591d4b34f2e435ba3d8a1f4d4f0d185");
         return uriBuilder.toString();
@@ -166,7 +168,6 @@ public class HealthFragment extends Fragment implements LoaderManager.LoaderCall
         return super.onOptionsItemSelected(item);
     }
 
-
     // private helper method to check the internet connectivity
     private boolean checkInternetConnectivity(){
         ConnectivityManager connMgr = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
@@ -187,12 +188,12 @@ public class HealthFragment extends Fragment implements LoaderManager.LoaderCall
         adapter.clear();
         if(data != null && !data.isEmpty()){
             Toast.makeText(getContext(),"News updated",Toast.LENGTH_SHORT).show();
-            sData = data;
             mSwipeRefreshLayout.setRefreshing(false);
+            sData = data;
             adapter.addAll(data);
         }
         emptyListTextView1.setText(R.string.no_articles_found);
-        emptyListTextViewSuggestionText.setText(R.string.no_articles_suggestion);
+        emptyListTextViewSuggestionText.setText(R.string.no_internet_suggestion);
 
     }
 
