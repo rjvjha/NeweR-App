@@ -59,8 +59,6 @@ public class SettingsActivity extends AppCompatActivity {
             onPreferenceChange(preference, preferenceString);
         }
 
-        private void restartActivity(){
-        }
 
     }
 

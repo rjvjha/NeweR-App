@@ -2,6 +2,7 @@ package com.example.rajeev.newer.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -13,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.util.ArraySet;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,24 +29,26 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.rajeev.newer.activities.MainActivity;
 import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.activities.EditNewsSourceActivity;
 import com.example.rajeev.newer.adapters.ArticleAdapter;
 import com.example.rajeev.newer.custom_classes.Article;
 import com.example.rajeev.newer.loaders.ArticleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class IndiaCategoryFragment extends Fragment
+public class CustomCategoryFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<List<Article>> {
 
-    private static final String LOG_TAG = IndiaCategoryFragment.class.getName();
+    private static final String LOG_TAG = CustomCategoryFragment.class.getName();
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
     private final int LOADER_ID = 1;
     private View emptyView;
@@ -58,8 +62,7 @@ public class IndiaCategoryFragment extends Fragment
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
-
-    public IndiaCategoryFragment() {
+    public CustomCategoryFragment() {
         // Required empty public constructor
     }
 
@@ -82,13 +85,6 @@ public class IndiaCategoryFragment extends Fragment
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // set title of country fragment
-        String countryTitle = ((MainActivity) getActivity()).getCountryLabel();
-        ((MainActivity) getActivity()).setTitle(countryTitle);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -149,9 +145,30 @@ public class IndiaCategoryFragment extends Fragment
         // adapter.notifyDataSetChanged();
     }
 
+    private List<String> getPrefNewsSourcesSetToList(){
+        Set<String> newsSources = getActivity().getSharedPreferences("com.example.rajeev.newer",
+                MODE_PRIVATE).getStringSet("sources", new ArraySet<String>());
+        List<String> newsSourceList = new ArrayList<>(20);
+        newsSourceList.addAll(newsSources);
+        return newsSourceList;
+    }
+
+    private String formatStringSetToString(List<String> newsSourceList){
+        String sources = "" ;
+        for(int i = 0;i< newsSourceList.size();i++ ){
+            if(i == newsSourceList.size() -1){
+             sources += newsSourceList.get(i);
+            }else{
+                sources += newsSourceList.get(i) +",";
+            }
+        }
+        return sources;
+    }
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.section_fragments_menu, menu);
+        inflater.inflate(R.menu.custom_category_fragment_menu, menu);
     }
 
     @Override
@@ -162,6 +179,10 @@ public class IndiaCategoryFragment extends Fragment
             case R.id.action_refresh:
                 mSwipeRefreshLayout.setRefreshing(true);
                 articlesRefreshOperation();
+                return true;
+            case R.id.menu_edit_source:
+                Intent editNewsIntent = new Intent(getContext(),EditNewsSourceActivity.class);
+                startActivity(editNewsIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -183,7 +204,8 @@ public class IndiaCategoryFragment extends Fragment
                 getString(R.string.pref_country_default));
         Uri baseUri = Uri.parse(BASE_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-        uriBuilder.appendQueryParameter("country",selectedCountry);
+        Log.v(LOG_TAG,"sources="+formatStringSetToString(getPrefNewsSourcesSetToList()));
+        uriBuilder.appendQueryParameter("sources",formatStringSetToString(getPrefNewsSourcesSetToList()));
         uriBuilder.appendQueryParameter("apiKey", "e591d4b34f2e435ba3d8a1f4d4f0d185");
         return uriBuilder.toString();
     }

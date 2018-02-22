@@ -9,6 +9,7 @@ import java.util.List;
 
 public class NewsSource {
     private static List<String> selectedSourceIds;
+    public static boolean isNewsSourcesIdChanged;
     private String sourceId;
     private String sourceName;
     private String sourceDescription;
@@ -36,8 +37,6 @@ public class NewsSource {
 
     static {
         selectedSourceIds = new ArrayList<>(20);
-        selectedSourceIds.add("abc-news");
-        selectedSourceIds.add("buzzfeed");
     }
 
     public static List<String> getSelectedSourceIds() {
@@ -62,9 +61,11 @@ public class NewsSource {
 
     public static void addNewSourceId(String selectedSourceId){
         selectedSourceIds.add(selectedSourceId);
+        isNewsSourcesIdChanged = true;
     }
     public static void removeExistingNewsSourceId(String unselectSourceId){
         selectedSourceIds.remove(unselectSourceId);
+        isNewsSourcesIdChanged = true;
     }
 
     public static void setSelectedSourceIds(List<String> savedSelectedSourceIds) {

@@ -42,7 +42,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
  */
 public class SportFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Article>>{
 
-    private static final String LOG_TAG = IndiaCategoryFragment.class.getName();
+    private static final String LOG_TAG = CustomCategoryFragment.class.getName();
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
     private final int LOADER_ID = 6;
     private View emptyView;

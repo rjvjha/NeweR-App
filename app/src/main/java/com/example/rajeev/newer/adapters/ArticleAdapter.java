@@ -152,6 +152,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
                    .load(imageUrl)
                    .placeholder(R.color.fallbackImageColor)
                    .fallback(Color.GRAY)
+                   .optionalCenterCrop()
                    .into(holder.articleImage);
         }else{
             holder.articleImage.setVisibility(View.GONE);

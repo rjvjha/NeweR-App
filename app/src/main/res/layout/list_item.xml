@@ -13,8 +13,8 @@
         android:clickable="false"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="8dp"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="false"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
         app:contentPadding="16dp"
         app:contentPaddingBottom="8dp"
         app:cardElevation="2dp"
@@ -58,11 +58,9 @@
             <ImageView
                 android:id="@+id/article_image_imageView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxHeight="@dimen/ariticle_image_height"
+                android:layout_height="@dimen/ariticle_image_height"
                 android:layout_marginTop="16dp"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 tools:src="@color/backgroundColor"
                 />
 

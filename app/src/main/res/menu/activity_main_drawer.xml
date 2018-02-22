@@ -11,10 +11,10 @@
                 android:title="@string/menu_top_stories"
                 android:icon="@drawable/ic_trending_up_black_24dp"/>
             <item
-                android:id="@+id/nav_country"
+                android:id="@+id/nav_custom"
                 android:checkable="true"
-                android:title="@string/menu_india"
-                android:icon="@drawable/ic_flag_black_24dp"/>
+                android:title="@string/menu_custom"
+                android:icon="@drawable/ic_mood_black_24dp"/>
             <item
                 android:id="@+id/nav_world"
                 android:checkable="true"
@@ -50,16 +50,6 @@
                 android:checkable="true"
                 android:title="@string/menu_health"
                 android:icon="@drawable/ic_favorite_black_24dp"/>
-        </menu>
-    </item>
-
-
-    <item android:title="@string/menu_manage_label">
-        <menu>
-            <item
-                android:id="@+id/nav_change_source"
-                android:title="@string/menu_change_source"
-                android:icon="@drawable/ic_mode_edit_black_24dp"/>
         </menu>
     </item>
 

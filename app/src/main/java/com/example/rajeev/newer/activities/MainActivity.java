@@ -21,9 +21,9 @@ import android.view.View;
 
 import com.example.rajeev.newer.R;
 import com.example.rajeev.newer.fragments.BusinessFragment;
+import com.example.rajeev.newer.fragments.CustomCategoryFragment;
 import com.example.rajeev.newer.fragments.EntertainmentFragment;
 import com.example.rajeev.newer.fragments.HealthFragment;
-import com.example.rajeev.newer.fragments.IndiaCategoryFragment;
 import com.example.rajeev.newer.fragments.ScienceFragment;
 import com.example.rajeev.newer.fragments.SportFragment;
 import com.example.rajeev.newer.fragments.TechnologyFragment;
@@ -40,14 +40,12 @@ public class MainActivity extends AppCompatActivity
     private static final String SAMPLE_NEWS_URL ="https://newsapi.org/v2/top-headlines?sources=google-news-in,the-times-of-india,the-hindu&apiKey=e591d4b34f2e435ba3d8a1f4d4f0d185";
     private static final String LOG_TAG = MainActivity.class.getName();
     private FloatingActionButton fab;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -135,9 +133,9 @@ public class MainActivity extends AppCompatActivity
                 openFragment(new TopStoriesFragment());
                 break;
 
-            case R.id.nav_country:
-                //setTitle(getCountryLabel());
-                openFragment(new IndiaCategoryFragment());
+            case R.id.nav_custom:
+                setTitle(R.string.menu_custom);
+                openFragment(new CustomCategoryFragment());
                 break;
 
             case R.id.nav_world:
@@ -175,12 +173,6 @@ public class MainActivity extends AppCompatActivity
                 openFragment(new HealthFragment());
                 break;
 
-            case R.id.nav_change_source:
-                Intent editNewsIntent = new Intent(this,EditNewsSourceActivity.class);
-                drawer.closeDrawer(GravityCompat.START);
-                startActivity(editNewsIntent);
-                return true;
-
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -197,10 +189,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        NavigationView navigationView =  findViewById(R.id.nav_view);
-        Menu menu = navigationView.getMenu();
-        MenuItem navCountry = menu.findItem(R.id.nav_country);
-        navCountry.setTitle(getCountryLabel());
     }
     // Helper method to open new Fragment
     private void openFragment(final Fragment fragment){
@@ -209,9 +197,6 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
     }
 
-    public FloatingActionButton getFloatingActionButton(){
-        return fab;
-    }
 
     // Private helper method to return the country selected by the user
     public String getCountryLabel(){

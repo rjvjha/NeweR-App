@@ -12,7 +12,7 @@
     <!--String values for navigation drawer -->
     <string name="menu_section_label">SECTIONS</string>
     <string name="menu_top_stories">Top Stories</string>
-    <string name="menu_india">India</string>
+    <string name="menu_custom">My Section</string>
     <string name="menu_world">World</string>
     <string name="menu_Business">Business</string>
     <string name="menu_technology">Technology</string>
@@ -21,7 +21,7 @@
     <string name="menu_science">Science</string>
     <string name="menu_health">Health</string>
     <string name="menu_manage_label">Manage Sources</string>
-    <string name="menu_change_source">Change news source</string>
+    <string name="menu_change_source">Edit news sources</string>
 
     <!--string values for menu options-->
     <string name="action_search">Search</string>
@@ -29,6 +29,7 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_feedback">Feedback</string>
     <string name="action_about">About</string>
+    <string name="action_reset">Reset</string>
 
     <!-- String values for user feedback messages -->
     <string name="no_internet_connectivity">No internet connection available!</string>
@@ -41,6 +42,8 @@
     <string name="search_edit_text_hint">Enter keyword or phrases to search..</string>
     <string name="search_activity_no_results_feedback">No relevant articles found!,
         try rephrasing the search terms.</string>
+    <string name="edit_news_source_no_news_sources_found">No news sources available!</string>
+    <string name="edit_news_source_reset_dialog_confiramation">Are you sure?</string>
 
     <!-- String values for article_item layout-->
     <string name="author_by_label">By</string>

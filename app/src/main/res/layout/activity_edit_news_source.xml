@@ -49,7 +49,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:entries="@array/settings_countries_labels"
                 android:spinnerMode="dialog"/>
 
             <Spinner
@@ -57,7 +56,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:entries="@array/news_sources_languages_labels"
                 android:spinnerMode="dialog"/>
 
         </LinearLayout>
@@ -78,12 +76,23 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:entries="@array/news_sources_category_labels"
                 android:spinnerMode="dropdown"
                 />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/news_source_apply_operation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="@string/sortBy_Apply"
+            android:drawableStart="@drawable/ic_check_black_24dp"
+            style="?android:attr/borderlessButtonStyle"/>
+
     </LinearLayout>
+
     <View
         android:id="@+id/divider_line"
         android:layout_width="match_parent"
@@ -103,10 +112,10 @@
     <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/progress_indicator_editNewsSource"
         style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_centerInParent="true"
-        android:visibility="visible" />
+        android:visibility="invisible" />
     <RelativeLayout
         android:id="@+id/empty_list_view_editNewsSource"
         android:layout_width="wrap_content"
