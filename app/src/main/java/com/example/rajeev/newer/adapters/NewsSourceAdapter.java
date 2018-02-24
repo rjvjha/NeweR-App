@@ -22,11 +22,12 @@ import java.util.List;
 
 public class NewsSourceAdapter extends ArrayAdapter<NewsSource> {
     private static final String LOG_TAG = NewsSourceAdapter.class.getName();
+    private List<String> savedSourcesIdList;
 
 
-
-    public NewsSourceAdapter(@NonNull Context context, @NonNull List<NewsSource> newsSourceList) {
+    public NewsSourceAdapter(@NonNull Context context, @NonNull List<NewsSource> newsSourceList, List<String> savedSourcesIdList) {
         super(context, 0, newsSourceList);
+        this.savedSourcesIdList = savedSourcesIdList;
     }
 
     private void onSwitchClickEvent(final Switch switchToggleButton, final String newsSourceId) {
@@ -63,6 +64,7 @@ public class NewsSourceAdapter extends ArrayAdapter<NewsSource> {
             holder = new ViewHolder();
             holder.newsSourceDescription = itemView.findViewById(R.id.news_source_description);
             holder.newsSourceSwitch = itemView.findViewById(R.id.news_source_switch);
+            NewsSource.setSelectedSourceIds(savedSourcesIdList);
             itemView.setTag(holder);
 
         } else{

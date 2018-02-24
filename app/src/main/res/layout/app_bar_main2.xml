@@ -26,7 +26,7 @@
     <include layout="@layout/content_main2" />
 
 
-    <android.support.design.widget.FloatingActionButton
+ <!--   <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_saved_articles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,6 +41,6 @@
         android:clickable="true"
         app:backgroundTint="@color/saved_articles_activity"
         app:layout_anchorGravity="bottom|right|end"
-        />
+        /> -->
 
 </android.support.design.widget.CoordinatorLayout>

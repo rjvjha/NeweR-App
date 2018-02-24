@@ -80,8 +80,16 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:gravity="center_horizontal"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="@android:color/darker_gray" />
+            android:textAppearance="?android:textAppearance"
+            android:textColor="@color/colorAccent"/>
+        <Button
+            android:id="@+id/empty_list_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/empty_list_suggestion"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:text="@string/title_activity_editNewsSource"/>
     </RelativeLayout>
 
 </RelativeLayout>

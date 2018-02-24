@@ -39,7 +39,11 @@
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/ArticlesCatalogTheme" />
         <activity android:name=".activities.EditNewsSourceActivity"
-            android:label="@string/title_activity_editNewsSource"></activity>
+            android:label="@string/title_activity_editNewsSource"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

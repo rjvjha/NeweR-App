@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:checkable="false"
@@ -52,5 +53,17 @@
                 android:icon="@drawable/ic_favorite_black_24dp"/>
         </menu>
     </item>
+
+    <item
+        android:checkable="false"
+        android:title="@string/menu_offline_label">
+        <menu>
+            <item
+                android:id="@+id/nav_saved_articles"
+                android:title="@string/title_activity_savedArticlesCatalog"
+                android:icon="@drawable/ic_file_download_black_24dp"/>
+        </menu>
+    </item>
+
 
 </menu>

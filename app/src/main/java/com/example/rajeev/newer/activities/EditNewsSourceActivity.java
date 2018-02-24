@@ -67,7 +67,8 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
         spinnerLanguage = findViewById(R.id.language_selector);
         spinnerCountry = findViewById(R.id.country_selector);
         spinnerCategory = findViewById(R.id.category_selector);
-        adapter = new NewsSourceAdapter(this, new ArrayList<NewsSource>());
+        adapter = new NewsSourceAdapter(this, new ArrayList<NewsSource>(), getPrefNewsSourcesSetToList());
+
         listView.setAdapter(adapter);
         setupSpinners();
         applyButton.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +109,6 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
 
     private void triggerNetworkOperation(){
         if(checkInternetConnectivity()){
-            Log.v(LOG_TAG, "Making Query to url : " + getQueryUrl());
             progressBar.setVisibility(View.VISIBLE);
             getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         }
@@ -226,7 +226,7 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.action_reset);
         builder.setMessage(R.string.edit_news_source_reset_dialog_confiramation);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Reset

@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.rajeev.newer.R;
 import com.example.rajeev.newer.fragments.BusinessFragment;
@@ -39,7 +37,6 @@ public class MainActivity extends AppCompatActivity
 
     private static final String SAMPLE_NEWS_URL ="https://newsapi.org/v2/top-headlines?sources=google-news-in,the-times-of-india,the-hindu&apiKey=e591d4b34f2e435ba3d8a1f4d4f0d185";
     private static final String LOG_TAG = MainActivity.class.getName();
-    private FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,16 +52,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
-        fab = findViewById(R.id.fab_saved_articles);
-        // code to handle fab button click
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SavedArticlesCatalog.class);
-                startActivity(intent);
-
-            }
-        });
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_content_container, new TopStoriesFragment());
@@ -171,6 +158,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_health:
                 setTitle(R.string.menu_health);
                 openFragment(new HealthFragment());
+                break;
+
+            case R.id.nav_saved_articles:
+                Intent intent = new Intent(MainActivity.this, SavedArticlesCatalog.class);
+                startActivity(intent);
                 break;
 
         }

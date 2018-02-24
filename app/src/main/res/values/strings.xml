@@ -20,7 +20,7 @@
     <string name="menu_sport">Sport</string>
     <string name="menu_science">Science</string>
     <string name="menu_health">Health</string>
-    <string name="menu_manage_label">Manage Sources</string>
+    <string name="menu_offline_label">OFFLINE</string>
     <string name="menu_change_source">Edit news sources</string>
 
     <!--string values for menu options-->
@@ -44,6 +44,8 @@
         try rephrasing the search terms.</string>
     <string name="edit_news_source_no_news_sources_found">No news sources available!</string>
     <string name="edit_news_source_reset_dialog_confiramation">Are you sure?</string>
+    <string name="custom_categoty_fragment_welcome_greet">Welcome! to My section</string>
+    <string name="custom_category_fragment_no_news_sources_suggestion">Customise your news feed by choosing single or multiple news sources.</string>
 
     <!-- String values for article_item layout-->
     <string name="author_by_label">By</string>
