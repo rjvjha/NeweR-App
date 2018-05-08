@@ -20,7 +20,7 @@
             android:animateLayoutChanges="true"
             android:clipToPadding="false"
             android:divider="@android:color/transparent"
-            android:dividerHeight="2dp"
+            android:dividerHeight="6dp"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
 

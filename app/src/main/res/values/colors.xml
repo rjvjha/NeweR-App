@@ -3,9 +3,11 @@
     <color name="colorPrimary">#607D8B</color>
     <color name="colorPrimaryDark">#455A64</color>
     <color name="colorAccent">#90A4AE</color>
+    <color name="colorAccentShare">#FF1744</color>
     <color name="backgroundColor">#F2F2F2</color>
     <color name="fallbackImageColor">#F5F5F5</color>
     <color name="custom_tab_toolbar">#263238</color>
     <color name="saved_articles_activity">#4CAF50</color>
     <color name="light_grey">#EAEAEA</color>
+    <color name="licence_text_background">#FAFAFA</color>
 </resources>

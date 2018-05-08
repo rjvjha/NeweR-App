@@ -97,8 +97,9 @@ public class MainActivity extends AppCompatActivity
                 return true;
 
             case R.id.action_about:
-                // Do nothing for now;
-                break;
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
+                return true;
 
         }
 

@@ -74,6 +74,12 @@ public class NewsSource {
         }
     }
 
+    public static boolean resetSelectedSourceIds(){
+        selectedSourceIds.clear();
+        return true;
+    }
+
+
     public boolean isNewsSourceSelected(){
         // return true if newsSource is already selected
         return selectedSourceIds.contains(sourceId);

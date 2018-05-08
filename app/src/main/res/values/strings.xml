@@ -72,7 +72,7 @@
     <string name="pref_country_title">Country</string>
     <string name="pref_country_key">pref_country</string>
     <string name="pref_country_dialog">Choose a country</string>
-    <string name="pref_country_default" translatable="false" >@string/country_india_value</string>
+    <string name="pref_country_default" translatable="false">@string/country_india_value</string>
     <string name="country_settings_hint">Articles will be shown from chosen country news sources in their respective languages.</string>
 
     <!-- String values for countries labels in SettingsActivity -->
@@ -228,7 +228,6 @@
     <string name="language_chinese_value" translatable="false">zh</string>
 
 
-    
     <!-- String values for categories -->
     <string name="category_business_value" translatable="false">business</string>
     <string name="category_entertainment_value" translatable="false">entertainment</string>
@@ -237,9 +236,29 @@
     <string name="category_science_value" translatable="false">science</string>
     <string name="category_sports_value" translatable="false">sports</string>
     <string name="category_technology_value" translatable="false">technology</string>
+    <string name="title_activity_about">About</string>
+    <string name="dummy_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum urna nibh, aliquet eget tempus vel, iaculis eget turpis. Maecenas sapien odio, malesuada non finibus congue, varius in ex. Cras non lobortis elit. </string>
+    <string name="glide_licence">Copyright 2014 Google, Inc. All rights reserved.
 
+Redistribution and use in source and binary forms, with or without modification, are
+permitted provided that the following conditions are met:
 
+   1. Redistributions of source code must retain the above copyright notice, this list of
+         conditions and the following disclaimer.
 
-    
+   2. Redistributions in binary form must reproduce the above copyright notice, this list
+         of conditions and the following disclaimer in the documentation and/or other materials
+         provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY GOOGLE, INC. \`\`AS IS\'\' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL GOOGLE, INC. OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+
 
 </resources>

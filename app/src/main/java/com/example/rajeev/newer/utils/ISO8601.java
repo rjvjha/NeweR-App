@@ -45,4 +45,36 @@ public final class ISO8601 {
         calendar.setTime(date);
         return calendar;
     }
-}
+
+    public static long[] getTimeElapsedArray(Date publishedDate){
+        long [] elapsedTimeArray = new long[3];
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd LLL, yyyy h:mm a");
+        Date current = Calendar.getInstance().getTime();
+        long difference = current.getTime() - publishedDate.getTime();
+
+        // Conversion factors
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = difference / daysInMilli;
+        difference = difference % daysInMilli;
+
+        elapsedTimeArray[0]= elapsedDays;
+
+        long elapsedHours = difference / hoursInMilli;
+        difference = difference % hoursInMilli;
+
+        elapsedTimeArray[1] = elapsedHours;
+
+        long elapsedMinutes = difference / minutesInMilli;
+
+        elapsedTimeArray[2] = elapsedMinutes;
+
+        return elapsedTimeArray;
+        }
+
+
+    }
+

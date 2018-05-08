@@ -16,12 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.rajeev.newer.utils.GlideApp;
 import com.example.rajeev.newer.R;
 import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.utils.GlideApp;
 import com.example.rajeev.newer.utils.ISO8601;
 
 import java.text.ParseException;
@@ -51,14 +52,14 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         TextView byLabel;
         TextView description;
         ImageView articleImage;
-        Button shareButton;
-        Button saveButton;
+        ImageButton shareButton;
+        ImageButton saveButton;
         Button readMoreButton;
         int position;
     }
 
     // private helper methods to add listener to ShareAction
-    private void shareAction(Button button, final String articleTitle, final String url){
+    private void shareAction(ImageButton button, final String articleTitle, final String url){
         button.setOnClickListener(new View.OnClickListener() {
             final String MSG = "Read this: \n" + articleTitle +"\n" + url + "\n" +
                     "shared from Newer news app.";
@@ -147,10 +148,12 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         holder.sourceName.setText(currentArticle.getSourceName());
         // Set publish DateTime
         holder.publishDateTime.setText(formatDateTime(publishAt,holder.publishDateTime));
-        if(imageUrl!="null" && !TextUtils.isEmpty(imageUrl)){
+
+        // code for loading image using Glide
+        if(!imageUrl.equals("null") && !TextUtils.isEmpty(imageUrl)){
            GlideApp.with(getContext())
                    .load(imageUrl)
-                   .placeholder(R.color.fallbackImageColor)
+                   .placeholder(R.color.light_grey)
                    .fallback(Color.GRAY)
                    .optionalCenterCrop()
                    .into(holder.articleImage);
@@ -186,25 +189,64 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
     }
 
     // Helper method to format Date and time
+    @Nullable
     private String formatDateTime(String publishDateTime, TextView dateTime) {
-        String displayDateTime = new String();
         if (!publishDateTime.equals("null") && !TextUtils.isEmpty(publishDateTime)) {
             try {
                 Calendar calendar = ISO8601.toCalendar(publishDateTime);
                 Date date = calendar.getTime();
+                long [] elapsedTimeArray = ISO8601.getTimeElapsedArray(date);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd LLL, yyyy h:mm a");
-                publishDateTime = simpleDateFormat.format(date);
+                String formerDateTime = simpleDateFormat.format(date);
+
+                // Test cases for time elapsed
+                if(elapsedTimeArray[0]>1 && elapsedTimeArray[1]>1){
+                    publishDateTime = elapsedTimeArray[0] + " days " +
+                            elapsedTimeArray[1] + " hours " + "ago";
+                } else if(elapsedTimeArray[0]==1 && elapsedTimeArray[1]==1){
+                    publishDateTime = elapsedTimeArray[0] + " day " +
+                            elapsedTimeArray[1] + " hour " + "ago";
+                } else if(elapsedTimeArray[0]==1 && elapsedTimeArray[1]>1){
+                    publishDateTime = elapsedTimeArray[0] + " day " +
+                            elapsedTimeArray[1] + " hours " + "ago";
+                } else if(elapsedTimeArray[0]>1 && elapsedTimeArray[1]==1){
+                    publishDateTime = elapsedTimeArray[0] + " days " +
+                            elapsedTimeArray[1] + " hour " + "ago";
+                } else if(elapsedTimeArray[1]>1 && elapsedTimeArray[2]>1) {
+                    publishDateTime = elapsedTimeArray[1] + " hours " +
+                            elapsedTimeArray[2] + " minutes " + "ago";
+                } else if(elapsedTimeArray[1]==1 && elapsedTimeArray[2]==1) {
+                    publishDateTime = elapsedTimeArray[1] + " hour " +
+                            elapsedTimeArray[2] + " minute " + "ago";
+                } else if(elapsedTimeArray[1]>1 && elapsedTimeArray[2]==1){
+                    publishDateTime = elapsedTimeArray[1] + " hours " +
+                            elapsedTimeArray[2] + " minute " + "ago";
+
+                } else if(elapsedTimeArray[1]==1 && elapsedTimeArray[2]>1){
+                    publishDateTime = elapsedTimeArray[1] + " hour " +
+                            elapsedTimeArray[2] + " minutes " + "ago";
+                } else if(elapsedTimeArray[1]>1 && elapsedTimeArray[2]==0){
+                    publishDateTime = elapsedTimeArray[1] + " hours " + "ago";
+                } else if(elapsedTimeArray[1]==1 && elapsedTimeArray[2]==0){
+                    publishDateTime = elapsedTimeArray[1] + " hour " + "ago";
+                } else if(elapsedTimeArray[2]==1){
+                    publishDateTime = elapsedTimeArray[2] + " minute " + "ago";
+                } else {
+                    publishDateTime = elapsedTimeArray[2] + " minutes " + "ago";
+                }
+                Log.d("ArticleAdapter.java", elapsedTimeArray[0] + "days" + elapsedTimeArray[1] + " hours" + elapsedTimeArray[2] + " minutes");
+                Log.d("ArticleAdapter.java", "Displayed Time: " + publishDateTime + "\t" + "Actual time: " + formerDateTime);
                 return publishDateTime;
 
             }catch (ParseException e){
-                Log.wtf("ArticleAdapter.java", "Error in parsing the given dateTime", e);
-                return displayDateTime;
+                Log.e("ArticleAdapter.java", "Error in parsing the given dateTime", e);
+                return null;
 
             }
 
         }else{
             dateTime.setVisibility(View.GONE);
-            return displayDateTime;
+            return " ";
         }
 
     }

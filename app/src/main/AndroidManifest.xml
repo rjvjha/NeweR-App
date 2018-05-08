@@ -38,11 +38,19 @@
             android:label="@string/title_activity_savedArticlesCatalog"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/ArticlesCatalogTheme" />
-        <activity android:name=".activities.EditNewsSourceActivity"
-            android:label="@string/title_activity_editNewsSource"
+        <activity
+            android:name=".activities.EditNewsSourceActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
-
+            android:label="@string/title_activity_editNewsSource"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rajeev.newer.activities.MainActivity" />
         </activity>
     </application>
 

@@ -37,7 +37,6 @@ import java.util.Set;
 public class EditNewsSourceActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<List<NewsSource>>{
 
     private static final String LOG_TAG = EditNewsSourceActivity.class.getName();
-    private final String BASE_URL = "https://newsapi.org/v2/sources?";
     private final int LOADER_ID = 12;
     private NewsSourceAdapter adapter;
     private View emptyView;
@@ -46,9 +45,9 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
     private Spinner spinnerCountry;
     private Spinner spinnerLanguage;
     private Spinner spinnerCategory;
-    private String sSelectedCategory;
-    private String sSelectedLanguage;
-    private String sSelectedCountry;
+    private String sSelectedCategory = " ";
+    private String sSelectedLanguage = " ";
+    private String sSelectedCountry = " ";
     private String sharedPrefFile = "com.example.rajeev.newer";
     private SharedPreferences mPreferences;
 
@@ -58,6 +57,7 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
         setContentView(R.layout.activity_edit_news_source);
         // creating preference file
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        NewsSource.setSelectedSourceIds(getPrefNewsSourcesSetToList());
         ListView listView = findViewById(R.id.edit_news_sources_list_view);
         emptyView = findViewById(R.id.empty_list_view_editNewsSource);
         emptyTextView1 = findViewById(R.id.empty_list_textView1_editNewsSource);
@@ -67,7 +67,7 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
         spinnerLanguage = findViewById(R.id.language_selector);
         spinnerCountry = findViewById(R.id.country_selector);
         spinnerCategory = findViewById(R.id.category_selector);
-        adapter = new NewsSourceAdapter(this, new ArrayList<NewsSource>(), getPrefNewsSourcesSetToList());
+        adapter = new NewsSourceAdapter(this, new ArrayList<NewsSource>());
 
         listView.setAdapter(adapter);
         setupSpinners();
@@ -77,6 +77,8 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
                 triggerNetworkOperation();
             }
         });
+
+        triggerNetworkOperation();
 
     }
 
@@ -226,7 +228,7 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.action_reset);
         builder.setMessage(R.string.edit_news_source_reset_dialog_confiramation);
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Reset
@@ -249,7 +251,7 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
 
     // private method to get queryUrl for news Sources
     private String getQueryUrl(){
-        Uri baseUri = Uri.parse(BASE_URL);
+        Uri baseUri = Uri.parse("https://newsapi.org/v2/sources?");
         Uri.Builder uriBuilder = baseUri.buildUpon();
         uriBuilder.appendQueryParameter("language", sSelectedLanguage);
         uriBuilder.appendQueryParameter("country", sSelectedCountry);
@@ -278,6 +280,7 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
         preferencesEditor.clear();
         preferencesEditor.apply();
+        NewsSource.resetSelectedSourceIds();
     }
     // private helper method to check the internet connectivity
     private boolean checkInternetConnectivity(){
@@ -288,6 +291,12 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
 
     @Override
     public Loader<List<NewsSource>> onCreateLoader(int id, Bundle args) {
+        if(TextUtils.isEmpty(sSelectedLanguage)
+                && TextUtils.isEmpty(sSelectedCategory)
+                && TextUtils.isEmpty(sSelectedCountry)){
+            return new NewsSourceLoader(this,
+                    "https://newsapi.org/v2/sources?apiKey=e591d4b34f2e435ba3d8a1f4d4f0d185");
+        }
         return new NewsSourceLoader(this, getQueryUrl());
     }
 
