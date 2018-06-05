@@ -29,17 +29,6 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
         super(context, 0, articles);
     }
 
-    private static class ViewHolder{
-        TextView title;
-        TextView source;
-        TextView description;
-        ImageView articleImage;
-        ImageButton shareButton;
-        ImageButton downloadButton;
-    }
-
-    // private helper method for share action onClick
-
     private void shareAction(ImageButton button, final String TITLE, final String URL){
         button.setOnClickListener(new View.OnClickListener() {
             final String MSG = "Read this: \n" + TITLE +"\n" + URL + "\n" +
@@ -60,6 +49,8 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
             }
         });
     }
+
+    // private helper method for share action onClick
 
     // private helper method for downloadArticleAction onClick
     private void downloadArticle(ImageButton button, final Article CURRENT_ARTICLE){
@@ -87,6 +78,8 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
         }
         holder.description.setVisibility(View.VISIBLE);
         holder.articleImage.setVisibility(View.VISIBLE);
+        holder.downloadButton.setVisibility(View.VISIBLE);
+        holder.shareButton.setVisibility(View.VISIBLE);
 
         // get the required values from article object
         String currentTitle = currentArticle.getTitle();
@@ -127,5 +120,14 @@ public class ArticleSearchAdapter extends ArrayAdapter<Article> {
         }
         shareAction(holder.shareButton, currentTitle, currentArticle.getUrl());
         return itemView;
+    }
+
+    private static class ViewHolder {
+        TextView title;
+        TextView source;
+        TextView description;
+        ImageView articleImage;
+        ImageButton shareButton;
+        ImageButton downloadButton;
     }
 }

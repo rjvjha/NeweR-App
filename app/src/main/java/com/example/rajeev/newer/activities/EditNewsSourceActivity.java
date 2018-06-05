@@ -36,7 +36,7 @@ import java.util.Set;
 
 public class EditNewsSourceActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<List<NewsSource>>{
 
-    private static final String LOG_TAG = EditNewsSourceActivity.class.getName();
+    private static final String LOG_TAG = EditNewsSourceActivity.class.getSimpleName();
     private final int LOADER_ID = 12;
     private NewsSourceAdapter adapter;
     private View emptyView;
@@ -85,14 +85,14 @@ public class EditNewsSourceActivity extends AppCompatActivity  implements Loader
     @Override
     protected void onStart() {
         super.onStart();
-        Log.wtf("EditNewsSourceActivity.class","SelectedNewsSources :"+ getPrefNewsSourcesSetToList());
+        Log.d(LOG_TAG, "SelectedNewsSources :" + getPrefNewsSourcesSetToList());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         if(NewsSource.isNewsSourcesIdChanged){
-            Log.wtf(LOG_TAG, "Edit preferences");
+            Log.d(LOG_TAG, "Edit preferences");
             SharedPreferences.Editor preferenceEditor = mPreferences.edit();
             preferenceEditor.putStringSet("sources", getSelectedNewsSourcesListToSet());
             preferenceEditor.apply();

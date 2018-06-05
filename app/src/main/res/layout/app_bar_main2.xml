@@ -26,21 +26,5 @@
     <include layout="@layout/content_main2" />
 
 
- <!--   <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_saved_articles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:gravity="center_vertical"
-        android:src="@drawable/ic_file_download_black_24dp"
-        app:useCompatPadding="true"
-        app:fabSize="normal"
-        android:tint="@android:color/white"
-        android:clickable="true"
-        app:backgroundTint="@color/saved_articles_activity"
-        app:layout_anchorGravity="bottom|right|end"
-        /> -->
 
 </android.support.design.widget.CoordinatorLayout>

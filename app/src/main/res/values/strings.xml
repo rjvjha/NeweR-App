@@ -38,7 +38,7 @@
     <string name="no_internet_suggestion">Please check your internet connection.</string>
     <string name="loading_feedback">Loading&#8230;</string>
     <string name="searching_feedback">Searching&#8230;</string>
-    <string name="search_empty_header">Search through millions of articles from over 5,000 large and small news sources and blogs.</string>
+    <string name="search_empty_header">Search through millions of articles from over 30,000 large and small news sources and blogs.</string>
     <string name="search_edit_text_hint">Enter keyword or phrases to search..</string>
     <string name="search_activity_no_results_feedback">No relevant articles found!,
         try rephrasing the search terms.</string>

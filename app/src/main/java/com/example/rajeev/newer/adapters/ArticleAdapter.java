@@ -38,31 +38,16 @@ import java.util.List;
 public class ArticleAdapter extends ArrayAdapter<Article> {
 
 
-
     public ArticleAdapter(Context context, List<Article> articles) {
         super(context, 0, articles);
     }
 
-
-    private static class ViewHolder{
-        TextView sourceName;
-        TextView publishDateTime;
-        TextView title;
-        TextView authorName;
-        TextView byLabel;
-        TextView description;
-        ImageView articleImage;
-        ImageButton shareButton;
-        ImageButton saveButton;
-        Button readMoreButton;
-        int position;
-    }
-
     // private helper methods to add listener to ShareAction
-    private void shareAction(ImageButton button, final String articleTitle, final String url){
+    private void shareAction(final ImageButton button, final String articleTitle, final String url) {
         button.setOnClickListener(new View.OnClickListener() {
-            final String MSG = "Read this: \n" + articleTitle +"\n" + url + "\n" +
+            final String MSG = "Read this: \n" + articleTitle + "\n" + url + "\n" +
                     "shared from Newer news app.";
+
             @Override
             public void onClick(View v) {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -79,8 +64,9 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
             }
         });
     }
+
     // private helper methods to add listener to readMoreAction
-    private void readMoreAction(Button button, final String url){
+    private void readMoreAction(Button button, final String url) {
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,9 +76,9 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
                 intentBuilder.setToolbarColor(toolbarColorId);
                 intentBuilder.setCloseButtonIcon(BitmapFactory.decodeResource(getContext().
                         getResources(), R.drawable.ic_arrow_back_white_24dp));
-                intentBuilder.setStartAnimations(getContext(),R.anim.slide_in_right,
+                intentBuilder.setStartAnimations(getContext(), R.anim.slide_in_right,
                         R.anim.slide_out_left);
-                intentBuilder.setExitAnimations(getContext(),android.R.anim.slide_in_left,
+                intentBuilder.setExitAnimations(getContext(), android.R.anim.slide_in_left,
                         android.R.anim.slide_out_right);
 
                 CustomTabsIntent customTabsIntent = intentBuilder.build();
@@ -120,11 +106,11 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
             holder.description = itemView.findViewById(R.id.article_description_textView);
             holder.articleImage = itemView.findViewById(R.id.article_image_imageView);
             holder.shareButton = itemView.findViewById(R.id.article_button_share);
-            holder.saveButton =  itemView.findViewById(R.id.article_save_button);
+            holder.saveButton = itemView.findViewById(R.id.article_save_button);
             holder.readMoreButton = itemView.findViewById(R.id.article_read_more_button);
             holder.position = position;
             itemView.setTag(holder);
-        }else{
+        } else {
             holder = (ViewHolder) itemView.getTag();
         }
 
@@ -147,17 +133,17 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         // Set article source name
         holder.sourceName.setText(currentArticle.getSourceName());
         // Set publish DateTime
-        holder.publishDateTime.setText(formatDateTime(publishAt,holder.publishDateTime));
+        holder.publishDateTime.setText(formatDateTime(publishAt, holder.publishDateTime));
 
         // code for loading image using Glide
-        if(!imageUrl.equals("null") && !TextUtils.isEmpty(imageUrl)){
-           GlideApp.with(getContext())
-                   .load(imageUrl)
-                   .placeholder(R.color.light_grey)
-                   .fallback(Color.GRAY)
-                   .optionalCenterCrop()
-                   .into(holder.articleImage);
-        }else{
+        if (!imageUrl.equals("null") && !TextUtils.isEmpty(imageUrl)) {
+            GlideApp.with(getContext())
+                    .load(imageUrl)
+                    .placeholder(R.color.light_grey)
+                    .fallback(Color.GRAY)
+                    .optionalCenterCrop()
+                    .into(holder.articleImage);
+        } else {
             holder.articleImage.setVisibility(View.GONE);
         }
 
@@ -177,7 +163,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         // Check for empty description and set description
         if (!description.equals("null") && !TextUtils.isEmpty(description)) {
             holder.description.setText(currentArticle.getDescription());
-        }else{
+        } else {
             holder.description.setVisibility(View.GONE);
         }
 
@@ -195,59 +181,73 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
             try {
                 Calendar calendar = ISO8601.toCalendar(publishDateTime);
                 Date date = calendar.getTime();
-                long [] elapsedTimeArray = ISO8601.getTimeElapsedArray(date);
+                long[] elapsedTimeArray = ISO8601.getTimeElapsedArray(date);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd LLL, yyyy h:mm a");
                 String formerDateTime = simpleDateFormat.format(date);
 
                 // Test cases for time elapsed
-                if(elapsedTimeArray[0]>1 && elapsedTimeArray[1]>1){
+                if (elapsedTimeArray[0] > 1 && elapsedTimeArray[1] > 1) {
                     publishDateTime = elapsedTimeArray[0] + " days " +
                             elapsedTimeArray[1] + " hours " + "ago";
-                } else if(elapsedTimeArray[0]==1 && elapsedTimeArray[1]==1){
+                } else if (elapsedTimeArray[0] == 1 && elapsedTimeArray[1] == 1) {
                     publishDateTime = elapsedTimeArray[0] + " day " +
                             elapsedTimeArray[1] + " hour " + "ago";
-                } else if(elapsedTimeArray[0]==1 && elapsedTimeArray[1]>1){
+                } else if (elapsedTimeArray[0] == 1 && elapsedTimeArray[1] > 1) {
                     publishDateTime = elapsedTimeArray[0] + " day " +
                             elapsedTimeArray[1] + " hours " + "ago";
-                } else if(elapsedTimeArray[0]>1 && elapsedTimeArray[1]==1){
+                } else if (elapsedTimeArray[0] > 1 && elapsedTimeArray[1] == 1) {
                     publishDateTime = elapsedTimeArray[0] + " days " +
                             elapsedTimeArray[1] + " hour " + "ago";
-                } else if(elapsedTimeArray[1]>1 && elapsedTimeArray[2]>1) {
+                } else if (elapsedTimeArray[1] > 1 && elapsedTimeArray[2] > 1) {
                     publishDateTime = elapsedTimeArray[1] + " hours " +
                             elapsedTimeArray[2] + " minutes " + "ago";
-                } else if(elapsedTimeArray[1]==1 && elapsedTimeArray[2]==1) {
+                } else if (elapsedTimeArray[1] == 1 && elapsedTimeArray[2] == 1) {
                     publishDateTime = elapsedTimeArray[1] + " hour " +
                             elapsedTimeArray[2] + " minute " + "ago";
-                } else if(elapsedTimeArray[1]>1 && elapsedTimeArray[2]==1){
+                } else if (elapsedTimeArray[1] > 1 && elapsedTimeArray[2] == 1) {
                     publishDateTime = elapsedTimeArray[1] + " hours " +
                             elapsedTimeArray[2] + " minute " + "ago";
 
-                } else if(elapsedTimeArray[1]==1 && elapsedTimeArray[2]>1){
+                } else if (elapsedTimeArray[1] == 1 && elapsedTimeArray[2] > 1) {
                     publishDateTime = elapsedTimeArray[1] + " hour " +
                             elapsedTimeArray[2] + " minutes " + "ago";
-                } else if(elapsedTimeArray[1]>1 && elapsedTimeArray[2]==0){
+                } else if (elapsedTimeArray[1] > 1 && elapsedTimeArray[2] == 0) {
                     publishDateTime = elapsedTimeArray[1] + " hours " + "ago";
-                } else if(elapsedTimeArray[1]==1 && elapsedTimeArray[2]==0){
+                } else if (elapsedTimeArray[1] == 1 && elapsedTimeArray[2] == 0) {
                     publishDateTime = elapsedTimeArray[1] + " hour " + "ago";
-                } else if(elapsedTimeArray[2]==1){
+                } else if (elapsedTimeArray[2] == 1) {
                     publishDateTime = elapsedTimeArray[2] + " minute " + "ago";
                 } else {
                     publishDateTime = elapsedTimeArray[2] + " minutes " + "ago";
                 }
-                Log.d("ArticleAdapter.java", elapsedTimeArray[0] + "days" + elapsedTimeArray[1] + " hours" + elapsedTimeArray[2] + " minutes");
+
                 Log.d("ArticleAdapter.java", "Displayed Time: " + publishDateTime + "\t" + "Actual time: " + formerDateTime);
                 return publishDateTime;
 
-            }catch (ParseException e){
+            } catch (ParseException e) {
                 Log.e("ArticleAdapter.java", "Error in parsing the given dateTime", e);
                 return null;
 
             }
 
-        }else{
+        } else {
             dateTime.setVisibility(View.GONE);
             return " ";
         }
 
+    }
+
+    private static class ViewHolder {
+        TextView sourceName;
+        TextView publishDateTime;
+        TextView title;
+        TextView authorName;
+        TextView byLabel;
+        TextView description;
+        ImageView articleImage;
+        ImageButton shareButton;
+        ImageButton saveButton;
+        Button readMoreButton;
+        int position;
     }
 }

@@ -44,6 +44,7 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
 
     private static final String LOG_TAG = TopStoriesFragment.class.getName();
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
+    private static List<Article> sData;
     private final int LOADER_ID = 0;
     private View emptyView;
     private ArticleAdapter adapter;
@@ -51,7 +52,6 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
     private TextView emptyListTextView1;
     private TextView emptyListTextViewSuggestionText;
     private ProgressBar progressIndicator;
-    private static List<Article> sData;
     private TextView loadingFeedback;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -63,7 +63,9 @@ public class TopStoriesFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        if (savedInstanceState == null) {
+            setHasOptionsMenu(true);
+        }
     }
 
     @Override

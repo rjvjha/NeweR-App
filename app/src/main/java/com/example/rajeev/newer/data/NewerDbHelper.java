@@ -9,9 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Database helper for Newer app. Manages database creation and version management.
  */
 
-public class NewerDbHelper extends SQLiteOpenHelper{
-
-    public static final String LOG_TAG = NewerDbHelper.class.getSimpleName();
+public class NewerDbHelper extends SQLiteOpenHelper {
 
     /** Name of the database file */
     private static final String DATABASE_NAME = "SavedArticles.db";
@@ -20,22 +18,6 @@ public class NewerDbHelper extends SQLiteOpenHelper{
      * Database version. If you change the database schema, you must increment the database version.
      */
     private static final int DATABASE_VERSION = 1;
-
-    // SQL statement to create table
-    private static final String SQL_CREATE_TABLE = "CREATE TABLE " +
-            NewerContract.ArticleEntry.TABLE_NAME + " ("
-            + NewerContract.ArticleEntry._ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + NewerContract.ArticleEntry.SOURCE_NAME + "TEXT NOT NULL, "
-            + NewerContract.ArticleEntry.AUTHOR_NAME + "TEXT, "
-            + NewerContract.ArticleEntry.IMAGE + "BLOB, "
-            + NewerContract.ArticleEntry.TITLE + "TEXT NOT NULL, "
-            + NewerContract.ArticleEntry.DESCRIPTION + "TEXT, "
-            + NewerContract.ArticleEntry.URL + "TEXT NOT NULL, "
-            + NewerContract.ArticleEntry.IMAGE_URL + "TEXT, "
-            + NewerContract.ArticleEntry.PUBLISHED_AT + "TEXT) ;";
-
-    // SQL statement to drop table
-    private static final String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + NewerContract.ArticleEntry.TABLE_NAME + ";";
 
 
     public NewerDbHelper(Context context) {
@@ -47,6 +29,19 @@ public class NewerDbHelper extends SQLiteOpenHelper{
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // SQL statement to create table
+        final String SQL_CREATE_TABLE = "CREATE TABLE " +
+                NewerContract.ArticleEntry.TABLE_NAME + "( "
+                + NewerContract.ArticleEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + NewerContract.ArticleEntry.SOURCE_NAME + " TEXT NOT NULL, "
+                + NewerContract.ArticleEntry.AUTHOR_NAME + " TEXT, "
+                + NewerContract.ArticleEntry.IMAGE + " BLOB, "
+                + NewerContract.ArticleEntry.TITLE + " TEXT NOT NULL, "
+                + NewerContract.ArticleEntry.DESCRIPTION + " TEXT, "
+                + NewerContract.ArticleEntry.URL + " TEXT NOT NULL, "
+                + NewerContract.ArticleEntry.IMAGE_URL + " TEXT, "
+                + NewerContract.ArticleEntry.PUBLISHED_AT + " TEXT ) ;";
+
         db.execSQL(SQL_CREATE_TABLE);
 
     }
@@ -56,6 +51,11 @@ public class NewerDbHelper extends SQLiteOpenHelper{
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // SQL statement to drop table
+        final String dropTableCommand = "DROP TABLE IF EXISTS " +
+                NewerContract.ArticleEntry.TABLE_NAME + ";";
+        db.execSQL(dropTableCommand);
+        onCreate(db);
 
     }
 }

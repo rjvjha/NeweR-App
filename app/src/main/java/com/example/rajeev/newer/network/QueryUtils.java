@@ -138,7 +138,6 @@ public final class QueryUtils {
      * Make an HTTP request to the given imageURL and return a Bitmap as the response.
      */
     public static Bitmap downloadBitmapFromInternet(String imageUrl) throws IOException {
-        //@ToDo: write code to fetch bitmap from imageUrl
         Bitmap thumbnail = null;
         URL url = createUrl(imageUrl);
         Log.v(LOG_TAG, "Image url:" + url);
@@ -146,18 +145,18 @@ public final class QueryUtils {
         InputStream inputStream = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            Log.v(LOG_TAG, "Connection Opened");
+            Log.d(LOG_TAG, "Connection Opened");
             urlConnection.setRequestMethod("GET");
             urlConnection.setReadTimeout(5000);
             urlConnection.setConnectTimeout(500);
             urlConnection.setUseCaches(true);
-            Log.v(LOG_TAG, "Connecting to the given url");
+            Log.d(LOG_TAG, "Connecting to the given url");
             urlConnection.connect();
             int responseCode = urlConnection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                Log.wtf(LOG_TAG, "Connection successful, fetching input sream now");
+                Log.d(LOG_TAG, "Connection successful, fetching input sream now");
                 inputStream = urlConnection.getInputStream();
-                Log.wtf(LOG_TAG, "received the stream, decoding stream now");
+                Log.d(LOG_TAG, "received the stream, decoding stream now");
                 thumbnail = BitmapFactory.decodeStream(inputStream);
                 return thumbnail;
             } else {

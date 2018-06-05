@@ -10,14 +10,15 @@
         android:name="com.example.rajeev.newer.activities.SettingsActivity$NewsPreferenceFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.example.rajeev.newer.activities.SettingsActivity"/>
+        tools:context="com.example.rajeev.newer.activities.SettingsActivity" />
+
     <TextView
         android:id="@+id/settings_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/light_grey"
+        android:fontFamily="sans-serif"
         android:padding="10dp"
         android:text="@string/country_settings_hint"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:background="@color/light_grey"
-        android:fontFamily="sans-serif"/>
+        android:textAppearance="?android:textAppearanceSmall" />
 </LinearLayout>

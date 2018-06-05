@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     android:background="@color/fallbackImageColor">
 
-    <ListView
-        android:id="@+id/saved_articles_list_view"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/saved_articles_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="false"
+        android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:clipToPadding="false"
-        android:animateLayoutChanges="false"
+        android:paddingTop="8dp"
         />
 </RelativeLayout>

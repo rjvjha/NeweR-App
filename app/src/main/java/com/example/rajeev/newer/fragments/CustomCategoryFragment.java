@@ -49,6 +49,7 @@ public class CustomCategoryFragment extends Fragment
 
     private static final String LOG_TAG = CustomCategoryFragment.class.getName();
     private static final String BASE_URL = "https://newsapi.org/v2/top-headlines?";
+    private static List<Article> sData;
     private final int LOADER_ID = 1;
     private View emptyView;
     private ArticleAdapter adapter;
@@ -56,7 +57,6 @@ public class CustomCategoryFragment extends Fragment
     private TextView emptyListTextView1;
     private TextView emptyListTextViewSuggestionText;
     private ProgressBar progressIndicator;
-    private static List<Article> sData;
     private TextView loadingFeedback;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Button emptyListButton;
@@ -70,7 +70,9 @@ public class CustomCategoryFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        if (savedInstanceState == null) {
+            setHasOptionsMenu(true);
+        }
     }
 
     @Override
