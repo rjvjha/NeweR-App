@@ -125,7 +125,6 @@ public class BusinessFragment extends Fragment implements LoaderManager.LoaderCa
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.i(LOG_TAG, "onRefresh called from SwipeRefreshLayout");
                 articlesRefreshOperation();
             }
         });

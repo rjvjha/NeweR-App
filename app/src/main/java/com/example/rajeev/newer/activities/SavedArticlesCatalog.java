@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 public class SavedArticlesCatalog extends AppCompatActivity {
     private static final String LOG_TAG = SavedArticlesCatalog.class.getSimpleName();
     private RecyclerView mRecylerView;
+    private Cursor mData;
 
     // convert from bitmap to byte array
     public static byte[] getBytes(Bitmap bitmap) {
@@ -49,7 +50,7 @@ public class SavedArticlesCatalog extends AppCompatActivity {
         NewerDbHelper dbHelper = new NewerDbHelper(this);
         Bitmap dummyBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
         //DbTestUtils.insertFakeData(dbHelper.getWritableDatabase(),dummyBitmap);
-        Cursor c = getDataFromDb(dbHelper.getReadableDatabase());
+        mData = getDataFromDb(dbHelper.getReadableDatabase());
 
         // Setup RecyclerView
         mRecylerView = findViewById(R.id.saved_articles_rv);
@@ -57,7 +58,7 @@ public class SavedArticlesCatalog extends AppCompatActivity {
         mRecylerView.setLayoutManager(layoutManager);
         mRecylerView.setHasFixedSize(true);
 
-        SavedArticleAdapter adapter = new SavedArticleAdapter(this, c);
+        SavedArticleAdapter adapter = new SavedArticleAdapter(this, mData);
         mRecylerView.setAdapter(adapter);
 
     }
@@ -84,5 +85,11 @@ public class SavedArticlesCatalog extends AppCompatActivity {
                 null,
                 null,
                 null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mData.close();
     }
 }

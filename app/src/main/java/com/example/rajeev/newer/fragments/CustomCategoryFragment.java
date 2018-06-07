@@ -101,14 +101,17 @@ public class CustomCategoryFragment extends Fragment
         View rootView = inflater.inflate(R.layout.list_articles, container, false);
         Context context = getContext();
 
-        // adding references to widgets
+        // adding references to views
         emptyView = rootView.findViewById(R.id.empty_list_view);
         progressIndicator = rootView.findViewById(R.id.progress_indicator);
         loadingFeedback = rootView.findViewById(R.id.loading_feedback_text);
+
+        // handling empty list
         emptyListImageView = rootView.findViewById(R.id.empty_list_imageView);
         emptyListTextView1 = rootView.findViewById(R.id.empty_list_textView1);
         emptyListTextViewSuggestionText = rootView.findViewById((R.id.empty_list_suggestion));
         emptyListButton = rootView.findViewById(R.id.empty_list_button);
+
         mSwipeRefreshLayout = rootView.findViewById(R.id.swipe_refresh);
         ListView listView = rootView.findViewById(R.id.list_view);
 
@@ -151,7 +154,6 @@ public class CustomCategoryFragment extends Fragment
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.i(LOG_TAG, "onRefresh called from SwipeRefreshLayout");
                 articlesRefreshOperation();
             }
         });
