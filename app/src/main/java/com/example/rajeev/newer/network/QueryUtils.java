@@ -12,15 +12,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by rjvjha on 17/12/17.
@@ -61,7 +60,7 @@ public final class QueryUtils {
         return fetchNewsSourcesFromJson(jsonResponse);
     }
 
-    // private helper methd to create url from string
+    // private helper method to create url from string
     private static URL createUrl(String stringUrl) {
         URL newUrl = null;
         try {
@@ -123,12 +122,14 @@ public final class QueryUtils {
         StringBuilder output = new StringBuilder();
 
         if (inputStream != null) {
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader reader = new BufferedReader(inputStreamReader);
-            String line = reader.readLine();
-            while (line != null) {
-                output.append(line);
-                line = reader.readLine();
+            Scanner scanner = new Scanner(inputStream);
+            scanner.useDelimiter("\\A");
+
+            boolean hasInput = scanner.hasNext();
+            if (hasInput) {
+                output.append(scanner.next());
+            } else {
+                return null;
             }
         }
         return output.toString();
@@ -145,22 +146,18 @@ public final class QueryUtils {
         InputStream inputStream = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            Log.d(LOG_TAG, "Connection Opened");
             urlConnection.setRequestMethod("GET");
-            urlConnection.setReadTimeout(5000);
-            urlConnection.setConnectTimeout(500);
-            urlConnection.setUseCaches(true);
-            Log.d(LOG_TAG, "Connecting to the given url");
             urlConnection.connect();
             int responseCode = urlConnection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                Log.d(LOG_TAG, "Connection successful, fetching input sream now");
+                Log.d(LOG_TAG, "Connection successful, fetching input stream now");
                 inputStream = urlConnection.getInputStream();
-                Log.d(LOG_TAG, "received the stream, decoding stream now");
                 thumbnail = BitmapFactory.decodeStream(inputStream);
+
                 return thumbnail;
             } else {
-                Log.wtf(LOG_TAG, "error while connecting, http error code: " + urlConnection.getResponseCode());
+                Log.wtf(LOG_TAG, "error while connecting, http error code: " +
+                        urlConnection.getResponseCode());
             }
         } catch (IOException e) {
 

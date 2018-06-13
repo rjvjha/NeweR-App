@@ -1,9 +1,13 @@
 package com.example.rajeev.newer.adapters;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,9 +23,18 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.FutureTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.rajeev.newer.R;
+import com.example.rajeev.newer.activities.SavedArticlesCatalog;
 import com.example.rajeev.newer.custom_classes.Article;
+import com.example.rajeev.newer.data.NewerContract;
+import com.example.rajeev.newer.network.DownloadBitmapTask;
 import com.example.rajeev.newer.utils.GlideApp;
 import com.example.rajeev.newer.utils.ISO8601;
 
@@ -30,12 +43,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by rjvjha on 16/12/17.
  */
 
 public class ArticleAdapter extends ArrayAdapter<Article> {
+
+    private static final String LOG_TAG = ArticleAdapter.class.getSimpleName();
 
 
     public ArticleAdapter(Context context, List<Article> articles) {
@@ -86,6 +102,56 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
             }
         });
 
+    }
+
+    // private helper method to add listener to save article
+    private void saveAction(final ImageButton button, Article article){
+        String authorName = article.getAuthor();
+        String sourceName = article.getSourceName();
+        String title = article.getTitle();
+        String description = article.getDescription();
+        String url = article.getUrl();
+        final String urlImage = article.getUrlToImage();
+        String publishedAt = article.getPublishedAt();
+
+        final ContentValues cv = new ContentValues();
+
+        // Sanity Checks
+        if(!authorName.equals("null") && !TextUtils.isEmpty(authorName)){
+            cv.put(NewerContract.ArticleEntry.AUTHOR_NAME, authorName);
+        }
+        if(!description.equals("null") && !TextUtils.isEmpty(description)){
+            cv.put(NewerContract.ArticleEntry.DESCRIPTION, description);
+        }
+        if(!urlImage.equals("null") && !TextUtils.isEmpty(urlImage)){
+            cv.put(NewerContract.ArticleEntry.IMAGE_URL, urlImage);
+        }
+        if(!publishedAt.equals("null") && !TextUtils.isEmpty(publishedAt)){
+            cv.put(NewerContract.ArticleEntry.PUBLISHED_AT, publishedAt);
+        }
+
+        // Not Null Values
+        cv.put(NewerContract.ArticleEntry.SOURCE_NAME, sourceName);
+        cv.put(NewerContract.ArticleEntry.TITLE, title);
+        cv.put(NewerContract.ArticleEntry.URL, url);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Download Image on background thread and insert into database
+                if(!urlImage.equals("null") && !TextUtils.isEmpty(urlImage)){
+                    DownloadBitmapTask insertTask = new DownloadBitmapTask(cv, getContext());
+                    insertTask.execute(urlImage);
+                    }
+                    // Do insertion without image
+                    else{
+                    Uri insertUri = getContext().getContentResolver().insert(NewerContract.ArticleEntry.CONTENT_URI, cv);
+                    Toast.makeText(getContext(),"Article Saved : "+
+                            insertUri, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
     }
 
     @NonNull
@@ -170,6 +236,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         // attach onClick Listeners to buttons here;
         shareAction(holder.shareButton, currentTitle, articleUrl);
         readMoreAction(holder.readMoreButton, articleUrl);
+        saveAction(holder.saveButton, currentArticle);
 
         return itemView;
     }

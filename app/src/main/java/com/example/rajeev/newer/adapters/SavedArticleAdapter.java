@@ -25,9 +25,8 @@ public class SavedArticleAdapter extends RecyclerView.Adapter<SavedArticleAdapte
     private Cursor mCursor;
 
 
-    public SavedArticleAdapter(Context context, Cursor cursor) {
+    public SavedArticleAdapter(Context context) {
         this.mContext = context;
-        this.mCursor = cursor;
 
     }
 
@@ -43,23 +42,54 @@ public class SavedArticleAdapter extends RecyclerView.Adapter<SavedArticleAdapte
         if (!mCursor.moveToPosition(position)) {
             return;
         }
+        int id = mCursor.getInt(mCursor.getColumnIndex(NewerContract.ArticleEntry._ID));
         String title = mCursor.getString(mCursor.getColumnIndex(NewerContract.ArticleEntry.TITLE));
         String descp = mCursor.getString(mCursor.getColumnIndex(NewerContract.ArticleEntry.DESCRIPTION));
         String source = mCursor.getString(mCursor.getColumnIndex(NewerContract.ArticleEntry.SOURCE_NAME));
-        Bitmap image = SavedArticlesCatalog.getImage(mCursor.getBlob(mCursor.getColumnIndex(NewerContract.ArticleEntry.IMAGE)));
+        byte[] binaryImage =  mCursor.getBlob(mCursor.getColumnIndex(NewerContract.ArticleEntry.IMAGE));
 
         // bind data to views
+        if(binaryImage!=null){
+            Bitmap image = SavedArticlesCatalog.getImage(binaryImage);
+            holder.articleImage.setImageBitmap(image);
+
+        }
+        holder.itemView.setTag(id);
         holder.articleTitle.setText(title);
         holder.articleDesc.setText(descp);
         holder.articleSource.setText(source);
-        holder.articleImage.setImageBitmap(image);
+
+
 
     }
 
     @Override
     public int getItemCount() {
+        if(mCursor==null){
+            return 0;
+        }
         return mCursor.getCount();
     }
+
+    /**
+     * When data changes and a re-query occurs, this function swaps the old Cursor
+     * with a newly updated Cursor (Cursor c) that is passed in.
+     */
+    public Cursor swapCursor(Cursor c) {
+        // check if this cursor is the same as the previous cursor (mCursor)
+        if (mCursor == c) {
+            return null; // bc nothing has changed
+        }
+        Cursor temp = mCursor;
+        this.mCursor = c; // new cursor value assigned
+
+        //check if this is a valid cursor, then update the cursor
+        if (c != null) {
+            this.notifyDataSetChanged();
+        }
+        return temp;
+    }
+
 
     class SavedArticlesViewHolder extends RecyclerView.ViewHolder {
         TextView articleTitle;
@@ -74,6 +104,7 @@ public class SavedArticleAdapter extends RecyclerView.Adapter<SavedArticleAdapte
             articleTitle = itemView.findViewById(R.id.article_title);
             articleDesc = itemView.findViewById(R.id.article_description);
             articleSource = itemView.findViewById(R.id.article_source);
+
         }
 
 

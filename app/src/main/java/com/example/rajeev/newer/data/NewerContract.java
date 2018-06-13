@@ -1,5 +1,7 @@
 package com.example.rajeev.newer.data;
 
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 
@@ -8,18 +10,33 @@ import android.provider.BaseColumns;
  */
 
 public class NewerContract {
+
     // URI constants
     public static final String CONTENT_AUTHORITY = "com.example.rajeev.newer";
-
-    // TODO: define following URI a/c to our app
-    //    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY );
-    //    public static final String PETS_PATH = "pets";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY );
+    public static final String ARTICLES_PATH = "articles";
 
     // To prevent someone from accidentally instantiating the contract class,
     // give it an empty constructor.
     private NewerContract(){};
 
     public static final class ArticleEntry implements BaseColumns{
+
+        // Specific Content URI to access all articles in db
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().
+                appendPath(ARTICLES_PATH).build();
+
+        /**
+         * The MIME type of the {@link #CONTENT_URI} for a list of pets.
+         */
+        public static final String CONTENT_LIST_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + ARTICLES_PATH;
+
+        /**
+         * The MIME type of the {@link #CONTENT_URI} for a single pet.
+         */
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + ARTICLES_PATH;
 
         /* Name of the database table */
         public static final String TABLE_NAME = "Article";
