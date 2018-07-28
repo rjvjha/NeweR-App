@@ -22,17 +22,16 @@
             app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="true">
-            
+
             <ImageView
                 android:id="@+id/expanded_image"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:fitsSystemWindows="false"
-                app:layout_collapseMode="parallax"
-                android:src="@drawable/demo_c"
                 android:drawingCacheQuality="high"
+                android:fitsSystemWindows="false"
                 android:scaleType="fitXY"
-                />
+                android:src="@drawable/demo_c"
+                app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

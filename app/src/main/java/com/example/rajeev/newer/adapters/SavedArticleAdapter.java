@@ -42,6 +42,7 @@ public class SavedArticleAdapter extends RecyclerView.Adapter<SavedArticleAdapte
         if (!mCursor.moveToPosition(position)) {
             return;
         }
+        // get values from Cursor
         int id = mCursor.getInt(mCursor.getColumnIndex(NewerContract.ArticleEntry._ID));
         String title = mCursor.getString(mCursor.getColumnIndex(NewerContract.ArticleEntry.TITLE));
         String descp = mCursor.getString(mCursor.getColumnIndex(NewerContract.ArticleEntry.DESCRIPTION));
@@ -50,8 +51,9 @@ public class SavedArticleAdapter extends RecyclerView.Adapter<SavedArticleAdapte
 
         // bind data to views
         if(binaryImage!=null){
-            Bitmap image = SavedArticlesCatalog.getImage(binaryImage);
-            holder.articleImage.setImageBitmap(image);
+            Bitmap bitmap = SavedArticlesCatalog.getImage(binaryImage);
+            holder.articleImage.setImageBitmap(bitmap);
+
 
         }
         holder.itemView.setTag(id);

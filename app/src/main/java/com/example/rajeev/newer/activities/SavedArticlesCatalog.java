@@ -3,7 +3,6 @@ package com.example.rajeev.newer.activities;
 import android.content.ContentUris;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -21,6 +20,8 @@ import android.widget.Toast;
 import com.example.rajeev.newer.R;
 import com.example.rajeev.newer.adapters.SavedArticleAdapter;
 import com.example.rajeev.newer.data.NewerContract;
+import com.glidebitmappool.GlideBitmapFactory;
+import com.glidebitmappool.GlideBitmapPool;
 
 import java.io.ByteArrayOutputStream;
 
@@ -97,12 +98,12 @@ public class SavedArticlesCatalog extends AppCompatActivity  implements
     protected void onDestroy() {
         super.onDestroy();
         mData.close();
+        GlideBitmapPool.clearMemory();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getSupportLoaderManager().restartLoader(sLoaderID, null, this);
     }
 
     // convert from bitmap to byte array
@@ -114,7 +115,9 @@ public class SavedArticlesCatalog extends AppCompatActivity  implements
 
     // convert from byte array to bitmap
     public static Bitmap getImage(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
+        Bitmap bitmap = GlideBitmapFactory.decodeByteArray(image,0,
+                image.length, 100, 100);
+        return bitmap;
     }
 
 
